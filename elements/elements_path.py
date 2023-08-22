@@ -1,0 +1,34 @@
+import os
+
+class save_path():
+    base_path = os.path.dirname(__file__)
+    dataset_path = r"\\10.80.31.43\vimo数据SVNwc\15_VDL_autotest_dataset"
+    project_path = r"D:\ly\03_autotest\性能测试_1期"
+    #选择模型类型（四类算法）
+    cls = base_path + "/public/分类算法.png"
+    det = base_path + "/public/检测算法.png"
+    seg = base_path + "/public/分割算法.png"
+    ocr = base_path + "/public/OCR算法.png"
+    uad = base_path + "/public/无监督算法.png"
+    #project_list = [cls,ocr,seg,uad,det]
+    project_list = [cls]
+
+    #数据集（四类算法） 
+    # cls_dataset = base_path + "/分类算法/dataset"
+    # det_dataset = base_path + "/检测算法/dataset"
+    # seg_dataset = base_path + "/分割算法/dataset"
+    # ocr_dataset = base_path + "/ocr算法/dataset"
+
+    '''新建方案数据集'''
+    cls_dataset = dataset_path + "\分类算法"
+    det_dataset = dataset_path + "\检测算法"
+    seg_dataset = dataset_path + "\分割算法"
+    ocr_dataset = dataset_path + "\OCR算法"
+
+
+    '''打开方案数据集'''
+    cls_project = project_path + "\一期性能测试_分类算法"
+    det_project = project_path + "\一期性能测试_检测算法"
+    seg_project = project_path + "\一期性能测试_分割算法"
+    ocr_project = project_path + "\一期性能测试_OCR算法"
+    uad_project = project_path + "\一期性能测试_无监督算法"
