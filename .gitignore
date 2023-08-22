@@ -1,0 +1,17 @@
+.vscode
+/.idea/
+/__pycache__/
+/.pytest_cache/
+/screenshot/*.png
+/common/__pycache__/
+/configs/__pycache__/
+/elements/__pycache__/
+/logs/*.log
+/pages/__pycache__/
+/report/*.json
+/report/*.txt
+/report/*.png
+/testcase/__pycache__/
+/testdata/__pycache__/
+/tools/__pycache__/
+/Resources/download/*.zip
