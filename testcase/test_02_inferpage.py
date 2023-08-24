@@ -1,14 +1,8 @@
 __author__ = "yunliu"
 from airtest.core.api import *
 from elements.elements_path import save_path
-from common.Base_method import search_file
 from common.Airtest_method import airtest_method 
-from pages.open_sofrware import open_Software
 from pages.management_page import management
-from pages.data_page import data
-from pages.marking_page import mark
-from pages.training_page import training
-from pages.assess_page import assess
 from tools.monitoring import *
 from tools.create_html import create_html_file
 import threading
@@ -46,32 +40,19 @@ def testcase02():
 
         '''导入图片'''
         file = 'sources'
-        infering.images_input(dataset,file)
+        infering.images_input(dataset,file)   
 
         '''开始推理'''
-        '''推理时长监控'''
-        infering_start_time = time.time()
         infering.begin_infering()
         event = threading.Event()
         status = [0]
-        t = threading.Thread(target=get_utilization, args=(name,status,event)) 
+        t = threading.Thread(target=get_infer_utilization, args=(name,status,event,save_path.base_path)) 
         t.start() 
         infering.review_infering()
         status[0] = 1
         event.set()    
-        t.join()         
-        infering_end_time = time.time()
-        training_spend_time = int(infering_end_time - infering_start_time)  #推理时长
-
-        '''将内容记录至表格'''
-        content = {}
-        content = {
-            '推理CT时间：' : training_spend_time,
-        }
-        csv_name = name + '.csv'
-        with open(csv_name, 'a', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow([content])
+        t.join() 
+        
 
         '''关闭方案'''
         airtest_method.operate_sleep()

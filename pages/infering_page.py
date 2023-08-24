@@ -7,7 +7,6 @@ class infering():
     '''切换至模型推理页面'''
     def model_infering():
         airtest_method.touch_button(control.model_infering)
-        airtest_method.operate_sleep()
     
     '''导入文件夹'''
     def images_input(dataset,file):
@@ -25,14 +24,18 @@ class infering():
     
     '''开始推理'''
     def begin_infering():
-        airtest_method.touch_button(control.begin_infering)
+        if not airtest_method.check_exit(control.begin_infering,'FALSE',5):      
+            assert False,'找不到开始推理按钮'
+        else:         
+            airtest_method.touch_button(control.begin_infering)
+       
 
     '''判断推理完成'''
     def review_infering():
-        if not airtest_method.check_exit(control.task_finished,'FALSE',36000) :
+        if not airtest_method.check_exit(control.infering_finished,'FALSE',36000) :
             assert False,'推理未完成'
         else:     
-            return
+            return True
 
 
 

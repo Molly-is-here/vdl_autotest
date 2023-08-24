@@ -21,13 +21,6 @@ class management():
         template = Template(item, threshold=0.7)
         airtest_method.assert_method(template)
         airtest_method.touch_button(template)
-        # pos = exists(template) #查找控件
-
-        # if pos is not None:
-        #     touch(pos)
-        # else:
-        #     print("未找模型类型")
-        # sleep(1.0)
         #点击创建按钮
         airtest_method.touch_button(control.create_button)
 

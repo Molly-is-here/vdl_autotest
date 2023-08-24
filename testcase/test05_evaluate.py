@@ -7,6 +7,7 @@ from pages.open_sofrware import open_Software
 
 @pytest.mark.smoke
 def test_export_model():
+    airtest_method.touch_button(control.new_card)
     assess.model_assess()
     if not airtest_method.check_exit(control.report_button,'FALSE',36000) :
         assert False,'评估未完成'

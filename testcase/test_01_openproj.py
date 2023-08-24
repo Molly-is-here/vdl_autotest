@@ -74,7 +74,7 @@ def testcase01():
             training.star_training()  
             event = threading.Event()
             status = [0]
-            t = threading.Thread(target=get_utilization, args=(name,status,event)) 
+            t = threading.Thread(target=get_training_utilization, args=(name,status,event)) 
             t.start()                                                        
             training.review_assess()  
             status[0] = 1

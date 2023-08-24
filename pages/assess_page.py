@@ -1,5 +1,4 @@
 from elements.public_control import control
-#from airtest.core.api import *
 import os
 from common.Airtest_method import airtest_method 
 
@@ -19,15 +18,6 @@ class assess():
             #     assert False,'评估未完成'
             # else:
             return True
-                
-            
-        
-        # airtest_method.check_exit(control.report_button,"查找控件中")
-
-        # if control.report_button is not None:
-        #     print("评估完成")
-        #     airtest_method.operate_sleep()
-        # return status
 
     '''点击更多按钮'''
     def more_button():
@@ -47,13 +37,10 @@ class assess():
         #输入指定路径
         current_dir = os.getcwd()
         airtest_method.input_text(current_dir)
-        #airtest_method.operate_sleep(2.0)
 
         airtest_method.touch_button(control.jump_click)
-        #airtest_method.operate_sleep()
 
         airtest_method.touch_button(control.choice_button)
-        #airtest_method.operate_sleep(2.0)
 
         airtest_method.touch_button(control.export_button)
         airtest_method.operate_sleep(10.0)
@@ -66,8 +53,7 @@ class assess():
         airtest_method.operate_sleep()
         #airtest_method.touch_button(control.add_parameter)
         airtest_method.touch_button(control.export_button)     
-
-    
+   
     '''点击文件按钮'''
     def template_file():
         airtest_method.touch_button(control.template_file)

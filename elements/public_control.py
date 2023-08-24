@@ -144,6 +144,12 @@ class control():
     #自定义缩放
     zidingyi_size = Template(save_path.base_path + "/public/09_自定义尺寸.png", threshold=0.7)
 
+    #自定义编辑框1
+    zidingyi_edit_box1 = Template(save_path.base_path + "/public/09_自定义编辑框.png",target_pos = 4,threshold=0.7)
+
+    #自定义编辑框2
+    zidingyi_edit_box2 = Template(save_path.base_path + "/public/09_自定义编辑框.png",target_pos = 5,threshold=0.7)
+
     #鼠标定位至批次大小
     mouse_move = Template(save_path.base_path + "/public/09_开benchsize.png", threshold=0.7)
 
@@ -224,3 +230,6 @@ class control():
 
     #开始推理
     begin_infering = Template(save_path.base_path + "/public/17_开始推理.png", threshold=0.7)
+
+    #推理完成
+    infering_finished = Template(save_path.base_path + "/public/17_推理完成.png",rgb= True, threshold=0.7)

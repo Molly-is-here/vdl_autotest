@@ -5,7 +5,7 @@ from pywinauto import Application
 
 
 class open_Software():
-    os.chdir(r"D:\ly\00_VDL\0809_0.4.8.2\中文測試testダイフク0818\ViMo-Deeplearning")
+    os.chdir(r"D:\ly\00_VDL\0809_0.4.8.2\ViMo-Deeplearning")
 
     '''打开软件'''
     def open_sofeware(app_path):
