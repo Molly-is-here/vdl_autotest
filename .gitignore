@@ -15,3 +15,4 @@
 /testdata/__pycache__/
 /tools/__pycache__/
 /Resources/download/*.zip
+/logs/*.log
