@@ -1,11 +1,9 @@
 __author__ = "yunliu"
 from airtest.core.api import *
 from elements.elements_path import save_path
-from common.Base_method import search_file
 from common.Airtest_method import airtest_method 
 from pages.open_sofrware import open_Software
 from pages.management_page import management
-from pages.data_page import data
 from pages.marking_page import mark
 from pages.training_page import training
 from pages.assess_page import assess
@@ -14,15 +12,10 @@ from tools.create_html import create_html_file
 import threading
 from PIL import Image
 from tools.ocr_identify import ocr_organize
-from elements.public_control import control
 
 auto_setup(__file__)
 
-# class open_project:
 def testcase01():
-    # open_Software.open_sofeware(r".\VDL.exe")
-    # open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
-    # open_Software.click_maximize() 
 
     # header = ['图片名称','训练时长/s','评估时长/s','总CT时间/s']  #设置表头
     # with open('testcase02_CT时间记录.csv', 'a', newline='') as f:
@@ -76,7 +69,7 @@ def testcase01():
             status = [0]
             t = threading.Thread(target=get_training_utilization, args=(name,status,event)) 
             t.start()                                                        
-            training.review_assess()  
+            training.review_assess(name)  
             status[0] = 1
             event.set()    
             t.join()         
@@ -88,7 +81,7 @@ def testcase01():
             assess_start_time = time.time()
             status = assess.assess_success() 
             assess_end_time = time.time()
-            assess_spend_time = int(assess_end_time - assess_start_time) #评估时长 
+            assess_spend_time = int(assess_end_time - assess_start_time -1) #评估时长 
 
             ct_time = training_spend_time + assess_spend_time  #总CT时间
 
@@ -153,12 +146,21 @@ def testcase01():
             with open(csv_name, 'a', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow([content])
+
+        '''导出模型'''
+        assess.more_button()
+        assess.export_model()
+
+        '''导出报告'''
+        assess.export_report()
+        airtest_method.operate_sleep(10.0)
+        open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
            
         '''关闭方案'''
-        airtest_method.operate_sleep()
-        airtest_method.touch_button(control.home_button)
-        #assess.template_file()
-        # assess.template_close()
+        # airtest_method.operate_sleep()
+        # airtest_method.touch_button(control.home_button)
+        assess.template_file()
+        assess.template_close()
                     
 
 if __name__ == "__main__":

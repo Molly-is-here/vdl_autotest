@@ -1,6 +1,7 @@
 from elements.public_control import control
 from common.Airtest_method import airtest_method 
 from airtest.core.api import *
+from elements.elements_path import save_path
 
 class training():
     '''切换至模型训练页面'''
@@ -11,6 +12,7 @@ class training():
     '''新增小卡片'''
     def add_card():
         airtest_method.touch_button(control.add_card)
+        airtest_method.touch_button(control.nomal_training)
         airtest_method.operate_sleep()
 
     '''重命名'''
@@ -76,7 +78,7 @@ class training():
         keyevent("{BACKSPACE}")
         keyevent("{BACKSPACE}")
         keyevent("{BACKSPACE}")
-        airtest_method.input_text('5')
+        airtest_method.input_text('2')
         airtest_method.operate_sleep()
     
     '''点击开始训练'''
@@ -85,12 +87,12 @@ class training():
         airtest_method.operate_sleep()
     
     '''点击查看评估'''
-    def review_assess():
-        if not airtest_method.check_exit(control.review_assess,'FALSE',36000) :
+    def review_assess(name):
+        if not airtest_method.check_exit(control.review_assess,'FALSE',36000000) :
             assert False,'训练未完成'
-        else:     
-            # airtest_method.touch_button(control.task_finished)               
-            # airtest_method.touch_button(control.close_task)
+        else:  
+            ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")  
+            airtest_method.screenshot(ct_screenshot)   #全屏截图  
             airtest_method.touch_button(control.review_assess)
 
     '''继续训练'''

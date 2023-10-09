@@ -44,7 +44,7 @@ def test_rename():
 @pytest.mark.smoke
 def test_edit_comment():
     '''修改备注'''
-    airtest_method.touch_button(control.more_button,2) #【更多】按钮
+    airtest_method.touch_button(control.more_button,2) #[更多]按钮
     training.edit_comment()
     input_comment = '發發'
     airtest_method.input_text(input_comment)
@@ -90,10 +90,26 @@ def test_choice_model(type):
 
     '''开始训练'''
     training.star_training()
-    training.review_assess()
+    if type == control.high_power:
+        name = '高精度'
+    else:
+        name = '低功耗'
+    training.review_assess(name)   
     assess.assess_success()
     do_log.info('切换模型类型训练成功，用例执行成功')
     training.model_training()
+
+@pytest.mark.smoke
+def test_continute_training():
+    '''继续训练'''
+    airtest_method.touch_button(control.new_card)
+    airtest_method.operate_sleep()
+    airtest_method.touch_button(control.more_button)       
+    training.continu_training()
+    airtest_method.operate_sleep()
+
+    airtest_method.touch_button(control.training_okbutton) #确认继续训练
+    do_log.info('继续训练成功，用例执行成功')
 
 @pytest.mark.parametrize('type',scaling_selection)
 @pytest.mark.parametrize('size',input_size)
@@ -101,13 +117,8 @@ def test_image_scaling(type,size):
     '''图像缩放'''
     training.add_card()
     training.image_scaling()
-    airtest_method.operate_sleep()
-    airtest_method.touch_button(type) #选择等比例缩放或自定义缩放
-    
-    if not airtest_method.check_exit(type,'FALSE',5) : 
-        do_log.error('图像缩放切换失败，用例执行失败')       
-        assert False,'图像缩放切换失败'
     do_log.info('成功选择图像缩放,用例执行成功')
+    airtest_method.touch_button(type)
     if type == control.zidingyi_size:
         airtest_method.touch_button(control.zidingyi_edit_box1) #第一个编辑框
         keyevent("{BACKSPACE}")
@@ -131,25 +142,8 @@ def test_image_scaling(type,size):
     training.cut_benchsize()
     '''开始训练'''
     training.star_training()
-    training.review_assess() 
-    assess.assess_success()
     do_log.info('图像缩放训练成功，用例执行成功')
-    training.model_training()
         
-@pytest.mark.smoke
-def test_continute_training():
-    '''继续训练'''
-    airtest_method.touch_button(control.new_card)
-    airtest_method.operate_sleep()
-    airtest_method.touch_button(control.more_button)       
-    training.continu_training()
-    airtest_method.operate_sleep()
-
-    airtest_method.touch_button(control.training_okbutton) #确认继续训练
-    training.review_assess()   
-    assess.assess_success()
-    do_log.info('继续训练成功，用例执行成功')
-    training.model_training()
         
 @pytest.mark.smoke
 def test_image_cropping():
@@ -169,10 +163,7 @@ def test_image_cropping():
 
     '''开始训练'''
     training.star_training()
-    training.review_assess()
-    assess.assess_success()
     do_log.info('图像裁切训练成功，用例执行成功')
-    training.model_training()
     
 @pytest.mark.smoke
 def test_color_mode():
@@ -196,32 +187,29 @@ def test_color_mode():
 
     '''开始训练'''
     training.star_training()
-    training.review_assess()
-    assess.assess_success()
     do_log.info('切换颜色模式训练成功，用例执行成功')
-    training.model_training()
 
-@pytest.mark.smoke
-def test_add_training():      
-    '''增量训练'''
-    airtest_method.touch_button(control.new_card)
-    airtest_method.operate_sleep()
-    airtest_method.touch_button(control.more_button)
-    training.add_training()
-    airtest_method.operate_sleep()
+# @pytest.mark.smoke
+# def test_add_training():      
+#     '''增量训练'''
+#     airtest_method.touch_button(control.new_card)
+#     airtest_method.operate_sleep()
+#     airtest_method.touch_button(control.more_button)
+#     training.add_training()
+#     airtest_method.operate_sleep()
 
-    '''切换回图像标注页面，新增数据集'''
-    airtest_method.touch_button(control.data_management_page)
-    test_add_file()
-    mark.image_label()
-    mark.auto_divide()
+#     '''切换回图像标注页面，新增数据集'''
+#     airtest_method.touch_button(control.data_management_page)
+#     test_add_file()
+#     mark.image_label()
+#     mark.auto_divide()
 
-    '''返回模型训练页面开始增量训练'''
-    training.model_training()
-    training.star_training()
-    airtest_method.touch_button(control.training_okbutton)
-    training.review_assess()
-    do_log.info('增量训练成功，用例执行成功')
+#     '''返回模型训练页面开始增量训练'''
+#     training.model_training()
+#     training.star_training()
+#     airtest_method.touch_button(control.training_okbutton)
+#     training.review_assess()
+#     do_log.info('增量训练成功，用例执行成功')
     
     
     

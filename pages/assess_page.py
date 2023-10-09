@@ -11,13 +11,8 @@ class assess():
     def assess_success():
         if not airtest_method.check_exit(control.report_button,'FALSE',36000) :
             assert False,'评估未完成'
-        else:   
-            # airtest_method.touch_button(control.task_finished)      
-            # airtest_method.touch_button(control.close_task)
-            # if not airtest_method.check_exit(control.report_button,"查找控件中",36000):
-            #     assert False,'评估未完成'
-            # else:
-            return True
+        else:
+            airtest_method.operate_sleep()
 
     '''点击更多按钮'''
     def more_button():
@@ -43,7 +38,7 @@ class assess():
         airtest_method.touch_button(control.choice_button)
 
         airtest_method.touch_button(control.export_button)
-        airtest_method.operate_sleep(10.0)
+        airtest_method.operate_sleep(20.0)
     
     '''导出报告'''
     def export_report():

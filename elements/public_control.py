@@ -93,6 +93,9 @@ class control():
     #新增训练小卡片
     add_card = Template(save_path.base_path + "/public/08_新增训练小卡片.png", threshold=0.7)
 
+    #常规训练
+    nomal_training = Template(save_path.base_path + "/public/08_常规训练.png", threshold=0.7)
+
     #一张新的卡片
     new_card = Template(save_path.base_path + "/public/07_新的卡片.png", threshold=0.7)
 
@@ -136,7 +139,10 @@ class control():
     cropping_true = Template(save_path.base_path + "/public/09_确定裁切.png", threshold=0.7)
 
     #图像缩放
-    image_scaling = Template(save_path.base_path + "/public/09_图像缩放.png",target_pos = 5, threshold=0.7)
+    image_scaling = Template(save_path.base_path + "/public/09_图像缩放1.png",target_pos = 5, threshold=0.7)
+
+    #无监督算法图像缩放
+    uad_image_scaling = Template(save_path.base_path + "/public/09_无监督图像缩放.png",target_pos = 5, threshold=0.7)
 
     #等比例缩放
     equal_size = Template(save_path.base_path + "/public/09_等比例缩放.png", threshold=0.7)

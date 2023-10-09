@@ -11,9 +11,10 @@ import statistics
 from common.Airtest_method import airtest_method 
 from PIL import Image
 from tools.ocr_identify import ocr_organize
+from tools.calculating import calculate_data
 
 def get_training_utilization(name,status,event):
-    pynvml.nvmlInit()
+    #pynvml.nvmlInit()
     #handle = pynvml.nvmlDeviceGetHandleByIndex(0)
 
     header = ['Time', 'GPU利用率/%', '显存使用量/Mib','CPU利用率/%','内存使用量/MB','磁盘使用量/GB']  #设置表头
@@ -71,34 +72,35 @@ def get_training_utilization(name,status,event):
     event.set() 
 
     '''统计表格数据'''
-    with open(file_name,'r',newline='', errors='replace') as read_f:
-        read_file = pd.read_csv(read_f)
-        columns = ['GPU利用率/%', '显存使用量/Mib','CPU利用率/%','内存使用量/MB','磁盘使用量/GB']
-        for column in columns:
-            column_total = {}
-            if column not in read_file.columns:
-                print(f"Column '{column}' not found in the CSV file.")
-                continue
+    calculate_data(file_name)
+    # with open(file_name,'r',newline='', errors='replace') as read_f:
+    #     read_file = pd.read_csv(read_f)
+    #     columns = ['GPU利用率/%', '显存使用量/Mib','CPU利用率/%','内存使用量/MB','磁盘使用量/GB']
+    #     for column in columns:
+    #         column_total = {}
+    #         if column not in read_file.columns:
+    #             print(f"Column '{column}' not found in the CSV file.")
+    #             continue
 
-            max_value = read_file[column].max()
-            min_value = read_file[column].min()
-            avg_value = read_file[column].mean()
-            van_value = statistics.variance(read_file[column])
-            range_value = max_value - min_value           
+    #         max_value = read_file[column].max()
+    #         min_value = read_file[column].min()
+    #         avg_value = read_file[column].mean()
+    #         van_value = statistics.variance(read_file[column])
+    #         range_value = max_value - min_value           
 
-            '''将统计信息添加到结果字典中'''
-            column_total[column] = {
-                    'max': max_value,
-                    'min': min_value,
-                    'avg': round(avg_value,2),
-                    'van': round(van_value,2),
-                    'ran' :round(range_value,2)
-                }
+    #         '''将统计信息添加到结果字典中'''
+    #         column_total[column] = {
+    #                 'max': max_value,
+    #                 'min': min_value,
+    #                 'avg': round(avg_value,2),
+    #                 'van': round(van_value,2),
+    #                 'ran' :round(range_value,2)
+    #             }
            
-            '''写入统计数据'''
-            with open(file_name, 'a', newline='') as write_f:
-                writer_file = csv.writer(write_f)
-                writer_file.writerow([column_total])
+    #         '''写入统计数据'''
+    #         with open(file_name, 'a', newline='') as write_f:
+    #             writer_file = csv.writer(write_f)
+    #             writer_file.writerow([column_total])
 
 def get_infer_utilization(name,status,event,path):
     pynvml.nvmlInit()
@@ -155,34 +157,35 @@ def get_infer_utilization(name,status,event,path):
     event.set() 
 
     '''统计表格数据'''
-    with open(file_name,'r',newline='', errors='replace') as read_f:
-        read_file = pd.read_csv(read_f)
-        columns = ['GPU利用率/%', '显存使用量/Mib','CPU利用率/%','内存使用量/MB','磁盘使用量/GB']
-        for column in columns:
-            column_total = {}
-            if column not in read_file.columns:
-                print(f"Column '{column}' not found in the CSV file.")
-                continue
+    calculate_data(file_name)
+    # with open(file_name,'r',newline='', errors='replace') as read_f:
+    #     read_file = pd.read_csv(read_f)
+    #     columns = ['GPU利用率/%', '显存使用量/Mib','CPU利用率/%','内存使用量/MB','磁盘使用量/GB']
+    #     for column in columns:
+    #         column_total = {}
+    #         if column not in read_file.columns:
+    #             print(f"Column '{column}' not found in the CSV file.")
+    #             continue
            
-            max_value = read_file[column].max()
-            min_value = read_file[column].min()
-            avg_value = read_file[column].mean()
-            van_value = statistics.variance(read_file[column])
-            range_value = max_value - min_value                      
+    #         max_value = read_file[column].max()
+    #         min_value = read_file[column].min()
+    #         avg_value = read_file[column].mean()
+    #         van_value = statistics.variance(read_file[column])
+    #         range_value = max_value - min_value                      
 
-            '''将统计信息添加到结果字典中'''
-            column_total[column] = {
-                    'max': max_value,
-                    'min': min_value,
-                    'avg': round(avg_value,2),
-                    'van': round(van_value,2),
-                    'ran' :round(range_value,2)
-                }
+    #         '''将统计信息添加到结果字典中'''
+    #         column_total[column] = {
+    #                 'max': max_value,
+    #                 'min': min_value,
+    #                 'avg': round(avg_value,2),
+    #                 'van': round(van_value,2),
+    #                 'ran' :round(range_value,2)
+    #             }
             
-            '''写入统计数据'''
-            with open(file_name, 'a', newline='') as write_f:
-                writer_file = csv.writer(write_f)
-                writer_file.writerow([column_total])
+    #         '''写入统计数据'''
+    #         with open(file_name, 'a', newline='') as write_f:
+    #             writer_file = csv.writer(write_f)
+    #             writer_file.writerow([column_total])
             
     static_path = os.path.join(path, 'static')
     project_name = f"{name}"

@@ -1,14 +1,15 @@
 import pytest
+import allure
 from pages.management_page import management
 from common.Airtest_method import airtest_method
 from elements.public_control import control
 from common.handle_log import do_log
 
 
+@allure.title("方案管理页面测试")
 @pytest.mark.smoke
 def test_create_proj():   
     if not airtest_method.check_exit(control.create_project,'FALSE',5) :
-        do_log.error('找不到新建方案按钮,用例执行失败')
         assert False,'找不到新建方案按钮'
     else:
         management.create_project()
@@ -16,13 +17,16 @@ def test_create_proj():
 
 @pytest.mark.smoke
 def test_input_name():
-    airtest_method.touch_button(control.select_textbox)
-    #random_string = radom_Name.get_character(3)
-    project_name = '1'
-    airtest_method.input_text(project_name)
-    airtest_method.touch_button(control.create_button)
-    if airtest_method.check_exit(control.proj_error,'TRUE',5):
-        do_log.error(f"字符长度输入校验,用例执行失败")
+    with allure.step(f'点击编辑框'):
+        airtest_method.touch_button(control.select_textbox)
+        project_name = '1'
+    with allure.step(f'输入字符'):
+        airtest_method.input_text(project_name)
+    with allure.step(f'点击创建按钮'):
+        airtest_method.touch_button(control.create_button)  
+        if airtest_method.check_exit(control.proj_error,'TRUE',5):
+            do_log.error(f'字符长度输入校验,用例执行失败')
+            allure.attach(airtest_method.screenshot,'异常')
 
 @pytest.mark.smoke
 def test_create_model():
