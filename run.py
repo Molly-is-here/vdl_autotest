@@ -6,7 +6,7 @@ open_Software.open_sofeware(r".\VDL.exe")
 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
 open_Software.click_maximize() 
 
-run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test01_management.py', '--alluredir=./reports']
+run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test01_management.py', '--alluredir=./reports','--clean-alluredir']
 
 
 # run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase01\\test_01_openproj.py',
