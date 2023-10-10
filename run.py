@@ -7,7 +7,7 @@ if addpath not in sys.path:
     sys.path.append(addpath)
 from pages.open_sofrware import open_Software
 
-#open_Software.open_sofeware(r".\VDL.exe")
+open_Software.open_sofeware(r".\VDL.exe")
 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
 open_Software.click_maximize() 
 
