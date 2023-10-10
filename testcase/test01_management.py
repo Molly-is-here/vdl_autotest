@@ -1,10 +1,12 @@
 import pytest
 import allure
+from elements.elements_path import save_path
 from pages.management_page import management
 from common.Airtest_method import airtest_method
 from elements.public_control import control
 from tools.radom_character import radom_Name
 from common.handle_log import do_log
+import os
 
 
 @allure.feature('方案管理页面测试')
@@ -14,8 +16,9 @@ def test_create_proj():
     if not airtest_method.check_exit(control.create_project,'FALSE',5) :
         assert False,'找不到新建方案按钮'
     else:
-        management.create_project()
-        do_log.info('成功点击新建方案按钮,用例执行成功')
+        with allure.step(f'点击新建方案按钮'):
+            management.create_project()
+            do_log.info('成功点击新建方案按钮,用例执行成功')
 
 @allure.title('编辑框仅输入单个字符创建方案失败')
 @pytest.mark.smoke
@@ -29,7 +32,11 @@ def test_input_name():
         airtest_method.touch_button(control.create_button)  
         if airtest_method.check_exit(control.proj_error,'TRUE',5):
             do_log.error(f'字符长度输入校验,用例执行失败')
-            allure.attach(airtest_method.screenshot,'异常')
+            static_path = os.path.join(save_path.base_path, 'static')
+            screen_shot = os.path.join(static_path, f"{project_name}.png")
+            airtest_method.screenshot(screen_shot)
+            falied_image =  os.path.join(save_path().base_path,screen_shot)  #指定路径
+            allure.attach(falied_image,name="异常附件", attachment_type=allure.attachment_type.PNG)
 
 @allure.title('编辑框输入多个字符创建方案成功')
 @pytest.mark.smoke
