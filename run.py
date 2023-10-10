@@ -1,4 +1,5 @@
 import pytest
+import allure
 import os
 from pages.open_sofrware import open_Software
 
@@ -6,7 +7,7 @@ open_Software.open_sofeware(r".\VDL.exe")
 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
 open_Software.click_maximize() 
 
-run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test01_management.py', '-s', '-v' ,'--alluredir', 'reports']
+run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test01_management.py', '-v' ,'--alluredir', './report', '--clean-alluredir']
 
 
 # run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase01\\test_01_openproj.py',
@@ -21,4 +22,4 @@ run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test01_management.
 
 pytest.main(run_command) 
 
-# os.system('allure serve reports')
+# os.system('allure serve report')

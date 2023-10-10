@@ -6,7 +6,7 @@
 /common/__pycache__/
 /configs/__pycache__/
 /elements/__pycache__/
-/logs/*.log
+/logs/
 /pages/__pycache__/
 /report/*.json
 /report/*.txt
@@ -15,4 +15,3 @@
 /testdata/__pycache__/
 /tools/__pycache__/
 /Resources/download/*.zip
-/logs/*.log
