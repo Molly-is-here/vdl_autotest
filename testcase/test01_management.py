@@ -32,11 +32,11 @@ def test_input_name():
         airtest_method.touch_button(control.create_button)  
         if airtest_method.check_exit(control.proj_error,'TRUE',5):
             do_log.error(f'字符长度输入校验,用例执行失败')
-            static_path = os.path.join('C:\\Users\\user\\.jenkins\\workspace\\VDL_test\\elements\\', 'static')
-            screen_shot = os.path.join('C:\\Users\\user\\.jenkins\\workspace\\VDL_test\\elements\\', f"{project_name}.png")
-            airtest_method.screenshot(screen_shot)
-            falied_image =  os.path.join(static_path,screen_shot)  #指定路径
-            allure.attach(falied_image,name="异常附件", attachment_type=allure.attachment_type.PNG)
+            # static_path = os.path.join('C:\\Users\\user\\.jenkins\\workspace\\VDL_test\\elements\\', 'static')
+            # screen_shot = os.path.join('C:\\Users\\user\\.jenkins\\workspace\\VDL_test\\elements\\', f"{project_name}.png")
+            # airtest_method.screenshot(screen_shot)
+            # falied_image =  os.path.join(static_path,screen_shot)  #指定路径
+            # allure.attach(falied_image,name="异常附件", attachment_type=allure.attachment_type.PNG)
 
 @allure.title('编辑框输入多个字符创建方案成功')
 @pytest.mark.smoke
