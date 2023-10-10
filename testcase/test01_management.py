@@ -3,6 +3,7 @@ import allure
 from pages.management_page import management
 from common.Airtest_method import airtest_method
 from elements.public_control import control
+from tools.radom_character import radom_Name
 from common.handle_log import do_log
 
 
@@ -30,8 +31,8 @@ def test_input_name():
 
 @pytest.mark.smoke
 def test_create_model():
-    project_name = '中文繁體A-B_[c]'
-    airtest_method.input_text(project_name)
+    random_string = radom_Name.get_character(3)
+    airtest_method.input_text(random_string)
     do_log.info('方案名称成功输入,用例执行成功')
     airtest_method.touch_button(control.seg_item)
     if not airtest_method.check_exit(control.seg_item,'FALSE',5) :
@@ -49,7 +50,7 @@ def test_search_project():
         do_log.info('成功切换回方案管理页面,用例执行成功')  
     airtest_method.operate_sleep()
     airtest_method.touch_button(control.manage_input)
-    project_name = '中文'
+    project_name = '测试發'
     airtest_method.input_text(project_name)
     airtest_method.touch_button(control.manage_search)
     airtest_method.touch_button(control.search_seg)
