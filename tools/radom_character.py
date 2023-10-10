@@ -10,6 +10,6 @@ class radom_Name():
             random.seed(time.time())
             for i in range(length): 
                 radom_character += random.choice(radom_Name.character)
-                input_character = '测试_' + radom_character
+                input_character = '测试發_' + radom_character
                 
             return input_character
