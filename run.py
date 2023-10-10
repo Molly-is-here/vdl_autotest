@@ -15,6 +15,7 @@ run_command = ['D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test01_management.
                'D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test02_data.py',
                'D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test03_label.py',
                'D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test04_training.py',
+               'D:\\ly\VDL_autotest\\VDL_autotest\\testcase\\test05_evaluate.py',
                'D:\\ly\\VDL_autotest\\VDL_autotest\\testcase\\test06_infer.py',
                 f'--alluredir={addpath}/report', '--clean-alluredir']
 

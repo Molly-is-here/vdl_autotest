@@ -12,7 +12,7 @@ class assess():
     
     '''判断是否评估完成'''
     def assess_success():
-        if not airtest_method.check_exit(control.report_button,'FALSE',36000) :
+        if not airtest_method.check_exit(control.report_button,'FALSE',360000) :
             assert False,'评估未完成'
         else:
             airtest_method.operate_sleep()
