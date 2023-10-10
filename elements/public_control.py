@@ -239,3 +239,18 @@ class control():
 
     #推理完成
     infering_finished = Template(save_path.base_path + "/public/17_推理完成.png",rgb= True, threshold=0.7)
+
+    #解锁标志
+    unlock_logo = Template(save_path.base_path + "/public/17_解锁标志 .png", threshold=0.7)
+
+    #模式选择
+    pattern_choice = Template(save_path.base_path + "/public/17_模式选择.png", threshold=0.7)
+
+    #选择TRT模式
+    pattern_TRT = Template(save_path.base_path + "/public/17_切换为TRT.png", threshold=0.7)
+
+    #设备类型
+    device_type = Template(save_path.base_path + "/public/17_设备类型.png", threshold=0.7)
+
+    #选择CPU设备
+    device_CPU = Template(save_path.base_path + "/public/17_选择CPU.png",target_pos = 5,threshold=0.7)

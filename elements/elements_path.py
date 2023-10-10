@@ -2,7 +2,7 @@ import os
 
 class save_path():
     base_path = os.path.dirname(__file__)
-    dataset_path = r"\\10.80.31.43\vimo数据SVNwc\14.VDL_SDK自动化\VDL_datasets"
+    dataset_path = r"\\10.80.31.43\vimo数据SVNwc\15_VDL_autotest_dataset"
     project_path = r"D:\ly\VDL_projects"
     #选择模型类型（四类算法）
     cls = base_path + "/public/分类算法.png"

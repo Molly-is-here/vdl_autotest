@@ -5,7 +5,10 @@ from common.Airtest_method import airtest_method
 class assess():
     '''切换至模型评估页面'''
     def model_assess():
-        airtest_method.touch_button(control.model_assess)
+        if not airtest_method.check_exit(control.model_assess,'FALSE') :
+            assert False,'找不到模型评估tab按钮'
+        else:
+            airtest_method.touch_button(control.model_assess)
     
     '''判断是否评估完成'''
     def assess_success():

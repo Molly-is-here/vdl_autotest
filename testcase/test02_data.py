@@ -5,7 +5,7 @@ from elements.public_control import control
 from elements.elements_path import save_path
 from common.handle_log import do_log
 
-@allure.feature('数据管理页面测试')
+@allure.feature('数据管理页面')
 @allure.title('导入图像')
 @pytest.mark.smoke
 def test_add_image():    
@@ -30,8 +30,8 @@ def test_add_image():
             airtest_method.touch_button(control.upload_done)
             do_log.info('成功导入图像,用例执行成功')
 
-@pytest.mark.smoke
 @allure.title('导入标注')
+@pytest.mark.smoke
 def test_add_label():
     '''导入标注'''   
     if not airtest_method.check_exit(control.add_label,'FALSE',5) :

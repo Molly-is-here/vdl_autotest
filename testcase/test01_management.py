@@ -7,7 +7,7 @@ from tools.radom_character import radom_Name
 from common.handle_log import do_log
 
 
-@allure.feature('方案管理页面测试')
+@allure.feature('方案管理页面')
 @allure.title('点击新建方案')
 @pytest.mark.smoke
 def test_create_proj():   

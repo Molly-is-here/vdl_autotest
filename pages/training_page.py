@@ -6,8 +6,11 @@ from elements.elements_path import save_path
 class training():
     '''切换至模型训练页面'''
     def model_training():
-        airtest_method.touch_button(control.model_training)
-        airtest_method.operate_sleep()
+        if not airtest_method.check_exit(control.model_training,'FALSE') :
+            assert False,'找不到模型训练tab按钮'
+        else:
+            airtest_method.touch_button(control.model_training)
+            
 
     '''新增小卡片'''
     def add_card():
@@ -88,7 +91,7 @@ class training():
     
     '''点击查看评估'''
     def review_assess(name):
-        if not airtest_method.check_exit(control.review_assess,'FALSE',36000000) :
+        if not airtest_method.check_exit(control.review_assess,'FALSE',3600000) :
             assert False,'训练未完成'
         else:  
             ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")  
