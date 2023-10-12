@@ -36,6 +36,9 @@ class control():
     #选中方案
     choice_proj = Template(save_path.base_path + "/public/03_进入项目.png", threshold=0.7)
 
+    #方案备注
+    manage_remark = Template(save_path.base_path + "/public/03_方案备注.png", threshold=0.7)
+
     #点击打开方案按钮
     openproj_button = Template(save_path.base_path + "/public/03_打开.png", threshold=0.7)
 
@@ -50,6 +53,9 @@ class control():
 
     #数据管理页面
     data_management_page = Template(save_path.base_path + "/public/03_数据管理页面.png", threshold=0.7)
+
+    #点击添加图像下划线
+    add_image_underscore = Template(save_path.base_path + "/public/05_添加图像下划线.png", target_pos = 9,threshold=0.7)
 
     #点击添加图像
     add_image = Template(save_path.base_path + "/public/05_添加图像.png", threshold=0.7)
@@ -80,6 +86,12 @@ class control():
 
     #完成按钮
     upload_done = Template(save_path.base_path + "/public/05_完成按钮.png", threshold=0.7)
+
+    #未完成标注
+    unfinish_labeled = Template(save_path.base_path + "/public/03_未完成标注.png", threshold=0.7)
+
+    #结果为空
+    null_results = Template(save_path.base_path + "/public/03_结果为空.png", threshold=0.7)
 
     #图像标注页面
     image_label = Template(save_path.base_path + "/public/06_图像标注页面.png", threshold=0.7)
@@ -219,11 +231,32 @@ class control():
     #点击导出按钮
     export_button = Template(save_path.base_path + "/public/14_导出按钮.png", threshold=0.7)
 
+    #判断导出成功
+    report_success =  Template(save_path.base_path + "/public/16_判断报告是否导出成功.png", threshold=0.7)
+
     #点击文件按钮
     template_file = Template(save_path.base_path + "/public/15_文件按钮.png", threshold=0.7)
 
+    #点击帮助按钮
+    template_help = Template(save_path.base_path + "/public/15_帮助按钮.png", threshold=0.7)
+
     #点击关闭方案
     template_close = Template(save_path.base_path + "/public/16_关闭方案.png", threshold=0.7)
+
+    #点击软件使用手册
+    user_guild = Template(save_path.base_path + "/public/16_软件使用手册.png", threshold=0.7)
+
+    #判断软件使用手册导出成功
+    user_success = Template(save_path.base_path + "/public/16_判断软件使用手册导出成功.png", threshold=0.7)
+
+    #点击SDK开发手册
+    SDK_guild = Template(save_path.base_path + "/public/16_SDK开发手册.png", threshold=0.7)
+
+    #判断SDK开发手册导出成功
+    SDK_success = Template(save_path.base_path + "/public/16_判断SDK开发手册导出成功.png", threshold=0.7)
+
+    #退出
+    template_quit = Template(save_path.base_path + "/public/16_退出.png.png", threshold=0.7)
 
     #模型推理页面
     model_infering = Template(save_path.base_path + "/public/17_模型推理页面.png", threshold=0.7)

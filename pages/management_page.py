@@ -37,7 +37,7 @@ class management():
     def click_project():
         airtest_method.touch_button(control.click_project)       
         airtest_method.touch_button(control.ok_button)
-        airtest_method.operate_sleep(2.0)
+
 
 
     

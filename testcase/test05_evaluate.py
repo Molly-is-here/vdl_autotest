@@ -30,8 +30,5 @@ def test_export_model():
 def test_export_report():
     with allure.step(f'点击导出报告按钮'):
         assess.export_report()
-        airtest_method.operate_sleep(5.0)
-    with allure.step(f'导出报告后返回mainwindow'):
-        open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
         do_log.info('报告成功导出,用例执行成功')
 

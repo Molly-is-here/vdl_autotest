@@ -39,16 +39,22 @@ def test_create_model():
         random_string = radom_Name.get_character(3)
         airtest_method.input_text(random_string)
         do_log.info('方案名称成功输入,用例执行成功')
-    with allure.step(f'选择模型类型'):
-        airtest_method.touch_button(control.seg_item)
+    with allure.step(f'选择模型类型'):       
         if not airtest_method.check_exit(control.seg_item,'FALSE',5) :
-            assert False,'找不到分割算法控件'
+            assert False,'找不到分割算法控件'   
         else:
-            with allure.step(f'点击创建按钮'):
-                airtest_method.touch_button(control.create_button)
-                do_log.info('方案成功新建,用例执行成功')
+            airtest_method.touch_button(control.seg_item)    
+    with allure.step(f'输入方案备注'):
+        if not airtest_method.check_exit(control.manage_remark,'FALSE',5) :
+            assert False,'找不到方案备注' 
+        else:      
+            airtest_method.touch_button(control.manage_remark)
+            airtest_method.input_text('發發發')
+    with allure.step(f'点击创建按钮'):
+        airtest_method.touch_button(control.create_button)
+        do_log.info('方案成功新建,用例执行成功')
 
-@allure.title('筛选框组合筛选')
+@allure.title('方案管理页面筛选框组合筛选')
 @pytest.mark.smoke
 def test_search_project():
     with allure.step(f'点击home键返回方案管理页面'):

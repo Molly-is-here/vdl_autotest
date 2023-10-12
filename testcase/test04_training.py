@@ -82,6 +82,37 @@ def test_delete():
                 airtest_method.touch_button(control.training_okbutton)
                 do_log.info('成功删除卡片，用例执行成功')
 
+@allure.title('图像裁切')                
+@pytest.mark.smoke
+def test_image_cropping():
+    with allure.step(f'选择图像裁切按钮'):
+        training.image_cropping()
+        airtest_method.operate_sleep()
+        if not airtest_method.check_exit(control.cropping_true,'FALSE',5) :        
+            assert False,'找不到是按钮'
+        else:  
+            with allure.step(f'选择是，确认开启图像裁切'):       
+                airtest_method.touch_button(control.cropping_true)
+
+        airtest_method.operate_sleep()
+        with allure.step(f'设置学习次数'):
+            training.set_study() 
+        with allure.step(f'调整benchsize'):   
+            training.mouse_move()
+            training.zidingyi_button()             
+            training.cut_benchsize()
+        with allure.step(f'点击开始训练'):
+            training.star_training()
+        with allure.step(f'判断是否训练成功'):
+            name = '图像裁切'
+        training.review_assess(name) 
+        with allure.step(f'判断是否评估成功'):  
+            assess.assess_success()
+            do_log.info('图像裁切训练成功，用例执行成功')
+        with allure.step(f'返回模型训练页面'): 
+            training.model_training()
+
+
 @allure.title('切换模型类型高精度/低功耗') 
 @pytest.mark.parametrize('type',model_selection)
 def test_choice_model(type):
@@ -120,7 +151,7 @@ def test_continute_training():
         airtest_method.touch_button(control.new_card)
         airtest_method.operate_sleep()
         airtest_method.touch_button(control.more_button)  
-    with allure.step(f'点击继续训练'):     
+    with allure.step(f'点击继续训练'):  
         training.continu_training()
         airtest_method.operate_sleep()
     with allure.step(f'确认继续训练'): 
@@ -178,37 +209,6 @@ def test_image_scaling(type,size):
         with allure.step(f'返回模型训练页面'): 
             training.model_training()
            
-@allure.title('图像裁切')                
-@pytest.mark.smoke
-def test_image_cropping():
-    with allure.step(f'新增卡片'):
-        training.add_card()
-    with allure.step(f'选择图像裁切按钮'):
-        training.image_cropping()
-        airtest_method.operate_sleep()
-        if not airtest_method.check_exit(control.cropping_true,'FALSE',5) :        
-            assert False,'找不到是按钮'
-        else:  
-            with allure.step(f'选择是，确认开启图像裁切'):       
-                airtest_method.touch_button(control.cropping_true)
-
-        airtest_method.operate_sleep()
-        with allure.step(f'设置学习次数'):
-            training.set_study() 
-        with allure.step(f'调整benchsize'):   
-            training.mouse_move()
-            training.zidingyi_button()             
-            training.cut_benchsize()
-        with allure.step(f'点击开始训练'):
-            training.star_training()
-        with allure.step(f'判断是否训练成功'):
-            name = '图像裁切'
-        training.review_assess(name) 
-        with allure.step(f'判断是否评估成功'):  
-            assess.assess_success()
-            do_log.info('图像裁切训练成功，用例执行成功')
-        with allure.step(f'返回模型训练页面'): 
-            training.model_training()
 
 @allure.title('灰度图训练')           
 @pytest.mark.smoke
