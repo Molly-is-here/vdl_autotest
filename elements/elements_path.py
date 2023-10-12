@@ -11,7 +11,7 @@ class save_path():
     seg = base_path + "/public/分割算法.png"
     ocr = base_path + "/public/OCR算法.png"
     uad = base_path + "/public/无监督算法.png"
-    project_list = [ocr,uad]
+    project_list = [cls,det,ocr,uad]
 
     #数据集（四类算法） 
     # cls_dataset = base_path + "/分类算法/dataset"

@@ -118,6 +118,7 @@ def test_search_image():
             assert False,'组合筛选无效'
         else:           
             do_log.info('组合筛选生效,用例执行成功')
+            airtest_method.operate_sleep()
            
 
 
