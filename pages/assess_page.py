@@ -3,28 +3,28 @@ import os
 from common.Airtest_method import airtest_method 
 from pages.open_sofrware import open_Software
 
-class assess():
-    '''切换至模型评估页面'''
+class assess():  
     def model_assess():
+        '''切换至模型评估页面'''
         if not airtest_method.check_exit(control.model_assess,'FALSE') :
             assert False,'找不到模型评估tab按钮'
         else:
             airtest_method.touch_button(control.model_assess)
     
-    '''判断是否评估完成'''
-    def assess_success():
+    def assess_success():       
+        '''判断是否评估完成''' 
         if not airtest_method.check_exit(control.report_button,'FALSE',360000) :
             assert False,'评估未完成'
         else:
             airtest_method.operate_sleep()
-
-    '''点击更多按钮'''
+  
     def more_button():
+         '''点击更多按钮'''
          airtest_method.touch_button(control.more_button)
          airtest_method.operate_sleep()
-
-    '''导出模型'''
+   
     def export_model():
+        '''导出模型'''
         airtest_method.touch_button(control.export_model)
 
         airtest_method.touch_button(control.file_name)
@@ -43,9 +43,9 @@ class assess():
 
         airtest_method.touch_button(control.export_button)
         airtest_method.operate_sleep(20.0)
-    
-    '''导出报告'''
+     
     def export_report():
+        '''导出报告'''
         airtest_method.touch_button(control.report_button)
         airtest_method.touch_button(control.report_name)
         airtest_method.touch_button(control.ok_button)
@@ -56,30 +56,30 @@ class assess():
             assert False,'报告未导出成功'
         else:
             open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
-   
-    '''点击文件按钮'''
+    
     def template_file():
+        '''点击文件按钮'''
         if not airtest_method.check_exit(control.template_file,'FALSE') :
             assert False,'未找到文件按钮'
         else:
             airtest_method.touch_button(control.template_file)
-
-    '''点击帮助按钮'''
+ 
     def template_help():
+        '''点击帮助按钮'''
         if not airtest_method.check_exit(control.template_help,'FALSE') :
             assert False,'未找到帮助按钮'
         else:
             airtest_method.touch_button(control.template_help)
-    
-    '''点击关闭按钮'''
+      
     def template_close():
+        '''点击关闭按钮'''
         if not airtest_method.check_exit(control.template_close,'FALSE') :
             assert False,'未找到关闭按钮'
         else:
             airtest_method.touch_button(control.template_close)
-
-    '''导出软件使用手册'''
+ 
     def user_guild():
+        '''导出软件使用手册'''
         if not airtest_method.check_exit(control.user_guild,'FALSE') :
             assert False,'未找到软件使用手册按钮'
         else:
@@ -89,8 +89,8 @@ class assess():
             else:
                 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
 
-    '''导出SDK开发手册'''
     def SDK_guild():
+        '''导出SDK开发手册'''
         if not airtest_method.check_exit(control.SDK_guild,'FALSE') :
             assert False,'未找到SDK开发手册按钮'
         else:
@@ -99,23 +99,23 @@ class assess():
                 assert False,'SDK开发手册未导出成功'
             else:
                 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
-
-    '''home键'''
+  
     def home():
+        '''home键'''
         if not airtest_method.check_exit(control.home_button,'FALSE') :
             assert False,'未找到home键'
         else:
             airtest_method.touch_button(control.home_button)
 
-    '''切换模型类型'''
     def change_type():
+        '''切换模型类型'''
         if not airtest_method.check_exit(control.change_type,'FALSE') :
             assert False,'未成功切换模型类型'
         else:
             airtest_method.touch_button(control.change_type)
-
-    '''退出'''
+  
     def template_quit():
+        '''退出'''
         if not airtest_method.check_exit(control.template_quit,'FALSE') :
             assert False,'未成功退出'
         else:

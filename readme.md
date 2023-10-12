@@ -14,6 +14,9 @@ pip install nvidia-ml-py3
 pip install psutil
 pip install pandas
 
+5、安装Allure依赖：
+pip install allure-pytest
+
 二、文件层级介绍
 ·common：公共类
 ·configs:日志设置

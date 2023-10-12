@@ -4,14 +4,13 @@ import os
 from airtest.core.api import *
 
 class data():
-
-    '''点击完成'''    
+     
     def finish_button():
+        '''点击完成''' 
         airtest_method.touch_button(control.upload_done)
-
-    '''选择文件夹'''
+   
     def add_file(dataset,file):
-        
+        '''选择文件夹'''
         airtest_method.touch_button(control.add_file) #点击添加文件夹按钮
         airtest_method.operate_sleep(2.0) 
     
