@@ -42,6 +42,7 @@ class infering():
         
     '''解锁推理按钮'''    
     def unlock_infering():
+        '''解锁推理按钮'''  
         if not airtest_method.check_exit(control.unlock_logo,'FALSE'):      
             assert False,'找不到解锁按钮'
         else:         
