@@ -256,7 +256,7 @@ class control():
     SDK_success = Template(save_path.base_path + "/public/16_判断SDK开发手册导出成功.png", threshold=0.7)
 
     #退出
-    template_quit = Template(save_path.base_path + "/public/16_退出.png.png", threshold=0.7)
+    template_quit = Template(save_path.base_path + "/public/16_退出.png", threshold=0.7)
 
     #模型推理页面
     model_infering = Template(save_path.base_path + "/public/17_模型推理页面.png", threshold=0.7)
