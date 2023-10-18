@@ -20,7 +20,7 @@ run_command = [f'{addpath}/testcase/test01_management.py',
                 f'{addpath}/testcase/test07_menu.py',
                 f'{addpath}/testcase/test00_smoke.py',
                 f'--alluredir={addpath}/report', '--clean-alluredir']
-# run_command = [f'{addpath}/testcase/test01_management.py',
+# run_command = [f'{addpath}/testcase/test00_smoke.py',
 #                 f'--alluredir={addpath}/report', '--clean-alluredir']
 
 
