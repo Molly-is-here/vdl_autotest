@@ -16,13 +16,21 @@ def test_template_close():
         assess.template_close()
         airtest_method.operate_sleep()
 
-@allure.title('导出软件使用手册')
+@allure.title('导出软件功能手册')
 @pytest.mark.smoke
 def test_user_guild():
     with allure.step(f'点击帮助按钮'):
         assess.template_help()
-    with allure.step(f'导出软件使用手册'):
+    with allure.step(f'导出软件功能手册'):
         assess.user_guild()
+
+@allure.title('导出软件操作手册')
+@pytest.mark.smoke
+def test_operating_guild():
+    with allure.step(f'点击帮助按钮'):
+        assess.template_help()
+    with allure.step(f'导出软件操作手册'):
+        assess.operating_guild()
 
 @allure.title('导出软件使用SDK开发手册')
 @pytest.mark.smoke

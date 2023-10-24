@@ -79,13 +79,24 @@ class assess():
             airtest_method.touch_button(control.template_close)
  
     def user_guild():
-        '''导出软件使用手册'''
+        '''导出软件功能手册'''
         if not airtest_method.check_exit(control.user_guild,'FALSE') :
-            assert False,'未找到软件使用手册按钮'
+            assert False,'未找到软件功能手册'
         else:
             airtest_method.touch_button(control.user_guild)
             if not airtest_method.check_exit(control.user_success,'FALSE',10) :
-                assert False,'软件使用手册未导出成功'
+                assert False,'软件功能手册未导出成功'
+            else:
+                open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
+
+    def operating_guild():
+        '''导出软件操作手册'''
+        if not airtest_method.check_exit(control.operating_guild,'FALSE') :
+            assert False,'未找到软件操作手册'
+        else:
+            airtest_method.touch_button(control.operating_guild)
+            if not airtest_method.check_exit(control.user_success,'FALSE',10) :
+                assert False,'软件操作手册未导出成功'
             else:
                 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
 
