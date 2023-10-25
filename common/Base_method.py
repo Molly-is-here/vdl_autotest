@@ -2,7 +2,7 @@ import os
 
 class search_file():
      #遍历文件夹
-     def get_file(file_path):
+     def get_file(self, file_path):
           files = []
           for file in os.listdir(file_path):  
              files.append(file)    
