@@ -231,6 +231,9 @@ class control():
     #点击导出按钮
     export_button = Template(save_path.base_path + "/public/14_导出按钮.png", threshold=0.7)
 
+    #混淆矩阵
+    confusion_matrix =  Template(save_path.base_path + "/public/14_混淆矩阵.png", threshold=0.7)
+
     #判断导出成功
     report_success =  Template(save_path.base_path + "/public/16_判断报告是否导出成功.png", threshold=0.7)
 

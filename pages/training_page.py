@@ -89,16 +89,17 @@ class training():
     def star_training():
         '''点击开始训练'''
         airtest_method.touch_button(control.star_training)
-        airtest_method.operate_sleep()
+        airtest_method.operate_sleep(5.0)
       
     def review_assess(name):
         '''点击查看评估'''
-        if not airtest_method.check_exit(control.review_assess,'FALSE',3600000) :
-            assert False,'训练未完成'
-        else:  
+        if airtest_method.check_exit(control.review_assess,'FALSE',3600000) :
             ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")  
             airtest_method.screenshot(ct_screenshot)   #全屏截图  
-            airtest_method.touch_button(control.review_assess)
+            airtest_method.touch_button(control.review_assess)           
+        else:  
+             assert False,'训练未完成'
+            
  
     def continu_training():
         '''继续训练'''
