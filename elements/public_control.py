@@ -243,8 +243,11 @@ class control():
     #点击关闭方案
     template_close = Template(save_path.base_path + "/public/16_关闭方案.png", threshold=0.7)
 
-    #点击软件使用手册
-    user_guild = Template(save_path.base_path + "/public/16_软件使用手册.png", threshold=0.7)
+    #点击软件功能手册
+    user_guild = Template(save_path.base_path + "/public/16_软件功能手册.png",target_pos = 8, threshold=0.7)
+
+    #点击软件操作手册
+    operating_guild = Template(save_path.base_path + "/public/16_软件操作手册.png", threshold=0.7) 
 
     #判断软件使用手册导出成功
     user_success = Template(save_path.base_path + "/public/16_判断软件使用手册导出成功.png", threshold=0.7)
