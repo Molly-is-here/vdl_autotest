@@ -12,7 +12,7 @@ class HandleYaml:
             filename = os.path.join(CONF_PATH, filename)  # 将配置文件名与路径进行拼接
         with open(filename, encoding='utf-8') as file:
             self.config_data = yaml.full_load(file)  # 加载yaml文件
-    def get_data(self, section,option):
+    def get_data(self,section,option):
         '''
         读取配置文件数据
         :param section:

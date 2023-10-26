@@ -93,9 +93,10 @@ class training():
       
     def review_assess(name):
         '''点击查看评估'''
-        if airtest_method.check_exit(control.review_assess,'FALSE',3600000) :
+        if airtest_method.check_exit(control.review_assess,'TRUE',3600000) :
             ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")  
-            airtest_method.screenshot(ct_screenshot)   #全屏截图  
+            airtest_method.screenshot(ct_screenshot)   #全屏截图
+            airtest_method.operate_sleep()   #sleep防止鼠标失焦
             airtest_method.touch_button(control.review_assess)           
         else:  
              assert False,'训练未完成'

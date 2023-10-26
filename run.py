@@ -17,9 +17,9 @@ run_command = [f'{addpath}/testcase/test01_management.py',
                 f'{addpath}/testcase/test04_training.py',
                 f'{addpath}/testcase/test05_evaluate.py',
                 f'{addpath}/testcase/test06_infer.py',
-                f'{addpath}/testcase/test07_menu.py',
-                f'{addpath}/testcase/test00_smoke.py',
+                f'{addpath}/testcase/test07_menu.py',            
                 f'{addpath}/testcase/test08_compatible.py',
+                f'{addpath}/testcase/test00_smoke.py',
                 f'--alluredir={addpath}/report', '--clean-alluredir']
 # run_command = [f'{addpath}/testcase/test08_compatible.py',
 #                 f'--alluredir={addpath}/report', '--clean-alluredir']

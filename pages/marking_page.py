@@ -4,12 +4,12 @@ from common.Airtest_method import airtest_method
 
 class mark():
     
-    def image_label(self):
+    def image_label():
         '''切换至图像标注'''
         airtest_method.touch_button(control.image_label)
         airtest_method.operate_sleep()
   
-    def auto_divide(self):
+    def auto_divide():
         '''自动划分'''
         airtest_method.touch_button(control.auto_divide)
         airtest_method.operate_sleep()
