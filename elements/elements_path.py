@@ -36,4 +36,7 @@ class save_path():
     det_OCR = pipelines_path + "\检测-OCR"
     det_seg = pipelines_path + "\检测-分割"
     det_uad = pipelines_path + "\检测-无监督"
+    seg_OCR = pipelines_path + "\分割-OCR"
+    seg_det = pipelines_path + "\分割-检测"
+    seg_uad = pipelines_path + "\分割-无监督"
 

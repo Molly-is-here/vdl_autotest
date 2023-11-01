@@ -349,4 +349,8 @@ class control():
     save_button = Template(save_path.base_path + "/public/18_保存按钮.png",threshold=0.7)   
 
     #综合判定完成
-    judgement_done =  Template(save_path.base_path + "/public/18_综合判定完成.png",threshold=0.7)                         
+    judgement_done =  Template(save_path.base_path + "/public/18_综合判定完成.png",threshold=0.7)   
+
+    #综合判定开始推理按钮
+    judgement_infering_button = Template(save_path.base_path + "/public/18_判定开始推理.png",threshold=0.7)
+                     

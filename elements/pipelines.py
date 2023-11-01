@@ -31,3 +31,19 @@ class det_uad():
     file_path = save_path.det_uad
     pre_module = control.det_module
     post_module = control.uad_module
+
+class seg_OCR():
+    file_path = save_path.seg_OCR
+    pre_module = control.seg_module
+    post_module = control.OCR_module
+
+class seg_det():
+    file_path = save_path.seg_det
+    pre_module = control.seg_module
+    post_module = control.det_module
+
+class seg_uad():
+    file_path = save_path.seg_uad
+    pre_module = control.seg_module
+    post_module = control.uad_module
+

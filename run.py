@@ -9,7 +9,7 @@ from pages.open_sofrware import open_Software
 
 open_Software.open_sofeware(r".\VDL.exe")
 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
-open_Software.click_maximize() 
+open_Software.click_maximize()
 
 run_command = [f'{addpath}/testcase/test01_management.py',
                 f'{addpath}/testcase/test02_data.py',
