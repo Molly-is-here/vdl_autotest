@@ -16,7 +16,10 @@ class infering():
         '''导入文件夹'''
         airtest_method.touch_button(control.images_input)
         file_path = os.path.join(dataset,file)
-        airtest_method.touch_button(control.choice_file)
+        if not airtest_method.check_exit(control.choice_file,'FALSE') :
+            assert False,'选择文件夹按钮'
+        else:
+            airtest_method.touch_button(control.choice_file)   
         airtest_method.input_text(file_path)
         airtest_method.touch_button(control.jump_click)
         airtest_method.touch_button(control.choice_button)

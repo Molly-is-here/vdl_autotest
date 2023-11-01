@@ -6,11 +6,35 @@ class control():
     #分割算法
     seg_item = Template(save_path.seg,threshold=0.7)
 
+    #分类串联模块
+    cls_module = Template(save_path.base_path + "/public/分类模块.png" , threshold=0.7)
+
+    #前置模块
+    pre_module = Template(save_path.base_path + "/public/前置模块.png" ,target_pos = 6,threshold=0.7)
+
+    #分割串联模块
+    seg_module = Template(save_path.base_path + "/public/分割模块.png" , threshold=0.7)
+
+    #检测串联模块
+    det_module = Template(save_path.base_path + "/public/检测模块.png" , threshold=0.7)
+
+    #OCR串联模块
+    OCR_module = Template(save_path.base_path + "/public/OCR模块.png" , threshold=0.7)
+
+    #无监督串联模块
+    uad_module = Template(save_path.base_path + "/public/无监督模块.png" , threshold=0.7)
+
     #点击窗口最大化
     max_screen = Template(save_path.base_path + "/public/01_窗口最大化.png" , threshold=0.7)
 
     #点击新建方案
     create_project = Template(save_path.base_path + "/public/02_新建方案.png", threshold=0.7)
+
+    #选择方案类型
+    project_type = Template(save_path.base_path + "/public/02_方案类型.png", threshold=0.7)
+
+    #选择多模型串并联方案
+    pipelines_project = Template(save_path.base_path + "/public/02_多模型串并联方案.png", threshold=0.7)
 
     #点击打开方案
     open_project = Template(save_path.base_path + "/public/02_打开方案.png", threshold=0.7)
@@ -70,10 +94,10 @@ class control():
     add_file = Template(save_path.base_path + "/public/05_添加文件夹.png", threshold=0.7)
 
     #选择文件夹按钮
-    choice_file1 = Template(save_path.base_path + "/public/05_路径编辑框3.png", threshold=0.7)
+    choice_file1 = Template(save_path.base_path + "/public/05_路径编辑框1.png",threshold=0.7)
 
     #选择文件夹按钮
-    choice_file = Template(save_path.base_path + "/public/05_路径编辑框2.png",target_pos = 5, threshold=0.7)
+    choice_file = Template(save_path.base_path + "/public/05_路径编辑框3.png",target_pos = 5, threshold=0.7)
 
     #输入文件夹名称
     print_name = Template(save_path.base_path + "/public/03_输入文件夹名称.png", threshold=0.7)
@@ -85,7 +109,7 @@ class control():
     upload_label = Template(save_path.base_path + "/public/05_导入成功.png", threshold=0.7)
 
     #完成按钮
-    upload_done = Template(save_path.base_path + "/public/05_完成按钮.png", threshold=0.7)
+    upload_done = Template(save_path.base_path + "/public/05_完成按钮1.png", threshold=0.7)
 
     #未完成标注
     unfinish_labeled = Template(save_path.base_path + "/public/03_未完成标注.png", threshold=0.7)
@@ -93,11 +117,23 @@ class control():
     #结果为空
     null_results = Template(save_path.base_path + "/public/03_结果为空.png", threshold=0.7)
 
+    #方案流程
+    project_flow = Template(save_path.base_path + "/public/03_方案流程.png", threshold=0.7)
+
+    #数据源
+    add_dataset = Template(save_path.base_path + "/public/03_数据源.png",target_pos = 6, threshold=0.7)
+
+    #数据源1
+    add_dataset1 = Template(save_path.base_path + "/public/03_数据源1.png",threshold=0.7)
+
     #图像标注页面
     image_label = Template(save_path.base_path + "/public/06_图像标注页面.png", threshold=0.7)
     
     #自动划分按钮
     auto_divide = Template(save_path.base_path + "/public/06_自动划分.png", threshold=0.7)
+
+    #导入标注
+    import_label = Template(save_path.base_path + "/public/06_导入标注.png", threshold=0.7)
 
     #模型训练页面
     model_training = Template(save_path.base_path + "/public/07_模型训练页面.png", threshold=0.7)
@@ -274,7 +310,7 @@ class control():
     file_upload = Template(save_path.base_path + "/public/17_完成按钮.png", threshold=0.7)
 
     #开始推理
-    begin_infering = Template(save_path.base_path + "/public/17_开始推理.png", threshold=0.7)
+    begin_infering = Template(save_path.base_path + "/public/17_开始推理.png",rgb= True, threshold=0.7)
 
     #推理完成
     infering_finished = Template(save_path.base_path + "/public/17_推理完成.png",rgb= True, threshold=0.7)
@@ -293,3 +329,24 @@ class control():
 
     #选择CPU设备
     device_CPU = Template(save_path.base_path + "/public/17_选择CPU.png",target_pos = 5,threshold=0.7)
+
+    #综合判定
+    judgement_page = Template(save_path.base_path + "/public/18_综合判定.png", threshold=0.7)
+
+    #判定范围
+    judgement_area = Template(save_path.base_path + "/public/18_判定功能.png", target_pos = 4,threshold=0.7)
+
+    # 判定规则
+    judgement_rules = Template(save_path.base_path + "/public/18_判定功能.png", target_pos = 5,threshold=0.7) 
+
+    # 开始推理 
+    judgement_infering = Template(save_path.base_path + "/public/18_判定功能.png", target_pos = 6,threshold=0.7)   
+
+    #复选框
+    checkbox = Template(save_path.base_path + "/public/18_复选框.png",threshold=0.7) 
+
+    #保存
+    save_button = Template(save_path.base_path + "/public/18_保存按钮.png",threshold=0.7)   
+
+    #综合判定完成
+    judgement_done =  Template(save_path.base_path + "/public/18_综合判定完成.png",threshold=0.7)                         

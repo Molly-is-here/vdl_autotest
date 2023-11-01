@@ -3,9 +3,11 @@ import os
 class save_path():
     base_path = os.path.dirname(__file__)
     dataset_path = r"\\10.80.31.43\vimo数据SVNwc\15_VDL_autotest_dataset"      
-    smoke_path = r"\\10.80.31.43\vimo数据SVNwc\14.VDL_SDK自动化\VDL_datasets"    #冒烟测试数据集
-    project_path = r"D:\ly\VDL_projects"                                        #兼容性测试数据集
-    #选择模型类型（四类算法）
+    smoke_path = r"\\10.80.31.43\vimo数据SVNwc\14.VDL_SDK自动化\VDL_datasets"        #冒烟测试数据集
+    project_path = r"D:\ly\VDL_projects"                                            #兼容性测试方案
+    pipelines_path = r'C:\Users\user\Desktop\串联测试数据集\串联auto_test'            #串联方案数据集
+
+    #算法类型（适用于单模块方案）
     cls = base_path + "/public/分类算法.png"
     det = base_path + "/public/检测算法.png"
     seg = base_path + "/public/分割算法.png"
@@ -13,22 +15,25 @@ class save_path():
     uad = base_path + "/public/无监督算法.png"
     project_list = [cls,det,ocr,uad,seg]
 
-    #数据集（四类算法） 
-    # cls_dataset = base_path + "/分类算法/dataset"
-    # det_dataset = base_path + "/检测算法/dataset"
-    # seg_dataset = base_path + "/分割算法/dataset"
-    # ocr_dataset = base_path + "/ocr算法/dataset"
-
-    '''新建方案数据集'''
+    '''冒烟测试数据集'''
     cls_dataset = smoke_path + "\分类算法"
     det_dataset = smoke_path + "\检测算法"
     seg_dataset = smoke_path + "\分割算法"
     ocr_dataset = smoke_path + "\OCR算法"
     uad_dataset = smoke_path + "\无监督算法"
 
-    '''打开方案数据集'''
+    '''兼容性测试方案'''
     cls_project = project_path + "\分类算法"
     det_project = project_path + "\检测算法"
     seg_project = project_path + "\分割算法"
     ocr_project = project_path + "\OCR算法"
     uad_project = project_path + "\无监督算法"
+
+    '''串联pipelines数据集'''
+    cls_seg = pipelines_path + "\分类-分割"
+    cls_det = pipelines_path + "\分类-检测"
+    cls_uad = pipelines_path + "\分类-无监督"
+    det_OCR = pipelines_path + "\检测-OCR"
+    det_seg = pipelines_path + "\检测-分割"
+    det_uad = pipelines_path + "\检测-无监督"
+

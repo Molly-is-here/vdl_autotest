@@ -1,16 +1,13 @@
 __author__ = "yunliu"
 from airtest.core.api import *
 from elements.elements_path import save_path
-from pages.data_page import data
 from pages.management_page import management
 from pages.marking_page import mark
 from pages.training_page import training
 from pages.assess_page import assess
-from pages.open_sofrware import open_Software
 from elements.public_control import control
 from common.handle_log import do_log
 from common.Airtest_method import airtest_method
-from common.Base_method import search_file
 import pytest
 import allure
 

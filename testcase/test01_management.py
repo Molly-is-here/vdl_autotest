@@ -11,12 +11,9 @@ from common.handle_log import do_log
 @allure.title('点击新建方案')
 @pytest.mark.smoke
 def test_create_proj():   
-    if not airtest_method.check_exit(control.create_project,'FALSE',5) :
-        assert False,'找不到新建方案按钮'
-    else:
-        with allure.step(f'点击新建方案按钮'):
-            management.create_project()
-            do_log.info('成功点击新建方案按钮,用例执行成功')
+    with allure.step(f'点击新建方案按钮'):
+        management.create_project()
+        do_log.info('成功点击新建方案按钮,用例执行成功')
 
 @allure.title('编辑框仅输入单个字符创建方案失败')
 @pytest.mark.smoke
@@ -27,7 +24,7 @@ def test_input_name():
     with allure.step(f'输入字符'):
         airtest_method.input_text(project_name)
     with allure.step(f'点击创建按钮'):
-        airtest_method.touch_button(control.create_button)  
+        management.create_success()
         if airtest_method.check_exit(control.proj_error,'TRUE',5):
             do_log.error(f'字符长度输入校验,用例执行失败')
             allure.attach('字符长度输入校验失败', name="异常情况", attachment_type=allure.attachment_type.TEXT)
@@ -45,13 +42,9 @@ def test_create_model():
         else:
             airtest_method.touch_button(control.seg_item)    
     with allure.step(f'输入方案备注'):
-        if not airtest_method.check_exit(control.manage_remark,'FALSE',5) :
-            assert False,'找不到方案备注' 
-        else:      
-            airtest_method.touch_button(control.manage_remark)
-            airtest_method.input_text('發發發')
+        management.manage_remark('fafa')  
     with allure.step(f'点击创建按钮'):
-        airtest_method.touch_button(control.create_button)
+        management.create_success()
         do_log.info('方案成功新建,用例执行成功')
 
 @allure.title('方案管理页面筛选框组合筛选')

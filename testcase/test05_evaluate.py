@@ -4,7 +4,6 @@ from common.Airtest_method import airtest_method
 from elements.public_control import control
 from common.handle_log import do_log
 from pages.assess_page import assess
-from pages.open_sofrware import open_Software
 
 @allure.feature('模型评估页面')
 @allure.title('切换至模型评估页面')
