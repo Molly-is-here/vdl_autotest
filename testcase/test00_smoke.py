@@ -6,13 +6,13 @@ from pages.management_page import management
 from pages.marking_page import mark
 from pages.training_page import training
 from pages.assess_page import assess
-from pages.open_sofrware import open_Software
 from elements.public_control import control
 from common.handle_log import do_log
 from common.Airtest_method import airtest_method
 from common.Base_method import search_file
 import pytest
 import allure
+import os
 
 auto_setup(__file__)
 
@@ -36,16 +36,22 @@ def test_algorithm_smoke():
         if item == save_path.uad:
             dataset = save_path.uad_dataset
             name = 'UAD'
+        if item == save_path.seqocr:
+            dataset = save_path.seqocr_dataset
+            name = 'SEQ'
+
+        current_dir = os.getcwd()
       
-        if name == 'OCR':        #OCR算法仅有高性能模型类型
+        if name == 'SEQ':        #seq OCR算法仅有高性能模型类型
             with allure.step(f'{name}算法冒烟'):
                 for file in search_file.get_file(dataset):
                     management.create_project()       
-                    management.input_name(name)  
+                    project_name = management.input_name(name)  
                     management.create_model(item)
 
                     '''数据管理页面'''
-                    data.add_file(dataset,file)
+                    file_path = str(os.path.join(dataset,file))
+                    data.add_file(file_path)
 
                     '''图像标注页面'''
                     mark.image_label()
@@ -59,11 +65,21 @@ def test_algorithm_smoke():
 
                     '''模型评估页面'''
                     assess.model_assess()
-                    assess.assess_success() 
+                    if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
+                        assert False,'评估未完成'
+                    else:
+                        airtest_method.operate_sleep()
 
-                    '''导出模型'''
+                    '''调用SDK'''
                     assess.more_button()
-                    assess.export_model()
+                    assess.export_SDK(current_dir)
+                    assess.unzip_SDK()
+                    assess.copy_SDK_dll()
+                    assess.run_SDK(file_path,project_name)
+
+                    # '''导出模型'''
+                    # assess.more_button()
+                    # assess.export_model()
 
                     '''导出报告'''
                     assess.export_report()
@@ -73,18 +89,73 @@ def test_algorithm_smoke():
                         assess.template_file()
                         assess.template_close()
 
-        else:
+        if name == 'UAD':  #无监督算法有三种模型类型
+            model_selection = [control.modelB,control.modelA_low_power,control.modelA_high_power]
+            for file in search_file.get_file(dataset):
+                for type in model_selection:
+                    with allure.step(f'{name}算法冒烟'):
+                        '''方案管理页面'''
+                        management.create_project()       
+                        project_name = management.input_name(name)  
+                        management.create_model(item)
+
+                        '''数据管理页面'''
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
+
+                        '''图像标注页面'''
+                        mark.image_label()
+                        mark.auto_divide()
+
+                        '''模型训练页面'''  
+                        training.model_training()
+                        training.add_card()
+                        training.uad_choice_model()
+                        airtest_method.touch_button(type) #选择模型类型
+                        if not airtest_method.check_exit(type,'FALSE',5) :      
+                            assert False,'模型类型切换失败'
+                        else:
+                            do_log.info("模型切换成功")
+                        training.star_training()
+
+                        '''模型评估页面'''
+                        assess.model_assess()
+                        if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
+                            assert False,'评估未完成'
+                        else:
+                            airtest_method.operate_sleep()
+
+                        '''调用SDK'''
+                        assess.more_button()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
+
+                        # '''导出模型'''
+                        # assess.more_button()
+                        # assess.export_model()
+
+                        '''导出报告'''
+                        assess.export_report()
+
+                        with allure.step(f'关闭方案'):    
+                            '''关闭方案'''
+                            assess.template_file()
+                            assess.template_close()
+        if name == 'OCR' or name == 'SEG' or name == 'DET' or name == 'CLS':
             model_selection = [control.low_power,control.high_power]      #模型类型：高精度/低功耗     
             for file in search_file.get_file(dataset):   
                 for type in model_selection:
                     with allure.step(f'{name}算法冒烟'):
                         '''方案管理页面'''
                         management.create_project()       
-                        management.input_name(name)  
+                        project_name = management.input_name(name)  
                         management.create_model(item)
 
                         '''数据管理页面'''
-                        data.add_file(dataset,file)
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
 
                         '''图像标注页面'''
                         mark.image_label()
@@ -101,26 +172,26 @@ def test_algorithm_smoke():
                         else:
                             do_log.info("模型切换成功")
 
-                        if name == 'CLS' or name == 'DET' or name == 'SEG':   #分类/检测/分割可以设置学习次数
-                            training.set_study()
-                            
+                        training.set_study()                            
                         training.star_training()
 
                         '''模型评估页面'''
-                        if name == 'UAD':
-                            assess.model_assess()
-                            if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
-                                assert False,'评估未完成'
-                            else:
-                                airtest_method.operate_sleep()
+                        assess.model_assess()
+                        if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
+                            assert False,'评估未完成'
                         else:
-                            assess.model_assess()
-                            assess.assess_success() 
+                            airtest_method.operate_sleep()
 
-
-                        '''导出模型'''
+                        '''调用SDK'''
                         assess.more_button()
-                        assess.export_model()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
+
+                        # '''导出模型'''
+                        # assess.more_button()
+                        # assess.export_model()
 
                         '''导出报告'''
                         assess.export_report()

@@ -12,37 +12,47 @@ from elements.public_control import control
 from elements.pipelines import *
 from common.handle_log import do_log
 
-cls_pipelines = [cls_seg,cls_det,cls_uad]
+cls_pipelines = [cls_seg,cls_det,cls_uad,cls_seq]
 det_pipelines = [det_OCR,det_seg,det_uad]
-seg_pipellines = [seg_OCR,seg_det,seg_uad]
-
+seg_pipellines = [seg_det,seg_uad,seg_seg,seg_OCR,seg_seq]
 
 @allure.feature('串联方案测试')
 @allure.title('点击新建方案')
-@pytest.mark.smoke
+@pytest.mark.skip('新建方案')
 def test_create_proj():   
     with allure.step(f'点击新建方案按钮'):
         management.create_project()
         do_log.info('成功点击新建方案按钮,用例执行成功')
 
 @allure.title('创建方案')
-@pytest.mark.smoke
-def test_create_model():
+@pytest.mark.skip('创建方案')
+def test_create_model(remark):
     with allure.step(f'输入方案名称'):
         management.input_name('test')
     with allure.step(f'选择串并联方案类型'):       
         management.choice_project_type()  
         do_log.info('串并联方案类型选择成功,用例执行成功')
     with allure.step(f'输入方案备注'):
-        management.manage_remark('红小豆')  
+        management.manage_remark(remark)  
     with allure.step(f'点击创建按钮'):
         management.create_success()
         do_log.info('方案成功新建,用例执行成功')
+
+@allure.title('切换方案')
+@pytest.mark.skip("串联方案创建完成后切换方案")
+def test_close_project():
+    with allure.step(f'关闭方案'):    
+        '''关闭方案'''
+        assess.template_file()
+        assess.template_close()
 
 @allure.title('文件夹导入分割串联数据集')
 @pytest.mark.smoke
 def test_seg_pipelines():
     for pipelines in seg_pipellines: 
+            with allure.step(f'新建方案'):
+                test_create_proj()
+                test_create_model(pipelines.name)
             with allure.step(f'点击导入文件夹按钮'):
                 file_path = pipelines.file_path + '\images'
                 data.add_file(file_path)
@@ -51,13 +61,9 @@ def test_seg_pipelines():
                 data.project_flow()
                 do_log.info('方案流程画布打开,用例执行成功')
             with allure.step(f'数据源添加分割模块作为首模块'):
-                data.add_dataset()
-                if not airtest_method.check_exit(pipelines.pre_module,'FALSE',5) :
-                    assert False,'未找到分割模块'
-                else:
-                    airtest_method.touch_button(pipelines.pre_module)
-                    mark.image_label()  #点击图像标注按钮关闭方案流程画布
-                    do_log.info('分割首模块创建成功,用例执行成功')
+                data.add_pre_module(pipelines.pre_module)
+                mark.image_label()  #点击图像标注按钮关闭方案流程画布
+                do_log.info('分割首模块创建成功,用例执行成功')
             with allure.step(f'导入前置模块标注'):
                 label1_path = pipelines.file_path + '\labels1'
                 mark.import_label(label1_path)
@@ -69,14 +75,12 @@ def test_seg_pipelines():
                 training.add_card()
                 training.set_study()
                 training.star_training()
-                training.review_assess('前置模块')
+                assess.model_assess()
                 assess.assess_success() 
                 do_log.info('前置模块训练评估完成')
             with allure.step(f'添加后置模块'):
                 data.project_flow()                
-                airtest_method.touch_button(control.pre_module)  #点击前置模块的‘+’符号新增模块
-                airtest_method.touch_button(pipelines.post_module)
-                airtest_method.operate_sleep()
+                data.add_pre_module(pipelines.post_module)
                 mark.image_label()   #点击图像标注按钮关闭方案流程画布                
                 do_log.info(f'后置模块创建成功')
             with allure.step(f'导入后置模块标注'):
@@ -93,37 +97,26 @@ def test_seg_pipelines():
                 else:
                     training.set_study()
                     training.star_training() 
-                airtest_method.operate_sleep()            
-                training.review_assess('后置模块')
-                if pipelines.post_module == control.uad_module:    #无监督算法评估状态与其他算法不一致
+                assess.model_assess()          
+                if pipelines.post_module == control.uad_module or pipelines.post_module == control.seq_module:    #无监督/seq OCR算法评估状态与其他算法不一致
                     if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
                         assert False,'评估未完成'
                 else:
                     assess.assess_success() 
-
                 do_log.info('后置模块训练评估完成')
             with allure.step(f'返回数据源管理页面'):
-                airtest_method.operate_sleep(2.0)
-                data.project_flow()
-                airtest_method.touch_button(control.add_dataset1)
-                data.project_flow()
+                data.dataset_management()
                 do_log.info('成功返回数据源管理页面')
-
-@allure.title('切换方案')
-@pytest.mark.smoke
-def test_close_project():
-    with allure.step(f'关闭方案'):    
-        '''关闭方案'''
-        assess.template_file()
-        assess.template_close()
-    with allure.step(f'新建方案'):
-        test_create_proj()
-        test_create_model()
+            with allure.step(f'切换方案'):
+                test_close_project()
 
 @allure.title('文件夹导入检测串联数据集')
 @pytest.mark.smoke
 def test_det_pipelines():
     for pipelines in det_pipelines: 
+            with allure.step(f'新建方案'):
+                test_create_proj()
+                test_create_model(pipelines.name)
             with allure.step(f'点击导入文件夹按钮'):
                 file_path = pipelines.file_path + '\images'
                 data.add_file(file_path)
@@ -132,13 +125,9 @@ def test_det_pipelines():
                 data.project_flow()
                 do_log.info('方案流程画布打开,用例执行成功')
             with allure.step(f'数据源添加检测模块作为首模块'):
-                data.add_dataset()
-                if not airtest_method.check_exit(pipelines.pre_module,'FALSE',5) :
-                    assert False,'未找到检测模块'
-                else:
-                    airtest_method.touch_button(pipelines.pre_module)
-                    mark.image_label()  #点击图像标注按钮关闭方案流程画布
-                    do_log.info('检测首模块创建成功,用例执行成功')
+                data.add_pre_module(pipelines.pre_module)
+                mark.image_label()  #点击图像标注按钮关闭方案流程画布
+                do_log.info('检测首模块创建成功,用例执行成功')
             with allure.step(f'导入前置模块标注'):
                 label1_path = pipelines.file_path + '\labels1'
                 mark.import_label(label1_path)
@@ -150,14 +139,12 @@ def test_det_pipelines():
                 training.add_card()
                 training.set_study()
                 training.star_training()
-                training.review_assess('前置模块')
+                assess.model_assess()
                 assess.assess_success() 
                 do_log.info('前置模块训练评估完成')
             with allure.step(f'添加后置模块'):
                 data.project_flow()                
-                airtest_method.touch_button(control.pre_module)  #点击前置模块的‘+’符号新增模块
-                airtest_method.touch_button(pipelines.post_module)
-                airtest_method.operate_sleep()
+                data.add_pre_module(pipelines.post_module)
                 mark.image_label()   #点击图像标注按钮关闭方案流程画布                
                 do_log.info(f'后置模块创建成功')
             with allure.step(f'导入后置模块标注'):
@@ -174,35 +161,28 @@ def test_det_pipelines():
                 else:
                     training.set_study()
                     training.star_training() 
-                airtest_method.operate_sleep()            
+                assess.model_assess()            
                 training.review_assess('后置模块')
-                if pipelines.post_module == control.uad_module:    #无监督算法评估状态与其他算法不一致
+                if pipelines.post_module == control.uad_module or pipelines.post_module == control.seq_module:    #无监督/seq OCR算法评估状态与其他算法不一致
                     if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
                         assert False,'评估未完成'
                 else:
-                    assess.assess_success() 
-
+                    assess.assess_success()
                 do_log.info('后置模块训练评估完成')
             with allure.step(f'返回数据源管理页面'):
-                airtest_method.operate_sleep(2.0)
-                data.project_flow()
-                airtest_method.touch_button(control.add_dataset1)
-                data.project_flow()
+                data.dataset_management()
                 do_log.info('成功返回数据源管理页面')
+            with allure.step(f'切换方案'):
+                test_close_project()
 
-def test_close_project():
-    with allure.step(f'关闭方案'):    
-        '''关闭方案'''
-        assess.template_file()
-        assess.template_close()
-    with allure.step(f'新建方案'):
-        test_create_proj()
-        test_create_model()
 
 @allure.title('文件夹导入分类串联数据集')
 @pytest.mark.smoke
 def test_cls_pipelines():
     for pipelines in cls_pipelines: 
+            with allure.step(f'新建方案'):
+                test_create_proj()
+                test_create_model(pipelines.name)
             with allure.step(f'点击导入文件夹按钮'):
                 file_path = pipelines.file_path + '\images'
                 data.add_file(file_path)
@@ -211,13 +191,9 @@ def test_cls_pipelines():
                 data.project_flow()
                 do_log.info('方案流程画布打开,用例执行成功')
             with allure.step(f'数据源添加分类模块作为首模块'):
-                data.add_dataset()
-                if not airtest_method.check_exit(pipelines.pre_module,'FALSE',5) :
-                    assert False,'未找到分类模块'
-                else:
-                    airtest_method.touch_button(pipelines.pre_module)
-                    mark.image_label()  #点击图像标注按钮关闭方案流程画布
-                    do_log.info('分类首模块创建成功,用例执行成功')
+                data.add_pre_module(pipelines.pre_module)
+                mark.image_label()  #点击图像标注按钮关闭方案流程画布
+                do_log.info('分类首模块创建成功,用例执行成功')
             with allure.step(f'导入前置模块标注'):
                 label1_path = pipelines.file_path + '\labels1'
                 mark.import_label(label1_path)
@@ -229,15 +205,13 @@ def test_cls_pipelines():
                 training.add_card()
                 training.set_study()
                 training.star_training()
-                training.review_assess('前置模块')
+                assess.model_assess()
                 assess.assess_success() 
                 do_log.info('前置模块训练评估完成')
             with allure.step(f'添加后置模块'):
-                data.project_flow()
-                airtest_method.touch_button(control.pre_module)  #点击前置模块的‘+’符号新增模块
-                airtest_method.touch_button(pipelines.post_module)
-                mark.image_label()   #点击图像标注按钮关闭方案流程画布
-                airtest_method.operate_sleep()
+                data.project_flow()                
+                data.add_pre_module(pipelines.post_module)
+                mark.image_label()   #点击图像标注按钮关闭方案流程画布                
                 do_log.info(f'后置模块创建成功')
             with allure.step(f'导入后置模块标注'):
                 label2_path = pipelines.file_path + '\labels2'
@@ -253,20 +227,18 @@ def test_cls_pipelines():
                 else:
                     training.set_study()
                     training.star_training() 
-                airtest_method.operate_sleep()            
-                training.review_assess('后置模块')
-                if pipelines.post_module == control.uad_module:    #无监督算法评估状态与其他算法不一致
+                assess.model_assess()            
+                if pipelines.post_module == control.uad_module or pipelines.post_module == control.seq_module:    #无监督/seq OCR算法评估状态与其他算法不一致
                     if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
                         assert False,'评估未完成'
                 else:
-                    assess.assess_success() 
+                    assess.assess_success()
                 do_log.info('后置模块训练评估完成')
             with allure.step(f'返回数据源管理页面'):
-                airtest_method.operate_sleep(2.0)
-                data.project_flow()
-                airtest_method.touch_button(control.add_dataset1)
-                data.project_flow()
+                data.dataset_management()
                 do_log.info('成功返回数据源管理页面')
+            with allure.step(f'切换方案'):
+                test_close_project()
 
 @allure.title('勾选判定范围')
 @pytest.mark.smoke

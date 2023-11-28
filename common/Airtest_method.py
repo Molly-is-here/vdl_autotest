@@ -1,6 +1,7 @@
 '''封装AirTest基本方法'''
 # from airtest.core.api import * 
 import airtest.core.api as api
+from airtest.core.win import *
 from pywinauto.mouse import *
 
 
@@ -16,6 +17,10 @@ class airtest_method:
     def touch_button(pos,times=1):
         '''点击按钮'''
         api.touch(pos,times)
+
+    def click_coordinate_point(points,times=1):
+        '''点击坐标点'''
+        api.touch(points,times)
 
     def input_text(content):
         '''输入文本'''
@@ -59,10 +64,12 @@ class airtest_method:
 
     def double_click(pos):
         '''双击'''
-        # touch(pos)
-        # time.sleep(0.01)
-        # touch(pos)
         api.double_click(pos)
+
+    def move_to(start_points,end_points):
+        '''使用坐标的方式进行滑动'''
+        api.swipe(start_points,end_points)
+
 
     
             

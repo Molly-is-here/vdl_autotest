@@ -55,13 +55,13 @@ class management():
         airtest_method.touch_button(control.click_project)       
         airtest_method.touch_button(control.ok_button)
 
-    def manage_remark(content): 
+    def manage_remark(remark): 
         '''添加方案备注'''       
         if not airtest_method.check_exit(control.manage_remark,'FALSE',5) :
             assert False,'找不到方案备注编辑框' 
         else:      
             airtest_method.touch_button(control.manage_remark)
-            airtest_method.input_text(content)
+            airtest_method.input_text(remark)
 
     def create_success():
         '''创建方案'''

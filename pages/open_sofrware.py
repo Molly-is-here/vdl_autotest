@@ -12,7 +12,7 @@ class open_Software():
         '''打开软件'''
         app = Application().start(app_path)
         # start_app(app_path)
-        airtest_method.operate_sleep(5.0)
+        airtest_method.operate_sleep(10.0)
 
     
     def connect_sofeware(url):

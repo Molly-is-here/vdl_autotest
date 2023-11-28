@@ -24,6 +24,9 @@ class control():
     #无监督串联模块
     uad_module = Template(save_path.base_path + "/public/无监督模块.png" , threshold=0.7)
 
+    #字符串串联模块
+    seq_module = Template(save_path.base_path + "/public/字符串模块.png" , threshold=0.7)
+
     #点击窗口最大化
     max_screen = Template(save_path.base_path + "/public/01_窗口最大化.png" , threshold=0.7)
 
@@ -120,11 +123,11 @@ class control():
     #方案流程
     project_flow = Template(save_path.base_path + "/public/03_方案流程.png", threshold=0.7)
 
-    #数据源
-    add_dataset = Template(save_path.base_path + "/public/03_数据源.png",target_pos = 6, threshold=0.7)
+    #添加数据源
+    add_dataset = Template(save_path.base_path + "/public/03_添加模块.png", threshold=0.7)
 
-    #数据源1
-    add_dataset1 = Template(save_path.base_path + "/public/03_数据源1.png",threshold=0.7)
+    #数据源模块
+    dataset_module = Template(save_path.base_path + "/public/03_数据源1.png",threshold=0.7)
 
     #图像标注页面
     image_label = Template(save_path.base_path + "/public/06_图像标注页面.png", threshold=0.7)
@@ -166,13 +169,25 @@ class control():
     training_okbutton = Template(save_path.base_path + "/public/08_确认按钮.png", threshold=0.7)
 
     #模型选择
-    choice_model = Template(save_path.base_path + "/public/09_模型选择.png",target_pos = 6,threshold=0.7)
+    choice_model = Template(save_path.base_path + "/public/09_模型选择1.png",target_pos = 5,threshold=0.7)
+
+    #无监督模型选择
+    uad_choice_model = Template(save_path.base_path + "/public/09_无监督模型选择.png",threshold=0.7)
 
     #低功耗
     low_power = Template(save_path.base_path + "/public/09_低功耗.png", threshold=0.7)
 
     #高精度
     high_power = Template(save_path.base_path + "/public/09_高精度.png", threshold=0.7)
+
+    #模型A低功耗
+    modelA_low_power = Template(save_path.base_path + "/public/09_模型A低功耗.png", threshold=0.7)
+
+    #模型A高精度
+    modelA_high_power = Template(save_path.base_path + "/public/09_模型A高精度.png",target_pos = 2, threshold=0.7)
+
+    #模型B
+    modelB = Template(save_path.base_path + "/public/09_模型B.png", threshold=0.7)
 
     #颜色模式
     color_mode = Template(save_path.base_path + "/public/09_颜色模式.png",target_pos = 6, threshold=0.7)
@@ -181,7 +196,7 @@ class control():
     gray_image = Template(save_path.base_path + "/public/09_灰度图.png", threshold=0.7)
 
     #图像裁切
-    image_cropping = Template(save_path.base_path + "/public/09_图像裁切.png",target_pos = 6, threshold=0.7)
+    image_cropping = Template(save_path.base_path + "/public/09_图像裁切1.png",target_pos = 5, threshold=0.7)
 
     #确定裁切
     cropping_true = Template(save_path.base_path + "/public/09_确定裁切.png", threshold=0.7)
@@ -248,6 +263,9 @@ class control():
 
     #选中导出模型
     export_model = Template(save_path.base_path + "/public/14_导出模型按钮.png", threshold=0.7)
+
+    #导出SDK
+    export_SDK = Template(save_path.base_path + "/public/14_导出SDK.png", threshold=0.7)
 
     #点击选择文件夹按钮
     file_name = Template(save_path.base_path + "/public/14_选择文件夹.png", threshold=0.7)
@@ -353,4 +371,65 @@ class control():
 
     #综合判定开始推理按钮
     judgement_infering_button = Template(save_path.base_path + "/public/18_判定开始推理.png",threshold=0.7)
-                     
+
+#标注工具控件
+class label_control():   
+    #添加特征按钮
+    add_characteristic = Template(save_path.base_path + "/auto_label/00_添加特征.png" , threshold=0.7) 
+
+    #名称编辑框
+    name_edit = Template(save_path.base_path + "/auto_label/00_名称编辑框.png" , threshold=0.7)
+
+    #确认添加按钮
+    confirm_button = Template(save_path.base_path + "/auto_label/00_确认.png" , threshold=0.7) 
+
+    #合格样本工具
+    acceptable_sample_tool = Template(save_path.base_path + "/auto_label/00_合格样本.png" , threshold=0.7)
+
+    #选择特征标签
+    select_characteristic = Template(save_path.base_path + "/auto_label/00_选择特征标签.png" , threshold=0.7)
+
+    #确认选中特征标签
+    select_true = Template(save_path.base_path + "/auto_label/00_确认选中标签.png" , threshold=0.7)
+
+    #矩形工具
+    rectangle_tool = Template(save_path.base_path + "/auto_label/01_矩形工具.png" , threshold=0.7)
+
+    #环形工具
+    circle_tool = Template(save_path.base_path + "/auto_label/06_环形工具.png" , threshold=0.7)
+
+    #多边形工具
+    polygon_tool = Template(save_path.base_path + "/auto_label/02_多边形工具.png" , threshold=0.7)
+
+    #画笔工具
+    brush_tool = Template(save_path.base_path + "/auto_label/02_画笔工具.png" , threshold=0.7)
+
+    #AI标注
+    AI_tool = Template(save_path.base_path + "/auto_label/02_AI标注.png" , threshold=0.7)
+
+    #笔形工具
+    pen_tool = Template(save_path.base_path + "/auto_label/02_笔形工具.png", threshold=0.7)
+
+    #线工具
+    line_tool = Template(save_path.base_path + "/auto_label/02_线工具.png" , threshold=0.7)
+
+    #折线工具
+    polyline_tool = Template(save_path.base_path + "/auto_label/02_折线工具.png" , threshold=0.7)
+
+    #屏蔽区域
+    masking_area = Template(save_path.base_path + "/auto_label/02_屏蔽区域.png" , threshold=0.7)
+    
+    #自动标注
+    auto_marking = Template(save_path.base_path + "/auto_label/03_自动标注.png" , threshold=0.7)
+
+    #开始标注
+    begin_marking = Template(save_path.base_path + "/auto_label/03_开始标注.png" , threshold=0.7)
+
+    #应用
+    apply = Template(save_path.base_path + "/auto_label/03_应用.png" ,rgb=True,threshold=0.7)
+
+    #添加标签
+    add_marking = Template(save_path.base_path + "/auto_label/04_添加标签.png" ,threshold=0.7)
+
+    #NG样本工具
+    NG_sample_tool = Template(save_path.base_path + "/auto_label/05_NG样本.png" ,threshold=0.7)

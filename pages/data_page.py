@@ -79,6 +79,30 @@ class data():
             assert False,'数据源添加失败'
         else:
             airtest_method.touch_button(control.add_dataset)
+
+    def add_pre_module(element):
+        '''添加后置模块'''
+        data.add_dataset()
+        if not airtest_method.check_exit(element,'FALSE',5) :
+            assert False,'未找到前置模块'
+        else:
+            airtest_method.touch_button(element)
+
+    def add_post_module(element):
+        '''添加后置模块'''
+        airtest_method.touch_button(control.pre_module)  #点击前置模块的‘+’符号新增模块
+        if not airtest_method.check_exit(element,'FALSE',5) :
+            assert False,'未找到后置模块'
+        else:
+            airtest_method.touch_button(element)
+        airtest_method.operate_sleep()
+
+    def dataset_management():
+        '''数据源管理页面'''
+        airtest_method.operate_sleep(2.0)
+        data.project_flow()
+        airtest_method.touch_button(control.dataset_module)
+        data.project_flow()
         
         
     

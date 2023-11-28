@@ -43,6 +43,13 @@ class training():
         else:         
             airtest_method.touch_button(control.choice_model)
 
+    def uad_choice_model():
+        '''选择UAD模型类型'''
+        if not airtest_method.check_exit(control.uad_choice_model,'FALSE',5) :        
+            assert False,'找不到模型选择按钮'
+        else:         
+            airtest_method.touch_button(control.uad_choice_model)
+
     def color_mode():
         '''选择颜色模式'''
         if not airtest_method.check_exit(control.color_mode,'FALSE',5) :        
@@ -93,15 +100,15 @@ class training():
       
     def review_assess(name):
         '''点击查看评估'''
-        if airtest_method.check_exit(control.review_assess,'TRUE',3600000) :
-            ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")  
-            airtest_method.screenshot(ct_screenshot)   #全屏截图
-            airtest_method.operate_sleep()   #sleep防止鼠标失焦
-            airtest_method.touch_button(control.review_assess)           
-        else:  
-             assert False,'训练未完成'
-            
- 
+        ct_screenshot = os.path.join(save_path.base_path, f"{name}.png") 
+        if not airtest_method.check_exit(control.review_assess,'FALSE',3600000): 
+            assert False,'训练未完成'
+        else: 
+            airtest_method.screenshot(ct_screenshot)   #全屏截图 
+            result = airtest_method.check_exit(control.review_assess,'TRUE')  
+            if result == True:   
+                airtest_method.touch_button(control.review_assess)        
+        
     def continu_training():
         '''继续训练'''
         if not airtest_method.check_exit(control.continu_training,'FALSE',5) :        
