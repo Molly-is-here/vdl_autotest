@@ -18,7 +18,7 @@ def test_assess_page():
 @pytest.mark.smoke
 def test_export_model():  
     assess.assess_success()
-    airtest_method.touch_button(control.new_card)
+    # airtest_method.touch_button(control.new_card)
     with allure.step(f'点击更多按钮'):
         assess.more_button()
     with allure.step(f'选择导出模型'):
@@ -29,7 +29,7 @@ def test_export_model():
 @pytest.mark.smoke
 def test_export_SDK():  
     assess.assess_success()
-    airtest_method.touch_button(control.new_card)
+    #airtest_method.touch_button(control.new_card)
     with allure.step(f'点击更多按钮'):
         assess.more_button()
     with allure.step(f'导出模型+SDK'):
