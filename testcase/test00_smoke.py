@@ -16,36 +16,39 @@ import os
 
 auto_setup(__file__)
 
-@allure.title('五类算法冒烟')
-@pytest.mark.smoke
-def test_algorithm_smoke():
-    for item in save_path.project_list:
-        #根据传入的item判断算法类型，找到相应的数据集
-        if item ==save_path.seg:
-            dataset = save_path.seg_dataset
-            name = 'SEG'
-        if item == save_path.cls:
-            dataset = save_path.cls_dataset
-            name = 'CLS'
-        if item == save_path.det:
-            dataset = save_path.det_dataset
-            name = 'DET'
-        if item == save_path.ocr:
-            dataset = save_path.ocr_dataset
-            name = 'OCR'
-        if item == save_path.uad:
-            dataset = save_path.uad_dataset
-            name = 'UAD'
-        if item == save_path.seqocr:
-            dataset = save_path.seqocr_dataset
-            name = 'SEQ'
+# @allure.title('五类算法冒烟')
+# @pytest.mark.smoke
+# def test_algorithm_smoke():
+for item in save_path.project_list:
+    #根据传入的item判断算法类型，找到相应的数据集
+    if item ==save_path.seg:
+        dataset = save_path.seg_dataset
+        name = 'SEG'
+    if item == save_path.cls:
+        dataset = save_path.cls_dataset
+        name = 'CLS'
+    if item == save_path.det:
+        dataset = save_path.det_dataset
+        name = 'DET'
+    if item == save_path.ocr:
+        dataset = save_path.ocr_dataset
+        name = 'OCR'
+    if item == save_path.uad:
+        dataset = save_path.uad_dataset
+        name = 'UAD'
+    if item == save_path.seqocr:
+        dataset = save_path.seqocr_dataset
+        name = 'SEQ'
 
-        current_dir = os.getcwd()
-        model_selection = [control.high_power,control.low_power]
-        color_mode = [0,control.gray_image]  #0为默认
-        scaling_selection = [control.equal_size,control.zidingyi_size]
-        input_size = ['512']
-      
+current_dir = os.getcwd()
+model_selection = [control.high_power,control.low_power]
+color_mode = [0,control.gray_image]  #0为默认
+scaling_selection = [control.equal_size,control.zidingyi_size]
+input_size = ['512']
+
+@allure.title('seq OCR算法冒烟')
+@pytest.mark.smoke
+def test_seq_OCR_smoke():      
         if name == 'SEQ':        #seq OCR算法仅有高性能模型类型                     
             for color in color_mode:
                 with allure.step(f'{name}算法冒烟,使用{color}训练模型'):
