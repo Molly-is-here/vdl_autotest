@@ -35,19 +35,27 @@ class training():
      '''删除'''
      airtest_method.touch_button(control.delete_button)
            
-    def choice_model():
+    def choice_model(type):
         '''选择模型类型'''
         if not airtest_method.check_exit(control.choice_model,'FALSE',5) :        
             assert False,'找不到模型选择按钮'
         else:         
-            airtest_method.touch_button(control.choice_model)
+            airtest_method.touch_button(control.choice_model)            
+            if not airtest_method.check_exit(type,'FALSE',5):      
+                assert False,'模型类型切换失败'
+            else:
+                airtest_method.touch_button(type) #选择模型类型
 
-    def uad_choice_model():
+    def uad_choice_model(type):
         '''选择UAD模型类型'''
         if not airtest_method.check_exit(control.uad_choice_model,'FALSE',5) :        
             assert False,'找不到模型选择按钮'
         else:         
             airtest_method.touch_button(control.uad_choice_model)
+            if not airtest_method.check_exit(type,'FALSE',5) :      
+                assert False,'模型类型切换失败'
+            else:
+                airtest_method.touch_button(type) #选择模型类型               
 
     def color_mode(color):
         '''选择颜色模式'''
@@ -63,12 +71,19 @@ class training():
                 else:       
                     airtest_method.touch_button(color)
   
-    def image_scaling():
+    def image_scaling(size):
         '''图像缩放'''
         if not airtest_method.check_exit(control.image_scaling,'FALSE',5) :        
             assert False,'找不到图像缩放按钮'
-        else:         
-            airtest_method.touch_button(control.image_scaling)
+        else:  
+            if size == 0:
+                return True 
+            else:      
+                airtest_method.touch_button(control.image_scaling)
+                if not airtest_method.check_exit(size,'FALSE',5) :        
+                    assert False,f'找不到{size}按钮'
+                else:       
+                    airtest_method.touch_button(size)
   
     def image_cropping():
         '''图像裁切'''
@@ -76,7 +91,7 @@ class training():
             assert False,'找不到图像裁切按钮'
         else:         
             airtest_method.touch_button(control.image_cropping)
-
+            
     def mouse_move():
         '''将鼠标移动至自定义'''
         airtest_method.touch_button(control.mouse_move)

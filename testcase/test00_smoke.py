@@ -10,6 +10,7 @@ from elements.public_control import control
 from common.handle_log import do_log
 from common.Airtest_method import airtest_method
 from common.Base_method import search_file
+from tools.radom_character import radom_Name
 import pytest
 import allure
 import os
@@ -41,17 +42,18 @@ for item in save_path.project_list:
         name = 'SEQ'
 
 current_dir = os.getcwd()
-model_selection = [control.high_power,control.low_power]
-color_mode = [0,control.gray_image]  #0为默认
-scaling_selection = [control.equal_size,control.zidingyi_size]
-input_size = ['512']
+model_selection = [control.high_power,control.low_power]  #模型类型
+color_mode = [0,control.gray_image]  #颜色模式，0为默认
+scaling_selection = [0,control.equal_size,control.zidingyi_size]  #图像缩放，0为默认
 
 @allure.title('seq OCR算法冒烟')
 @pytest.mark.smoke
 def test_seq_OCR_smoke():      
         if name == 'SEQ':        #seq OCR算法仅有高性能模型类型                     
-            for color in color_mode:
-                with allure.step(f'{name}算法冒烟,使用{color}训练模型'):
+            with allure.step(f'{name}算法冒烟'):
+                count = min(len(scaling_selection),len(color_mode))
+                for i in range(count):
+                    params_list= radom_Name.get_params(scaling_selection,color_mode)
                     for file in search_file.get_file(dataset):
                         management.create_project()       
                         project_name = management.input_name(name)  
@@ -67,8 +69,9 @@ def test_seq_OCR_smoke():
 
                         '''模型训练页面'''  
                         training.model_training()
-                        training.add_card()
-                        training.color_mode(color)
+                        training.add_card()                     
+                        training.image_scaling(params_list[0][0])
+                        training.color_mode(params_list[0][1])
 
                         training.set_study()
                         training.star_training()
@@ -96,175 +99,272 @@ def test_seq_OCR_smoke():
                             assess.template_file()
                             assess.template_close()
 
-#         if name == 'UAD':  #无监督算法有三种模型类型
-#             model_selection = [control.modelB,control.modelA_low_power,control.modelA_high_power]
-#             for file in search_file.get_file(dataset):
-#                 for type in model_selection:
-#                     with allure.step(f'{name}算法冒烟'):
-#                         '''方案管理页面'''
-#                         management.create_project()       
-#                         project_name = management.input_name(name)  
-#                         management.create_model(item)
+@allure.title('UAD算法冒烟')
+@pytest.mark.smoke
+def test_UAD_smoke():  
+        if name == 'UAD':  
+            UADmodel_selection = [control.modelB,control.modelA_low_power,control.modelA_high_power]  #无监督算法有三种模型类型
+            for file in search_file.get_file(dataset):
+                for type in UADmodel_selection:
+                    with allure.step(f'{name}算法冒烟'):
+                        
+                            '''方案管理页面'''
+                            management.create_project()       
+                            project_name = management.input_name(name)  
+                            management.create_model(item)
 
-#                         '''数据管理页面'''
-#                         file_path = str(os.path.join(dataset,file))
-#                         data.add_file(file_path)
+                            '''数据管理页面'''
+                            file_path = str(os.path.join(dataset,file))
+                            data.add_file(file_path)
 
-#                         '''图像标注页面'''
-#                         mark.image_label()
-#                         mark.auto_divide()
+                            '''图像标注页面'''
+                            mark.image_label()
+                            mark.auto_divide()
 
-#                         '''模型训练页面'''  
-#                         training.model_training()
-#                         training.add_card()
-#                         training.uad_choice_model()
-#                         airtest_method.touch_button(type) #选择模型类型
-#                         if not airtest_method.check_exit(type,'FALSE',5) :      
-#                             assert False,'模型类型切换失败'
-#                         else:
-#                             do_log.info("模型切换成功")
-#                         training.star_training()
+                            '''模型训练页面'''  
+                            training.model_training()
+                            training.add_card()
+                            training.uad_choice_model(type)
+                            training.star_training()
 
-#                         '''模型评估页面'''
-#                         assess.model_assess()
-#                         if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
-#                             assert False,'评估未完成'
-#                         else:
-#                             airtest_method.operate_sleep()
+                            '''模型评估页面'''
+                            assess.model_assess()
+                            assess.assess_success()
 
-#                         '''调用SDK'''
-#                         assess.more_button()
-#                         assess.export_SDK(current_dir)
-#                         assess.unzip_SDK()
-#                         assess.copy_SDK_dll()
-#                         assess.run_SDK(file_path,project_name)
+                            '''调用SDK'''
+                            assess.more_button()
+                            assess.export_SDK(current_dir)
+                            assess.unzip_SDK()
+                            assess.copy_SDK_dll()
+                            assess.run_SDK(file_path,project_name)
 
-#                         # '''导出模型'''
-#                         # assess.more_button()
-#                         # assess.export_model()
+                            # '''导出模型'''
+                            # assess.more_button()
+                            # assess.export_model()
 
-#                         '''导出报告'''
-#                         assess.export_report()
+                            '''导出报告'''
+                            assess.export_report()
 
-#                         with allure.step(f'关闭方案'):    
-#                             '''关闭方案'''
-#                             assess.template_file()
-#                             assess.template_close()
-#         if name == 'OCR' or name == 'SEG' or name == 'DET' or name == 'CLS':
-#             model_selection = [control.low_power,control.high_power]      #模型类型：高精度/低功耗   
-#             for file in search_file.get_file(dataset):   
-#                 for type in model_selection:
-#                     with allure.step(f'{name}算法冒烟'):
-#                         '''方案管理页面'''
-#                         management.create_project()       
-#                         project_name = management.input_name(name)  
-#                         management.create_model(item)
+                            with allure.step(f'关闭方案'):    
+                                '''关闭方案'''
+                                assess.template_file()
+                                assess.template_close()
+@allure.title('OCR算法冒烟')
+@pytest.mark.smoke
+def test_OCR_smoke(): 
+    if name == 'OCR':       
+        for file in search_file.get_file(dataset):   
+            with allure.step(f'{name}算法冒烟'):
+                count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                for i in range(count):
+                    params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                    '''方案管理页面'''
+                    management.create_project()       
+                    project_name = management.input_name(name)  
+                    management.create_model(item)
 
-#                         '''数据管理页面'''
-#                         file_path = str(os.path.join(dataset,file))
-#                         data.add_file(file_path)
+                    '''数据管理页面'''
+                    file_path = str(os.path.join(dataset,file))
+                    data.add_file(file_path)
 
-#                         '''图像标注页面'''
-#                         mark.image_label()
-#                         mark.auto_divide()
+                    '''图像标注页面'''
+                    mark.image_label()
+                    mark.auto_divide()
 
-#                         '''模型训练页面'''  
-#                         training.model_training()
+                    '''模型训练页面'''  
+                    training.model_training()
+                    training.add_card()
+                    training.choice_model(params_list[0][0])                  
+                    training.image_scaling(params_list[0][1])
+                    training.color_mode(params_list[0][2])
+                    training.set_study()                            
+                    training.star_training()
 
-#                         training.add_card()
-#                         training.choice_model()
-#                         airtest_method.touch_button(type) #选择模型类型
-#                         if not airtest_method.check_exit(type,'FALSE',5) :      
-#                             assert False,'模型类型切换失败'
-#                         else:
-#                             do_log.info("模型切换成功")
+                    '''模型评估页面'''
+                    assess.model_assess()
+                    assess.assess_success()
 
-#                         training.set_study()                            
-#                         training.star_training()
+                    '''调用SDK'''
+                    assess.more_button()
+                    assess.export_SDK(current_dir)
+                    assess.unzip_SDK()
+                    assess.copy_SDK_dll()
+                    assess.run_SDK(file_path,project_name)
 
-#                         '''模型评估页面'''
-#                         assess.model_assess()
-#                         if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
-#                             assert False,'评估未完成'
-#                         else:
-#                             airtest_method.operate_sleep()
+                    # '''导出模型'''
+                    # assess.more_button()
+                    # assess.export_model()
 
-#                         '''调用SDK'''
-#                         assess.more_button()
-#                         assess.export_SDK(current_dir)
-#                         assess.unzip_SDK()
-#                         assess.copy_SDK_dll()
-#                         assess.run_SDK(file_path,project_name)
+                    '''导出报告'''
+                    assess.export_report()
 
-#                         # '''导出模型'''
-#                         # assess.more_button()
-#                         # assess.export_model()
+                    with allure.step(f'关闭方案'):    
+                        '''关闭方案'''
+                        assess.template_file()
+                        assess.template_close()
 
-#                         '''导出报告'''
-#                         assess.export_report()
+@allure.title('CLS算法冒烟')
+@pytest.mark.smoke
+def test_CLS_smoke(): 
+    if name == 'CLS':       
+        for file in search_file.get_file(dataset):   
+            with allure.step(f'{name}算法冒烟'):
+                count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                for i in range(count):
+                    params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                    '''方案管理页面'''
+                    management.create_project()       
+                    project_name = management.input_name(name)  
+                    management.create_model(item)
 
-#                         with allure.step(f'关闭方案'):    
-#                             '''关闭方案'''
-#                             assess.template_file()
-#                             assess.template_close()
+                    '''数据管理页面'''
+                    file_path = str(os.path.join(dataset,file))
+                    data.add_file(file_path)
 
-# if name == 'DET' or name == 'CLS':
-#     model_selection = [control.low_power,control.high_power]      #模型类型：高精度/低功耗   
-#     for file in search_file.get_file(dataset):   
-#         for type in model_selection:
-#             with allure.step(f'{name}算法冒烟'):
-#                 '''方案管理页面'''
-#                 management.create_project()       
-#                 project_name = management.input_name(name)  
-#                 management.create_model(item)
+                    '''图像标注页面'''
+                    mark.image_label()
+                    mark.auto_divide()
 
-#                 '''数据管理页面'''
-#                 file_path = str(os.path.join(dataset,file))
-#                 data.add_file(file_path)
+                    '''模型训练页面'''  
+                    training.model_training()
+                    training.add_card()
+                    training.choice_model(params_list[0][0])                  
+                    training.image_scaling(params_list[0][1])
+                    training.color_mode(params_list[0][2])
+                    training.set_study()                            
+                    training.star_training()
 
-#                 '''图像标注页面'''
-#                 mark.image_label()
-#                 mark.auto_divide()
+                    '''模型评估页面'''
+                    assess.model_assess()
+                    assess.assess_success()
 
-#                 '''模型训练页面'''  
-#                 training.model_training()
+                    '''调用SDK'''
+                    assess.more_button()
+                    assess.export_SDK(current_dir)
+                    assess.unzip_SDK()
+                    assess.copy_SDK_dll()
+                    assess.run_SDK(file_path,project_name)
 
-#                 training.add_card()
-#                 training.choice_model()
-#                 airtest_method.touch_button(type) #选择模型类型
-#                 if not airtest_method.check_exit(type,'FALSE',5) :      
-#                     assert False,'模型类型切换失败'
-#                 else:
-#                     do_log.info("模型切换成功")
+                    # '''导出模型'''
+                    # assess.more_button()
+                    # assess.export_model()
 
-#                 training.set_study()                            
-#                 training.star_training()
+                    '''导出报告'''
+                    assess.export_report()
 
-#                 '''模型评估页面'''
-#                 assess.model_assess()
-#                 if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
-#                     assert False,'评估未完成'
-#                 else:
-#                     airtest_method.operate_sleep()
+                    with allure.step(f'关闭方案'):    
+                        '''关闭方案'''
+                        assess.template_file()
+                        assess.template_close()
 
-#                 '''调用SDK'''
-#                 assess.more_button()
-#                 assess.export_SDK(current_dir)
-#                 assess.unzip_SDK()
-#                 assess.copy_SDK_dll()
-#                 assess.run_SDK(file_path,project_name)
+@allure.title('DET算法冒烟')
+@pytest.mark.smoke
+def test_DET_smoke(): 
+    if name == 'DET':   
+        DET_scaling_selection = [0,control.equal_size]  #图像缩放，0为默认       
+        for file in search_file.get_file(dataset):   
+            with allure.step(f'{name}算法冒烟'):
+                count = min(len(model_selection),len(DET_scaling_selection),len(color_mode))
+                for i in range(count):
+                    params_list= radom_Name.get_params(model_selection,DET_scaling_selection,color_mode)
+                    '''方案管理页面'''
+                    management.create_project()       
+                    project_name = management.input_name(name)  
+                    management.create_model(item)
 
-#                 # '''导出模型'''
-#                 # assess.more_button()
-#                 # assess.export_model()
+                    '''数据管理页面'''
+                    file_path = str(os.path.join(dataset,file))
+                    data.add_file(file_path)
 
-#                 '''导出报告'''
-#                 assess.export_report()
+                    '''图像标注页面'''
+                    mark.image_label()
+                    mark.auto_divide()
 
-#                 with allure.step(f'关闭方案'):    
-#                     '''关闭方案'''
-#                     assess.template_file()
-#                     assess.template_close()
+                    '''模型训练页面'''  
+                    training.model_training()
+                    training.add_card()
+                    training.choice_model(params_list[0][0])                  
+                    training.image_scaling(params_list[0][1])
+                    training.color_mode(params_list[0][2])
+                    training.set_study()                            
+                    training.star_training()
+
+                    '''模型评估页面'''
+                    assess.model_assess()
+                    assess.assess_success()
+
+                    '''调用SDK'''
+                    assess.more_button()
+                    assess.export_SDK(current_dir)
+                    assess.unzip_SDK()
+                    assess.copy_SDK_dll()
+                    assess.run_SDK(file_path,project_name)
+
+                    # '''导出模型'''
+                    # assess.more_button()
+                    # assess.export_model()
+
+                    '''导出报告'''
+                    assess.export_report()
+
+                    with allure.step(f'关闭方案'):    
+                        '''关闭方案'''
+                        assess.template_file()
+                        assess.template_close()
+
+@allure.title('SEG算法冒烟')
+@pytest.mark.smoke
+def test_SEG_smoke(): 
+    if name == 'SEG':       
+        for file in search_file.get_file(dataset):   
+            with allure.step(f'{name}算法冒烟'):
+                count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                for i in range(count):
+                    params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                    '''方案管理页面'''
+                    management.create_project()       
+                    project_name = management.input_name(name)  
+                    management.create_model(item)
+
+                    '''数据管理页面'''
+                    file_path = str(os.path.join(dataset,file))
+                    data.add_file(file_path)
+
+                    '''图像标注页面'''
+                    mark.image_label()
+                    mark.auto_divide()
+
+                    '''模型训练页面'''  
+                    training.model_training()
+                    training.add_card()
+                    training.choice_model(params_list[0][0])                  
+                    training.image_scaling(params_list[0][1])
+                    training.color_mode(params_list[0][2])
+                    training.set_study()                            
+                    training.star_training()
+
+                    '''模型评估页面'''
+                    assess.model_assess()
+                    assess.assess_success()
+
+                    '''调用SDK'''
+                    assess.more_button()
+                    assess.export_SDK(current_dir)
+                    assess.unzip_SDK()
+                    assess.copy_SDK_dll()
+                    assess.run_SDK(file_path,project_name)
+
+                    # '''导出模型'''
+                    # assess.more_button()
+                    # assess.export_model()
+
+                    '''导出报告'''
+                    assess.export_report()
+
+                    with allure.step(f'关闭方案'):    
+                        '''关闭方案'''
+                        assess.template_file()
+                        assess.template_close()
 
 @allure.title('退出软件')
 @pytest.mark.smoke

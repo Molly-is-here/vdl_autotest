@@ -13,3 +13,27 @@ class radom_Name():
                 input_character = '测试發_' + radom_character
                 
             return input_character
+    
+    def get_params(list1,list2,list3=None):
+        combined_list = []
+        if list3 == None:
+            count = min(len(list1),len(list2))
+            for i in range(count):
+                param_A = random.choice(list1)
+                param_B = random.choice(list2)
+                
+                combined_list.append((param_A,param_B))
+                list1.remove(param_A)
+                list2.remove(param_B)
+                return combined_list
+        else:    
+            count = min(len(list1),len(list2),len(list3))
+            for i in range(count):
+                param_A = random.choice(list1)
+                param_B = random.choice(list2)
+                param_C = random.choice(list3)
+                combined_list.append((param_A,param_B,param_C))
+                list1.remove(param_A)
+                list2.remove(param_B)
+                list3.remove(param_C)
+                return combined_list

@@ -134,120 +134,12 @@ def test_continute_training():
         do_log.info('继续训练成功，用例执行成功')
     with allure.step(f'返回模型训练页面'): 
         training.model_training()
-
-@allure.title('图像缩放') 
-@pytest.mark.parametrize('type',scaling_selection)
-@pytest.mark.parametrize('size',input_size)
-def test_image_scaling(type,size):
-    with allure.step(f'新增卡片'):
-        training.add_card()
-    with allure.step(f'选择图像缩放按钮'):
-        training.image_scaling()
-    with allure.step(f'选择图像缩放类型{type}'):     #类型：等比例/自定义
-        airtest_method.touch_button(type)
-        with allure.step(f'自定义缩放，调整自定义尺寸为512*512'):
-            if type == control.zidingyi_size:
-                airtest_method.touch_button(control.zidingyi_edit_box1) #第一个编辑框
-                keyevent("{BACKSPACE}")
-                keyevent("{BACKSPACE}")
-                keyevent("{BACKSPACE}")
-                keyevent("{BACKSPACE}")
-                airtest_method.input_text(size)
-
-                airtest_method.touch_button(control.zidingyi_edit_box2) #第二个编辑框
-                keyevent("{BACKSPACE}")
-                keyevent("{BACKSPACE}")
-                keyevent("{BACKSPACE}")
-                keyevent("{BACKSPACE}")
-                airtest_method.input_text(size)
-
-        airtest_method.operate_sleep()
-        with allure.step(f'设置学习次数'):
-            training.set_study() 
-        with allure.step(f'调整benchsize'):   
-            training.mouse_move()
-            training.zidingyi_button()             
-            training.cut_benchsize()
-        with allure.step(f'点击开始训练'):
-            training.star_training()
-        with allure.step(f'判断是否训练成功'):
-            name = '图像缩放'
-        training.review_assess(name) 
-        with allure.step(f'判断是否评估成功'):  
-            assess.assess_success()
-            do_log.info('图像缩放训练成功，用例执行成功')
-        with allure.step(f'返回模型训练页面'): 
-            training.model_training()
-         
-@allure.title('灰度图训练')           
-@pytest.mark.smoke
-def test_color_mode():
-    with allure.step(f'新增卡片'):
-        training.add_card()
-    with allure.step(f'选择颜色模式'):
-        training.color_mode()
-        airtest_method.operate_sleep()
-        if not airtest_method.check_exit(control.gray_image,'FALSE',5) :        
-            assert False,'找不到灰度图按钮'
-        else: 
-            with allure.step(f'切换为灰度图'):        
-                airtest_method.touch_button(control.gray_image)
-
-        airtest_method.operate_sleep()
-        with allure.step(f'设置学习次数'):
-            training.set_study() 
-        with allure.step(f'调整benchsize'):   
-            training.mouse_move()
-            training.zidingyi_button()             
-            training.cut_benchsize()
-        with allure.step(f'点击开始训练'):
-            training.star_training()
-        with allure.step(f'判断是否训练成功'):
-            name = '灰度图'
-        training.review_assess(name) 
-        with allure.step(f'判断是否评估成功'):  
-            assess.assess_success()
-            do_log.info('切换灰度图训练成功，用例执行成功')
-        with allure.step(f'返回模型训练页面'): 
-            training.model_training()
-        
-# @allure.title('切换模型类型高精度/低功耗') 
-# @pytest.mark.parametrize('type',model_selection)
-# def test_choice_model(type):
-#     with allure.step(f'新增卡片'):
-#         training.add_card()
-#     with allure.step(f'选择模型类型{type}'):
-#         training.choice_model()
-#         airtest_method.touch_button(type) #选择模型类型高精度或者低功耗
-#         if not airtest_method.check_exit(type,'FALSE',5) :        
-#             assert False,'模型类型切换失败'
-#         else:
-#             with allure.step(f'设置学习次数'):
-#                 training.set_study() 
-#             with allure.step(f'调整benchsize'):   
-#                 training.mouse_move()
-#                 training.zidingyi_button()             
-#                 training.cut_benchsize()
-#             with allure.step(f'点击开始训练'):
-#                 training.star_training()
-#                 if type == control.high_power:
-#                     name = '高精度'
-#                 else:
-#                     name = '低功耗'
-#             with allure.step(f'判断是否训练成功'):
-#                 training.review_assess(name) 
-#             with allure.step(f'判断是否评估成功'):  
-#                 assess.assess_success()
-#                 do_log.info('切换模型类型训练成功，用例执行成功')
-#             with allure.step(f'返回模型训练页面'): 
-#                 training.model_training()
+        test_delete()
 
 @allure.title('增量训练')   
 @pytest.mark.smoke
 def test_add_training():  
     with allure.step(f'点击更多按钮'):    
-        # airtest_method.touch_button(control.new_card)
-        # airtest_method.operate_sleep()
         airtest_method.touch_button(control.more_button)
     with allure.step(f'选择增量训练'): 
         training.add_training()

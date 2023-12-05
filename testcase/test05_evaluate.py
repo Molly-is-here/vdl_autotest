@@ -25,29 +25,6 @@ def test_export_model():
         assess.export_model()
         do_log.info('模型成功导出,用例执行成功')
 
-@allure.title('导出SDK')
-@pytest.mark.smoke
-def test_export_SDK():  
-    assess.assess_success()
-    #airtest_method.touch_button(control.new_card)
-    with allure.step(f'点击更多按钮'):
-        assess.more_button()
-    with allure.step(f'导出模型+SDK'):
-        current_dir = os.getcwd()
-        assess.export_SDK(current_dir)
-        do_log.info('SDK成功导出,用例执行成功')
-
-@allure.title('运行SDK')
-@pytest.mark.smoke
-def test_run_SDK():
-    with allure.step(f'解压SDK'):
-        assess.unzip_SDK()
-    with allure.step(f'复制SDK运行的依赖文件'):
-        assess.copy_SDK_dll()
-    with allure.step(f'调用SDK开始推理'):
-        dataset = r'D:\ly\VDL_autotest\VDL_autotest\elements\images'
-        assess.run_SDK(dataset,'SDKdemo')
-
 @allure.title('导出报告')
 @pytest.mark.smoke
 def test_export_report():
