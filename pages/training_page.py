@@ -26,8 +26,7 @@ class training():
     def edit_comment():
         '''修改备注'''
         airtest_method.touch_button(control.edit_comment)
-    
-   
+
     def copy_button():
         '''复制'''
         airtest_method.touch_button(control.copy_button)
@@ -50,12 +49,19 @@ class training():
         else:         
             airtest_method.touch_button(control.uad_choice_model)
 
-    def color_mode():
+    def color_mode(color):
         '''选择颜色模式'''
         if not airtest_method.check_exit(control.color_mode,'FALSE',5) :        
             assert False,'找不到颜色按钮'
-        else:         
-            airtest_method.touch_button(control.color_mode)
+        else: 
+            if color == 0:
+                return True
+            else:        
+                airtest_method.touch_button(control.color_mode)
+                if not airtest_method.check_exit(color,'FALSE',5) :        
+                    assert False,f'找不到{color}按钮'
+                else:       
+                    airtest_method.touch_button(color)
   
     def image_scaling():
         '''图像缩放'''
