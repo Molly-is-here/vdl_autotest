@@ -17,38 +17,35 @@ import os
 
 auto_setup(__file__)
 
-# @allure.title('五类算法冒烟')
-# @pytest.mark.smoke
-# def test_algorithm_smoke():
-for item in save_path.project_list:
-    #根据传入的item判断算法类型，找到相应的数据集
-    if item ==save_path.seg:
-        dataset = save_path.seg_dataset
-        name = 'SEG'
-    if item == save_path.cls:
-        dataset = save_path.cls_dataset
-        name = 'CLS'
-    if item == save_path.det:
-        dataset = save_path.det_dataset
-        name = 'DET'
-    if item == save_path.ocr:
-        dataset = save_path.ocr_dataset
-        name = 'OCR'
-    if item == save_path.uad:
-        dataset = save_path.uad_dataset
-        name = 'UAD'
-    if item == save_path.seqocr:
-        dataset = save_path.seqocr_dataset
-        name = 'SEQ'
-
-current_dir = os.getcwd()
-model_selection = [control.high_power,control.low_power]  #模型类型
-color_mode = [0,control.gray_image]  #颜色模式，0为默认
-scaling_selection = [0,control.equal_size,control.zidingyi_size]  #图像缩放，0为默认
-
-@allure.title('seq OCR算法冒烟')
+@allure.title('六类算法冒烟')
 @pytest.mark.smoke
-def test_seq_OCR_smoke():      
+def test_algorithm_smoke():
+    for item in save_path.project_list:
+        #根据传入的item判断算法类型，找到相应的数据集
+        if item ==save_path.seg:
+            dataset = save_path.seg_dataset
+            name = 'SEG'
+        if item == save_path.cls:
+            dataset = save_path.cls_dataset
+            name = 'CLS'
+        if item == save_path.det:
+            dataset = save_path.det_dataset
+            name = 'DET'
+        if item == save_path.ocr:
+            dataset = save_path.ocr_dataset
+            name = 'OCR'
+        if item == save_path.uad:
+            dataset = save_path.uad_dataset
+            name = 'UAD'
+        if item == save_path.seqocr:
+            dataset = save_path.seqocr_dataset
+            name = 'SEQ'
+
+        current_dir = os.getcwd()
+        model_selection = [control.high_power,control.low_power]  #模型类型
+        color_mode = [0,control.gray_image]  #颜色模式，0为默认
+        scaling_selection = [0,control.equal_size,control.zidingyi_size]  #图像缩放，0为默认
+    
         if name == 'SEQ':        #seq OCR算法仅有高性能模型类型                     
             with allure.step(f'{name}算法冒烟'):
                 count = min(len(scaling_selection),len(color_mode))
@@ -98,10 +95,7 @@ def test_seq_OCR_smoke():
                             '''关闭方案'''
                             assess.template_file()
                             assess.template_close()
-
-@allure.title('UAD算法冒烟')
-@pytest.mark.smoke
-def test_UAD_smoke():  
+ 
         if name == 'UAD':  
             UADmodel_selection = [control.modelB,control.modelA_low_power,control.modelA_high_power]  #无监督算法有三种模型类型
             for file in search_file.get_file(dataset):
@@ -149,9 +143,7 @@ def test_UAD_smoke():
                                 '''关闭方案'''
                                 assess.template_file()
                                 assess.template_close()
-@allure.title('OCR算法冒烟')
-@pytest.mark.smoke
-def test_OCR_smoke(): 
+
     if name == 'OCR':       
         for file in search_file.get_file(dataset):   
             with allure.step(f'{name}算法冒烟'):
@@ -203,9 +195,6 @@ def test_OCR_smoke():
                         assess.template_file()
                         assess.template_close()
 
-@allure.title('CLS算法冒烟')
-@pytest.mark.smoke
-def test_CLS_smoke(): 
     if name == 'CLS':       
         for file in search_file.get_file(dataset):   
             with allure.step(f'{name}算法冒烟'):
@@ -257,9 +246,6 @@ def test_CLS_smoke():
                         assess.template_file()
                         assess.template_close()
 
-@allure.title('DET算法冒烟')
-@pytest.mark.smoke
-def test_DET_smoke(): 
     if name == 'DET':   
         DET_scaling_selection = [0,control.equal_size]  #图像缩放，0为默认       
         for file in search_file.get_file(dataset):   
@@ -312,9 +298,6 @@ def test_DET_smoke():
                         assess.template_file()
                         assess.template_close()
 
-@allure.title('SEG算法冒烟')
-@pytest.mark.smoke
-def test_SEG_smoke(): 
     if name == 'SEG':       
         for file in search_file.get_file(dataset):   
             with allure.step(f'{name}算法冒烟'):

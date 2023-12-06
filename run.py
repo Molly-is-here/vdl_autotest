@@ -23,7 +23,7 @@ run_command = [ f'{addpath}/testcase/test10_autolabel.py',
                 f'{addpath}/testcase/test00_smoke.py',                          
                 f'--alluredir={addpath}/report', '--clean-alluredir']
 
-# run_command = [f'{addpath}/testcase/test00_smoke.py',
+# run_command = [f'{addpath}/testcase/test08_pipelines.py',
 #                 f'--alluredir={addpath}/report', '--clean-alluredir']
 
 pytest.main(run_command) 

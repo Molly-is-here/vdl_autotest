@@ -45,6 +45,7 @@ def test_close_project():
         '''关闭方案'''
         assess.template_file()
         assess.template_close()
+        airtest_method.operate_sleep(5.0)
 
 @allure.title('文件夹导入分割串联数据集')
 @pytest.mark.smoke
@@ -101,8 +102,9 @@ def test_seg_pipelines():
                 if pipelines.post_module == control.uad_module or pipelines.post_module == control.seq_module:    #无监督/seq OCR算法评估状态与其他算法不一致
                     if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
                         assert False,'评估未完成'
-                else:
+                else:                   
                     assess.assess_success() 
+                    training.model_training()
                 do_log.info('后置模块训练评估完成')
             with allure.step(f'返回数据源管理页面'):
                 data.dataset_management()
@@ -166,8 +168,9 @@ def test_det_pipelines():
                 if pipelines.post_module == control.uad_module or pipelines.post_module == control.seq_module:    #无监督/seq OCR算法评估状态与其他算法不一致
                     if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
                         assert False,'评估未完成'
-                else:
+                else:                
                     assess.assess_success()
+                    training.model_training()
                 do_log.info('后置模块训练评估完成')
             with allure.step(f'返回数据源管理页面'):
                 data.dataset_management()
@@ -231,8 +234,9 @@ def test_cls_pipelines():
                 if pipelines.post_module == control.uad_module or pipelines.post_module == control.seq_module:    #无监督/seq OCR算法评估状态与其他算法不一致
                     if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
                         assert False,'评估未完成'
-                else:
+                else:                  
                     assess.assess_success()
+                    training.model_training()
                 do_log.info('后置模块训练评估完成')
             with allure.step(f'返回数据源管理页面'):
                 data.dataset_management()
