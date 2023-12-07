@@ -144,210 +144,210 @@ def test_algorithm_smoke():
                                 assess.template_file()
                                 assess.template_close()
 
-    if name == 'OCR':       
-        for file in search_file.get_file(dataset):   
-            with allure.step(f'{name}算法冒烟'):
-                count = min(len(model_selection),len(scaling_selection),len(color_mode))
-                for i in range(count):
-                    params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
-                    '''方案管理页面'''
-                    management.create_project()       
-                    project_name = management.input_name(name)  
-                    management.create_model(item)
+        if name == 'OCR':       
+            for file in search_file.get_file(dataset):   
+                with allure.step(f'{name}算法冒烟'):
+                    count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                    for i in range(count):
+                        params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                        '''方案管理页面'''
+                        management.create_project()       
+                        project_name = management.input_name(name)  
+                        management.create_model(item)
 
-                    '''数据管理页面'''
-                    file_path = str(os.path.join(dataset,file))
-                    data.add_file(file_path)
+                        '''数据管理页面'''
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
 
-                    '''图像标注页面'''
-                    mark.image_label()
-                    mark.auto_divide()
+                        '''图像标注页面'''
+                        mark.image_label()
+                        mark.auto_divide()
 
-                    '''模型训练页面'''  
-                    training.model_training()
-                    training.add_card()
-                    training.choice_model(params_list[0][0])                  
-                    training.image_scaling(params_list[0][1])
-                    training.color_mode(params_list[0][2])
-                    training.set_study()                            
-                    training.star_training()
+                        '''模型训练页面'''  
+                        training.model_training()
+                        training.add_card()
+                        training.choice_model(params_list[0][0])                  
+                        training.image_scaling(params_list[0][1])
+                        training.color_mode(params_list[0][2])
+                        training.set_study()                            
+                        training.star_training()
 
-                    '''模型评估页面'''
-                    assess.model_assess()
-                    assess.assess_success()
+                        '''模型评估页面'''
+                        assess.model_assess()
+                        assess.assess_success()
 
-                    '''调用SDK'''
-                    assess.more_button()
-                    assess.export_SDK(current_dir)
-                    assess.unzip_SDK()
-                    assess.copy_SDK_dll()
-                    assess.run_SDK(file_path,project_name)
+                        '''调用SDK'''
+                        assess.more_button()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
 
-                    # '''导出模型'''
-                    # assess.more_button()
-                    # assess.export_model()
+                        # '''导出模型'''
+                        # assess.more_button()
+                        # assess.export_model()
 
-                    '''导出报告'''
-                    assess.export_report()
+                        '''导出报告'''
+                        assess.export_report()
 
-                    with allure.step(f'关闭方案'):    
-                        '''关闭方案'''
-                        assess.template_file()
-                        assess.template_close()
+                        with allure.step(f'关闭方案'):    
+                            '''关闭方案'''
+                            assess.template_file()
+                            assess.template_close()
 
-    if name == 'CLS':       
-        for file in search_file.get_file(dataset):   
-            with allure.step(f'{name}算法冒烟'):
-                count = min(len(model_selection),len(scaling_selection),len(color_mode))
-                for i in range(count):
-                    params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
-                    '''方案管理页面'''
-                    management.create_project()       
-                    project_name = management.input_name(name)  
-                    management.create_model(item)
+        if name == 'CLS':       
+            for file in search_file.get_file(dataset):   
+                with allure.step(f'{name}算法冒烟'):
+                    count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                    for i in range(count):
+                        params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                        '''方案管理页面'''
+                        management.create_project()       
+                        project_name = management.input_name(name)  
+                        management.create_model(item)
 
-                    '''数据管理页面'''
-                    file_path = str(os.path.join(dataset,file))
-                    data.add_file(file_path)
+                        '''数据管理页面'''
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
 
-                    '''图像标注页面'''
-                    mark.image_label()
-                    mark.auto_divide()
+                        '''图像标注页面'''
+                        mark.image_label()
+                        mark.auto_divide()
 
-                    '''模型训练页面'''  
-                    training.model_training()
-                    training.add_card()
-                    training.choice_model(params_list[0][0])                  
-                    training.image_scaling(params_list[0][1])
-                    training.color_mode(params_list[0][2])
-                    training.set_study()                            
-                    training.star_training()
+                        '''模型训练页面'''  
+                        training.model_training()
+                        training.add_card()
+                        training.choice_model(params_list[0][0])                  
+                        training.image_scaling(params_list[0][1])
+                        training.color_mode(params_list[0][2])
+                        training.set_study()                            
+                        training.star_training()
 
-                    '''模型评估页面'''
-                    assess.model_assess()
-                    assess.assess_success()
+                        '''模型评估页面'''
+                        assess.model_assess()
+                        assess.assess_success()
 
-                    '''调用SDK'''
-                    assess.more_button()
-                    assess.export_SDK(current_dir)
-                    assess.unzip_SDK()
-                    assess.copy_SDK_dll()
-                    assess.run_SDK(file_path,project_name)
+                        '''调用SDK'''
+                        assess.more_button()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
 
-                    # '''导出模型'''
-                    # assess.more_button()
-                    # assess.export_model()
+                        # '''导出模型'''
+                        # assess.more_button()
+                        # assess.export_model()
 
-                    '''导出报告'''
-                    assess.export_report()
+                        '''导出报告'''
+                        assess.export_report()
 
-                    with allure.step(f'关闭方案'):    
-                        '''关闭方案'''
-                        assess.template_file()
-                        assess.template_close()
+                        with allure.step(f'关闭方案'):    
+                            '''关闭方案'''
+                            assess.template_file()
+                            assess.template_close()
 
-    if name == 'DET':   
-        DET_scaling_selection = [0,control.equal_size]  #图像缩放，0为默认       
-        for file in search_file.get_file(dataset):   
-            with allure.step(f'{name}算法冒烟'):
-                count = min(len(model_selection),len(DET_scaling_selection),len(color_mode))
-                for i in range(count):
-                    params_list= radom_Name.get_params(model_selection,DET_scaling_selection,color_mode)
-                    '''方案管理页面'''
-                    management.create_project()       
-                    project_name = management.input_name(name)  
-                    management.create_model(item)
+        if name == 'DET':   
+            DET_scaling_selection = [0,control.equal_size]  #图像缩放，0为默认       
+            for file in search_file.get_file(dataset):   
+                with allure.step(f'{name}算法冒烟'):
+                    count = min(len(model_selection),len(DET_scaling_selection),len(color_mode))
+                    for i in range(count):
+                        params_list= radom_Name.get_params(model_selection,DET_scaling_selection,color_mode)
+                        '''方案管理页面'''
+                        management.create_project()       
+                        project_name = management.input_name(name)  
+                        management.create_model(item)
 
-                    '''数据管理页面'''
-                    file_path = str(os.path.join(dataset,file))
-                    data.add_file(file_path)
+                        '''数据管理页面'''
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
 
-                    '''图像标注页面'''
-                    mark.image_label()
-                    mark.auto_divide()
+                        '''图像标注页面'''
+                        mark.image_label()
+                        mark.auto_divide()
 
-                    '''模型训练页面'''  
-                    training.model_training()
-                    training.add_card()
-                    training.choice_model(params_list[0][0])                  
-                    training.image_scaling(params_list[0][1])
-                    training.color_mode(params_list[0][2])
-                    training.set_study()                            
-                    training.star_training()
+                        '''模型训练页面'''  
+                        training.model_training()
+                        training.add_card()
+                        training.choice_model(params_list[0][0])                  
+                        training.image_scaling(params_list[0][1])
+                        training.color_mode(params_list[0][2])
+                        training.set_study()                            
+                        training.star_training()
 
-                    '''模型评估页面'''
-                    assess.model_assess()
-                    assess.assess_success()
+                        '''模型评估页面'''
+                        assess.model_assess()
+                        assess.assess_success()
 
-                    '''调用SDK'''
-                    assess.more_button()
-                    assess.export_SDK(current_dir)
-                    assess.unzip_SDK()
-                    assess.copy_SDK_dll()
-                    assess.run_SDK(file_path,project_name)
+                        '''调用SDK'''
+                        assess.more_button()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
 
-                    # '''导出模型'''
-                    # assess.more_button()
-                    # assess.export_model()
+                        # '''导出模型'''
+                        # assess.more_button()
+                        # assess.export_model()
 
-                    '''导出报告'''
-                    assess.export_report()
+                        '''导出报告'''
+                        assess.export_report()
 
-                    with allure.step(f'关闭方案'):    
-                        '''关闭方案'''
-                        assess.template_file()
-                        assess.template_close()
+                        with allure.step(f'关闭方案'):    
+                            '''关闭方案'''
+                            assess.template_file()
+                            assess.template_close()
 
-    if name == 'SEG':       
-        for file in search_file.get_file(dataset):   
-            with allure.step(f'{name}算法冒烟'):
-                count = min(len(model_selection),len(scaling_selection),len(color_mode))
-                for i in range(count):
-                    params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
-                    '''方案管理页面'''
-                    management.create_project()       
-                    project_name = management.input_name(name)  
-                    management.create_model(item)
+        if name == 'SEG':       
+            for file in search_file.get_file(dataset):   
+                with allure.step(f'{name}算法冒烟'):
+                    count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                    for i in range(count):
+                        params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                        '''方案管理页面'''
+                        management.create_project()       
+                        project_name = management.input_name(name)  
+                        management.create_model(item)
 
-                    '''数据管理页面'''
-                    file_path = str(os.path.join(dataset,file))
-                    data.add_file(file_path)
+                        '''数据管理页面'''
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
 
-                    '''图像标注页面'''
-                    mark.image_label()
-                    mark.auto_divide()
+                        '''图像标注页面'''
+                        mark.image_label()
+                        mark.auto_divide()
 
-                    '''模型训练页面'''  
-                    training.model_training()
-                    training.add_card()
-                    training.choice_model(params_list[0][0])                  
-                    training.image_scaling(params_list[0][1])
-                    training.color_mode(params_list[0][2])
-                    training.set_study()                            
-                    training.star_training()
+                        '''模型训练页面'''  
+                        training.model_training()
+                        training.add_card()
+                        training.choice_model(params_list[0][0])                  
+                        training.image_scaling(params_list[0][1])
+                        training.color_mode(params_list[0][2])
+                        training.set_study()                            
+                        training.star_training()
 
-                    '''模型评估页面'''
-                    assess.model_assess()
-                    assess.assess_success()
+                        '''模型评估页面'''
+                        assess.model_assess()
+                        assess.assess_success()
 
-                    '''调用SDK'''
-                    assess.more_button()
-                    assess.export_SDK(current_dir)
-                    assess.unzip_SDK()
-                    assess.copy_SDK_dll()
-                    assess.run_SDK(file_path,project_name)
+                        '''调用SDK'''
+                        assess.more_button()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
 
-                    # '''导出模型'''
-                    # assess.more_button()
-                    # assess.export_model()
+                        # '''导出模型'''
+                        # assess.more_button()
+                        # assess.export_model()
 
-                    '''导出报告'''
-                    assess.export_report()
+                        '''导出报告'''
+                        assess.export_report()
 
-                    with allure.step(f'关闭方案'):    
-                        '''关闭方案'''
-                        assess.template_file()
-                        assess.template_close()
+                        with allure.step(f'关闭方案'):    
+                            '''关闭方案'''
+                            assess.template_file()
+                            assess.template_close()
 
 @allure.title('退出软件')
 @pytest.mark.smoke
