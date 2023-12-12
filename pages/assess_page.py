@@ -22,6 +22,7 @@ class assess():
             assert False,'评估未完成'
         else:
             print('评估成功')
+            return True
         # if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
         #     assert False,'评估未完成'
         # else:

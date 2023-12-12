@@ -15,7 +15,7 @@ class save_path():
     ocr = base_path + "/public/OCR算法.png"
     uad = base_path + "/public/无监督算法.png"
     seqocr = base_path + "/public/字符串算法.png"
-    project_list = [seqocr,cls,det,uad,seg,ocr]
+    project_list = [cls,det,uad,ocr,seqocr,seg]
 
     '''冒烟测试数据集'''
     cls_dataset = smoke_path + "\分类算法"
