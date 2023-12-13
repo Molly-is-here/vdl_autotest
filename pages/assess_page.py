@@ -160,6 +160,7 @@ class assess():
             assert False,'未找到关闭按钮'
         else:
             airtest_method.touch_button(control.template_close)
+            airtest_method.operate_sleep(10.0)
  
     def user_guild():
         '''导出软件功能手册'''

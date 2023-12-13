@@ -47,66 +47,66 @@ def test_close_project():
         assess.template_close()
         airtest_method.operate_sleep(5.0)
 
-# @allure.title('文件夹导入分割串联数据集')
-# @pytest.mark.smoke
-# def test_seg_pipelines():
-#     for pipelines in seg_pipellines: 
-#             with allure.step(f'新建方案'):
-#                 test_create_proj()
-#                 test_create_model(pipelines.name)
-#             with allure.step(f'点击导入文件夹按钮'):
-#                 file_path = pipelines.file_path + '\images'
-#                 data.add_file(file_path)
-#                 do_log.info('成功导入图像,用例执行成功')
-#             with allure.step(f'点击方案流程'):
-#                 data.project_flow()
-#                 do_log.info('方案流程画布打开,用例执行成功')
-#             with allure.step(f'数据源添加分割模块作为首模块'):
-#                 data.add_pre_module(pipelines.pre_module)
-#                 mark.image_label()  #点击图像标注按钮关闭方案流程画布
-#                 do_log.info('分割首模块创建成功,用例执行成功')
-#             with allure.step(f'导入前置模块标注'):
-#                 label1_path = pipelines.file_path + '\labels1'
-#                 mark.import_label(label1_path)
-#                 do_log.info('前置模块标注导入成功')
-#             with allure.step(f'自动划分数据集'):
-#                 mark.auto_divide()
-#             with allure.step(f'开启训练'):
-#                 training.model_training()
-#                 training.add_card()
-#                 training.set_study()
-#                 training.star_training()
-#                 assess.model_assess()
-#                 assess.assess_success() 
-#                 do_log.info('前置模块训练评估完成')
-#             with allure.step(f'添加后置模块'):
-#                 data.project_flow()                
-#                 data.add_pre_module(pipelines.post_module)
-#                 mark.image_label()   #点击图像标注按钮关闭方案流程画布                
-#                 do_log.info(f'后置模块创建成功')
-#             with allure.step(f'导入后置模块标注'):
-#                 label2_path = pipelines.file_path + '\labels2'
-#                 mark.import_label(label2_path)
-#                 do_log.info('后置模块标注导入成功')
-#             with allure.step(f'自动划分数据集'):
-#                 mark.auto_divide()
-#             with allure.step(f'开启训练'):
-#                 training.model_training()
-#                 training.add_card()
-#                 if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
-#                     training.star_training() 
-#                 else:
-#                     training.set_study()
-#                     training.star_training() 
-#                 assess.model_assess()                                          
-#                 assess.assess_success() 
-#                 training.model_training()
-#                 do_log.info('后置模块训练评估完成')
-#             with allure.step(f'返回数据源管理页面'):
-#                 data.dataset_management()
-#                 do_log.info('成功返回数据源管理页面')
-#             with allure.step(f'切换方案'):
-#                 test_close_project()
+@allure.title('文件夹导入分割串联数据集')
+@pytest.mark.smoke
+def test_seg_pipelines():
+    for pipelines in seg_pipellines: 
+            with allure.step(f'新建方案'):
+                test_create_proj()
+                test_create_model(pipelines.name)
+            with allure.step(f'点击导入文件夹按钮'):
+                file_path = pipelines.file_path + '\images'
+                data.add_file(file_path)
+                do_log.info('成功导入图像,用例执行成功')
+            with allure.step(f'点击方案流程'):
+                data.project_flow()
+                do_log.info('方案流程画布打开,用例执行成功')
+            with allure.step(f'数据源添加分割模块作为首模块'):
+                data.add_pre_module(pipelines.pre_module)
+                mark.image_label()  #点击图像标注按钮关闭方案流程画布
+                do_log.info('分割首模块创建成功,用例执行成功')
+            with allure.step(f'导入前置模块标注'):
+                label1_path = pipelines.file_path + '\labels1'
+                mark.import_label(label1_path)
+                do_log.info('前置模块标注导入成功')
+            with allure.step(f'自动划分数据集'):
+                mark.auto_divide()
+            with allure.step(f'开启训练'):
+                training.model_training()
+                training.add_card()
+                training.set_study()
+                training.star_training()
+                assess.model_assess()
+                assess.assess_success() 
+                do_log.info('前置模块训练评估完成')
+            with allure.step(f'添加后置模块'):
+                data.project_flow()                
+                data.add_pre_module(pipelines.post_module)
+                mark.image_label()   #点击图像标注按钮关闭方案流程画布                
+                do_log.info(f'后置模块创建成功')
+            with allure.step(f'导入后置模块标注'):
+                label2_path = pipelines.file_path + '\labels2'
+                mark.import_label(label2_path)
+                do_log.info('后置模块标注导入成功')
+            with allure.step(f'自动划分数据集'):
+                mark.auto_divide()
+            with allure.step(f'开启训练'):
+                training.model_training()
+                training.add_card()
+                if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
+                    training.star_training() 
+                else:
+                    training.set_study()
+                    training.star_training() 
+                assess.model_assess()                                          
+                assess.assess_success() 
+                training.model_training()
+                do_log.info('后置模块训练评估完成')
+            with allure.step(f'返回数据源管理页面'):
+                data.dataset_management()
+                do_log.info('成功返回数据源管理页面')
+            with allure.step(f'切换方案'):
+                test_close_project()
 
 @allure.title('文件夹导入检测串联数据集')
 @pytest.mark.smoke
