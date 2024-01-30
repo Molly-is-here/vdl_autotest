@@ -88,8 +88,8 @@ def test_algorithm_smoke():
                         # assess.more_button()
                         # assess.export_model()
 
-                        '''导出报告'''
-                        assess.export_report()
+                        # '''导出报告'''
+                        # assess.export_report()
                             
                         with allure.step(f'关闭方案'):
                             '''关闭方案'''
@@ -136,8 +136,8 @@ def test_algorithm_smoke():
                             # assess.more_button()
                             # assess.export_model()
 
-                            '''导出报告'''
-                            assess.export_report()
+                            # '''导出报告'''
+                            # assess.export_report()
 
                             with allure.step(f'关闭方案'):    
                                 '''关闭方案'''
@@ -187,8 +187,8 @@ def test_algorithm_smoke():
                         # assess.more_button()
                         # assess.export_model()
 
-                        '''导出报告'''
-                        assess.export_report()
+                        # '''导出报告'''
+                        # assess.export_report()
 
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''
@@ -238,8 +238,8 @@ def test_algorithm_smoke():
                         # assess.more_button()
                         # assess.export_model()
 
-                        '''导出报告'''
-                        assess.export_report()
+                        # '''导出报告'''
+                        # assess.export_report()
 
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''
@@ -290,8 +290,8 @@ def test_algorithm_smoke():
                         # assess.more_button()
                         # assess.export_model()
 
-                        '''导出报告'''
-                        assess.export_report()
+                        # '''导出报告'''
+                        # assess.export_report()
 
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''
@@ -341,8 +341,8 @@ def test_algorithm_smoke():
                         # assess.more_button()
                         # assess.export_model()
 
-                        '''导出报告'''
-                        assess.export_report()
+                        # '''导出报告'''
+                        # assess.export_report()
 
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''

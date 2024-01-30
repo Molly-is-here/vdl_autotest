@@ -18,16 +18,16 @@ class assess():
     
     def assess_success():       
         '''判断是否评估完成''' 
-        if not airtest_method.check_exit(control.report_button,'FALSE',360000) :
-            assert False,'评估未完成'
-        else:
-            print('评估成功')
-            return True
-        # if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
+        # if not airtest_method.check_exit(control.report_button,'FALSE',360000) :
         #     assert False,'评估未完成'
         # else:
-        #     airtest_method.operate_sleep()
+        #     print('评估成功')
         #     return True
+        if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
+            assert False,'评估未完成'
+        else:
+            airtest_method.operate_sleep()
+            return True
   
     def more_button():
          '''点击更多按钮'''

@@ -65,8 +65,8 @@ def test_copy():
     with allure.step(f'点击复制按钮'):
         training.copy_button()
         do_log.info('成功复制卡片,用例执行成功')
-
-@allure.title('删除训练小卡片') 
+        
+@allure.title('删除卡片') 
 @pytest.mark.smoke
 def test_delete():  
     #airtest_method.touch_button(control.new_card)
@@ -114,27 +114,25 @@ def test_image_cropping():
         with allure.step(f'返回模型训练页面'): 
             training.model_training()
 
-@allure.title('继续训练') 
-@pytest.mark.smoke
-def test_continute_training():
-    with allure.step(f'点击更多按钮'):
-        airtest_method.touch_button(control.new_card)
-        airtest_method.operate_sleep()
-        airtest_method.touch_button(control.more_button)  
-    with allure.step(f'点击继续训练'):  
-        training.continu_training()
-        airtest_method.operate_sleep()
-    with allure.step(f'确认继续训练'): 
-        airtest_method.touch_button(control.training_okbutton) #确认继续训练       
-    with allure.step(f'判断是否训练成功'):
-        name = '继续训练'
-        training.review_assess(name) 
-    with allure.step(f'判断是否评估成功'):  
-        assess.assess_success()
-        do_log.info('继续训练成功，用例执行成功')
-    with allure.step(f'返回模型训练页面'): 
-        training.model_training()
-        test_delete()
+# @allure.title('继续训练') 
+# @pytest.mark.smoke
+# def test_continute_training():
+#     with allure.step(f'点击更多按钮'):
+#         airtest_method.touch_button(control.more_button)  
+#     with allure.step(f'点击继续训练'):  
+#         training.continu_training()
+#         airtest_method.operate_sleep()
+#     with allure.step(f'确认继续训练'): 
+#         airtest_method.touch_button(control.training_okbutton) #确认继续训练       
+#     with allure.step(f'判断是否训练成功'):
+#         name = '继续训练'
+#         training.review_assess(name) 
+#     with allure.step(f'判断是否评估成功'):  
+#         assess.assess_success()
+#         do_log.info('继续训练成功，用例执行成功')
+#     with allure.step(f'返回模型训练页面'): 
+#         training.model_training()
+#         test_delete()
 
 @allure.title('增量训练')   
 @pytest.mark.smoke

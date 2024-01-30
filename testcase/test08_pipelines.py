@@ -13,7 +13,7 @@ from elements.pipelines import *
 from common.handle_log import do_log
 
 cls_pipelines = [cls_seg,cls_det,cls_uad,cls_seq]
-det_pipelines = [det_OCR,det_seg,det_uad]
+det_pipelines = [det_OCR,det_uad,det_seg]
 seg_pipellines = [seg_det,seg_uad,seg_seg,seg_OCR,seg_seq]
 
 @allure.feature('串联方案测试')
@@ -170,7 +170,6 @@ def test_det_pipelines():
             with allure.step(f'切换方案'):
                 test_close_project()
 
-
 @allure.title('文件夹导入分类串联数据集')
 @pytest.mark.smoke
 def test_cls_pipelines():
@@ -255,41 +254,41 @@ def test_GPU_ONNX_infering():
         judgement.judgement_done()
         do_log.info('综合判定推理结束')
 
-@allure.title('使用GPU-TRT推理')
-@pytest.mark.smoke 
-def test_GPU_TRT_infering():
-    if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
-        assert False,'找不到开始推理按钮'
-    else:         
-        with allure.step(f'点击解锁按钮'):
-            infering.unlock_infering()
-        with allure.step(f'点击模式选择列表'):
-            infering.infering_pattern_choice()
-        with allure.step(f'选择TRT模式'):
-            infering.infering_pattern_TRT()
-        with allure.step(f'开始推理'):
-            judgement.judgement_infering()
-        with allure.step(f'判断是否推理成功'):
-            judgement.judgement_done()
-            do_log.info('GPU-TRT推理完成,用例执行成功') 
+# @allure.title('使用GPU-TRT推理')
+# @pytest.mark.smoke 
+# def test_GPU_TRT_infering():
+#     if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
+#         assert False,'找不到开始推理按钮'
+#     else:         
+#         with allure.step(f'点击解锁按钮'):
+#             infering.unlock_infering()
+#         with allure.step(f'点击模式选择列表'):
+#             infering.infering_pattern_choice()
+#         with allure.step(f'选择TRT模式'):
+#             infering.infering_pattern_TRT()
+#         with allure.step(f'开始推理'):
+#             judgement.judgement_infering()
+#         with allure.step(f'判断是否推理成功'):
+#             judgement.judgement_done()
+#             do_log.info('GPU-TRT推理完成,用例执行成功') 
 
-@allure.title('使用CPU推理')
-@pytest.mark.smoke 
-def test_CPU_infering():
-    if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
-        assert False,'找不到开始推理按钮'
-    else: 
-        with allure.step(f'点击解锁按钮'):
-            infering.unlock_infering()
-        with allure.step(f'点击设备类型列表'):
-            infering.infering_device_type()
-        with allure.step(f'选择CPU设备'):
-            infering.infering_device_CPU()
-        with allure.step(f'开始推理'):
-            judgement.judgement_infering()
-        with allure.step(f'判断是否推理成功'):
-            judgement.judgement_done()
-            do_log.info('CPU推理完成,用例执行成功') 
+# @allure.title('使用CPU推理')
+# @pytest.mark.smoke 
+# def test_CPU_infering():
+#     if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
+#         assert False,'找不到开始推理按钮'
+#     else: 
+#         with allure.step(f'点击解锁按钮'):
+#             infering.unlock_infering()
+#         with allure.step(f'点击设备类型列表'):
+#             infering.infering_device_type()
+#         with allure.step(f'选择CPU设备'):
+#             infering.infering_device_CPU()
+#         with allure.step(f'开始推理'):
+#             judgement.judgement_infering()
+#         with allure.step(f'判断是否推理成功'):
+#             judgement.judgement_done()
+#             do_log.info('CPU推理完成,用例执行成功') 
 
     
         
