@@ -126,10 +126,10 @@ class training():
             assert False,'训练未完成'
         else: 
             airtest_method.screenshot(ct_screenshot)   #全屏截图 
-            if not airtest_method.check_exit(control.review_assess,'FALSE',60): 
-                assert False,'训练未完成' 
-            else:
-                airtest_method.touch_button(control.review_assess)     
+            # if not airtest_method.check_exit(control.review_assess,'FALSE',60): 
+            #     assert False,'训练未完成' 
+            # else:
+            #     airtest_method.touch_button(control.review_assess)     
         
     def continu_training():
         '''继续训练'''

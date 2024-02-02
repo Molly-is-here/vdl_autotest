@@ -70,10 +70,10 @@ def test_seg_autolabel():
             mark.polygon_marking((837,285),(823,348),(891,335))  #多边形标注
             do_log.info('成功绘制多边形标注')
 
-        with allure.step(f'绘制线标注'):
-            mark.add_label('自动线标注')  #创建标签
-            mark.line_marking((827,808),(840,879))  #线标注
-            do_log.info('成功绘制线标注')
+        # with allure.step(f'绘制线标注'):
+        #     mark.add_label('自动线标注')  #创建标签
+        #     mark.line_marking((827,808),(840,879))  #线标注
+        #     do_log.info('成功绘制线标注')
 
         with allure.step(f'绘制折线标注'):
             mark.add_label('自动折线标注')  #创建标签

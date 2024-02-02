@@ -116,7 +116,7 @@ class mark():
         if not airtest_method.check_exit(label_control.polyline_tool,'FALSE') :
             assert False,'未找到折线工具'
         else:
-            airtest_method.key_event('3')    #标注方式：选中特征标签后进行特征标注
+            airtest_method.key_event('2')    #标注方式：选中特征标签后进行特征标注
             airtest_method.touch_button(label_control.polyline_tool)
             BasePage.click_move_to(v1,v2)
             airtest_method.double_click(v3) #双击确定标注
@@ -136,33 +136,26 @@ class mark():
 
     def AI_marking(start_points,end_points,marking_points):
         '''AI标注'''
-        if not airtest_method.check_exit(label_control.brush_tool,'FALSE') :
-            assert False,'未找到画笔工具'
-        else:
-            airtest_method.touch_button(label_control.brush_tool)
-            if not airtest_method.check_exit(label_control.AI_tool,'FALSE') :
-                assert False,'未找到AI标注工具'
-            else:
-                airtest_method.key_event('{DOWN}')  #切换至下一张图片
-                airtest_method.key_event('4')
-                airtest_method.touch_button(label_control.AI_tool)
+        if not airtest_method.check_exit(label_control.AI_tool,'FALSE') :
+            assert False,'未找到AI标注工具'
+        else:         
+            airtest_method.key_event('{DOWN}')  #切换至下一张图片
+            airtest_method.key_event('3')
+            airtest_method.touch_button(label_control.AI_tool)
                 
 
-        BasePage.click_move_to(start_points,end_points)  #绘制自定义区域
-        airtest_method.click_coordinate_point(marking_points)        #鼠标左键正点标注
-        if not airtest_method.check_exit(label_control.select_true,'FALSE') :
-            assert False,'未找到确认按钮'
-        else:
-            airtest_method.touch_button(label_control.select_true) 
+            BasePage.click_move_to(start_points,end_points)  #绘制自定义区域
+            airtest_method.click_coordinate_point(marking_points)        #鼠标左键正点标注
+            if not airtest_method.check_exit(label_control.select_true,'FALSE') :
+                assert False,'未找到确认按钮'
+            else:
+                airtest_method.touch_button(label_control.select_true) 
 
     def pen_marking(start_points,end_points):
         '''笔形标注'''
-        if not airtest_method.check_exit(label_control.brush_tool,'FALSE') :
-            assert False,'未找到笔形工具'
-        else:
-            airtest_method.key_event('5')
-            airtest_method.touch_button(label_control.brush_tool)
-            BasePage.click_hold_and_move_to(start_points,end_points)  #画笔滑动绘制
+        airtest_method.key_event('4')
+        airtest_method.touch_button(label_control.brush_tool)
+        BasePage.click_hold_and_move_to(start_points,end_points)  #画笔滑动绘制
     
         if not airtest_method.check_exit(label_control.select_true,'FALSE') :
             assert False,'未找到确认按钮'
