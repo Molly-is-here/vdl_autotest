@@ -11,7 +11,7 @@ open_Software.open_sofeware(r".\VDL.exe")
 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
 open_Software.click_maximize()
 
-run_command = [ f'{addpath}/testcase/test10_autolabel.py',          
+run_command = [ f'{addpath}/testcase/test10_autolabel.py',         
                 f'{addpath}/testcase/test01_management.py',
                 f'{addpath}/testcase/test02_data.py',
                 f'{addpath}/testcase/test03_label.py',
@@ -23,7 +23,7 @@ run_command = [ f'{addpath}/testcase/test10_autolabel.py',
                 f'{addpath}/testcase/test00_smoke.py',                  
                 f'--alluredir={addpath}/report', '--clean-alluredir']
  
-# run_command = [ f'{addpath}/testcase/test10_autolabel.py',
+# run_command = [ f'{addpath}/testcase/test08_pipelines.py',
 #                 f'--alluredir={addpath}/report', '--clean-alluredir']
 
 pytest.main(run_command) 

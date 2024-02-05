@@ -18,8 +18,8 @@ def test_model_infering():
 @pytest.mark.smoke
 def test_images_input():
     with allure.step(f'导入图像'):
-        dataset = r'D:\ly\VDL_autotest\VDL_autotest\elements'
-        infering.images_input(dataset,'images')
+        dataset = r'D:\ly\VDL_autotest\VDL_autotest\elements'  
+        infering.images_input(dataset,'images')    
         do_log.info('图像导入成功,用例执行成功')
 
 @allure.title('使用GPU-ONNX推理')

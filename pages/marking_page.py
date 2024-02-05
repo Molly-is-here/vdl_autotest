@@ -27,7 +27,7 @@ class mark():
         airtest_method.touch_button(control.click_area)
         '''全选'''
         airtest_method.key_event("^a")
-        airtest_method.touch_button(control.ok_button)
+        airtest_method.touch_button(control.ok_button1)
         if not airtest_method.check_exit(control.upload_label,'FALSE') :
             assert False,'找不到导入完成标志'
         else:

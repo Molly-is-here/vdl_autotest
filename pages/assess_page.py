@@ -26,8 +26,7 @@ class assess():
         if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
             assert False,'评估未完成'
         else:
-            airtest_method.operate_sleep()
-            return True
+            airtest_method.operate_sleep(5.0)
   
     def more_button():
          '''点击更多按钮'''

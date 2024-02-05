@@ -103,13 +103,13 @@ def test_image_cropping():
             training.cut_benchsize()
         with allure.step(f'点击开始训练'):
             training.star_training()
-        with allure.step(f'判断是否训练成功'):
-            name = '图像裁切'
-        training.review_assess(name) 
+        with allure.step(f'判断是否完成训练-评估'):
+            assess.model_assess()
         with allure.step(f'判断是否评估成功'):  
             if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
                 assert False,'评估未完成'
             else:
+                airtest_method.operate_sleep()
                 do_log.info('图像裁切训练成功，用例执行成功')
         with allure.step(f'返回模型训练页面'): 
             training.model_training()
@@ -159,9 +159,12 @@ def test_add_training():
     with allure.step(f'判断是否训练成功'):
         name = '增量训练'
         training.review_assess(name) 
-    with allure.step(f'判断是否评估成功'):  
-        assess.assess_success()
-        do_log.info('增量训练成功，用例执行成功')
+        assess.model_assess()
+    with allure.step(f'判断是否评估成功'):
+        if not airtest_method.check_exit(control.report_button,'FALSE',360000) :
+            assert False,'评估未完成'
+        else:
+            do_log.info('增量训练模型评估成功，用例执行成功')
     with allure.step(f'返回模型训练页面'): 
         training.model_training()
         

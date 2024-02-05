@@ -21,8 +21,10 @@ class infering():
         else:
             airtest_method.touch_button(control.choice_file)   
         airtest_method.input_text(file_path)
-        airtest_method.touch_button(control.jump_click)
-        airtest_method.touch_button(control.choice_button)
+        airtest_method.touch_button(control.jump_click)       
+        airtest_method.touch_button(control.click_area)
+        airtest_method.key_event("^a")
+        airtest_method.key_event('{ENTER}')
         if not airtest_method.check_exit(control.upload_label,'FALSE',3600) :          
             assert False,'找不到导入完成标志'
         else:

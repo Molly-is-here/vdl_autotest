@@ -73,7 +73,10 @@ class control():
     select_textbox = Template(save_path.base_path + "/public/03_方案名称编辑框.png", threshold=0.7)
 
     #确认按钮
-    ok_button = Template(save_path.base_path + "/public/04_确认按钮1.png", threshold=0.7)
+    ok_button = Template(save_path.base_path + "/public/04_确认按钮.png", threshold=0.7)
+
+    #确认按钮1
+    ok_button1 = Template(save_path.base_path + "/public/04_确认按钮1.png", threshold=0.7)
 
     #创建按钮
     create_button = Template(save_path.base_path + "/public/05_创建按钮.png", threshold=0.7)
