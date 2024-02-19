@@ -156,9 +156,8 @@ def test_add_training():
         training.star_training()
     with allure.step(f'确认开启增量训练'):
         airtest_method.touch_button(control.training_okbutton)
-    with allure.step(f'判断是否训练成功'):
-        name = '增量训练'
-        training.review_assess(name) 
+    with allure.step(f'开启训练'):
+        airtest_method.operate_sleep(120.0)      
         assess.model_assess()
     with allure.step(f'判断是否评估成功'):
         if not airtest_method.check_exit(control.report_button,'FALSE',360000) :

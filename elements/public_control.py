@@ -333,6 +333,9 @@ class control():
     #开始推理
     begin_infering = Template(save_path.base_path + "/public/17_开始推理.png",rgb= True, threshold=0.7)
 
+    #重新推理
+    return_infering = Template(save_path.base_path + "/public/17_重新推理.png",rgb= True, threshold=0.7)
+
     #推理完成
     infering_finished = Template(save_path.base_path + "/public/17_推理完成.png",rgb= True, threshold=0.7)
 

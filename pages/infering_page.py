@@ -21,7 +21,8 @@ class infering():
         else:
             airtest_method.touch_button(control.choice_file)   
         airtest_method.input_text(file_path)
-        airtest_method.touch_button(control.jump_click)       
+        airtest_method.key_event('{ENTER}')
+        # airtest_method.touch_button(control.jump_click)       
         airtest_method.touch_button(control.click_area)
         airtest_method.key_event("^a")
         airtest_method.key_event('{ENTER}')
@@ -33,10 +34,10 @@ class infering():
       
     def begin_infering():
         '''开始推理'''
-        if not airtest_method.check_exit(control.begin_infering,'FALSE',5):      
-            assert False,'找不到开始推理按钮'
+        if not airtest_method.check_exit(control.return_infering,'FALSE',5):      
+            assert False,'找不到重新推理按钮'
         else:         
-            airtest_method.touch_button(control.begin_infering)
+            airtest_method.touch_button(control.return_infering)
         
     def review_infering():
         '''判断推理完成'''
@@ -79,6 +80,7 @@ class infering():
             assert False,'找不到CPU设备'
         else:         
             airtest_method.touch_button(control.device_CPU)
+            airtest_method.operate_sleep(2.0)
 
 
 

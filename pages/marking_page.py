@@ -23,7 +23,8 @@ class mark():
             airtest_method.touch_button(control.import_label)
         airtest_method.touch_button(control.choice_file1) 
         airtest_method.input_text(file_path)
-        airtest_method.touch_button(control.jump_click)
+        airtest_method.key_event("{ENTER}")
+        # airtest_method.touch_button(control.jump_click)
         airtest_method.touch_button(control.click_area)
         '''全选'''
         airtest_method.key_event("^a")

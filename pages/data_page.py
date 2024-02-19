@@ -21,7 +21,8 @@ class data():
         else:
             airtest_method.touch_button(control.choice_file)            
         airtest_method.input_text(file_path)
-        airtest_method.touch_button(control.jump_click)
+        airtest_method.key_event('{ENTER}')
+        # airtest_method.touch_button(control.jump_click)
         airtest_method.touch_button(control.choice_button)
 
         if not airtest_method.check_exit(control.upload_label,'FALSE') :
@@ -37,7 +38,8 @@ class data():
             airtest_method.touch_button(control.add_image)
         airtest_method.touch_button(control.choice_file)   
         airtest_method.input_text(file_path)
-        airtest_method.touch_button(control.jump_click)
+        airtest_method.key_event('{ENTER}')
+        # airtest_method.touch_button(control.jump_click)
         airtest_method.touch_button(control.click_area)
         '''全选图片'''
         airtest_method.key_event("^a")
@@ -55,7 +57,8 @@ class data():
             airtest_method.touch_button(control.add_label)
         airtest_method.touch_button(control.choice_file) 
         airtest_method.input_text(file_path)
-        airtest_method.touch_button(control.jump_click)
+        airtest_method.key_event('{ENTER}')
+        # airtest_method.touch_button(control.jump_click)
         airtest_method.touch_button(control.click_area)
         '''全选标注'''
         airtest_method.key_event("^a")

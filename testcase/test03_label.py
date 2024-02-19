@@ -13,6 +13,7 @@ def test_data_page():
             assert False,'找不到图像标注tab按钮'
         else:
             airtest_method.touch_button(control.image_label)
+            airtest_method.operate_sleep(2.0)
             do_log.info('图像标注页面成功切换,用例执行成功')
 
 @allure.title('数据划分')

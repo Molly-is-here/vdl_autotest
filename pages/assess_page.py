@@ -46,9 +46,8 @@ class assess():
         #输入指定路径
         current_dir = os.getcwd()
         airtest_method.input_text(current_dir)
-
-        airtest_method.touch_button(control.jump_click)
-
+        airtest_method.key_event('{ENTER}')
+        # airtest_method.touch_button(control.jump_click)
         airtest_method.touch_button(control.choice_button)
 
         airtest_method.touch_button(control.export_button)
@@ -68,8 +67,8 @@ class assess():
         airtest_method.touch_button(control.edit_box)
         airtest_method.operate_sleep()
         airtest_method.input_text(check_path)
-
-        airtest_method.touch_button(control.jump_click)
+        airtest_method.key_event('{ENTER}')
+        # airtest_method.touch_button(control.jump_click)
 
         airtest_method.touch_button(control.choice_button)
         
