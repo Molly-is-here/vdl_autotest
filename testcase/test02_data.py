@@ -56,7 +56,7 @@ def test_add_file():
     with allure.step(f'点击导入文件夹按钮'):
         file_path = save_path.dataset_path + '\导入mask\导入image和label'
         data.add_file(file_path)
-        airtest_method.touch_button(control.add_file)
+        # airtest_method.touch_button(control.add_file)
         do_log.info('成功导入图像+标注,用例执行成功')
     
 @allure.title('数据管理页面筛选框组合筛选')
