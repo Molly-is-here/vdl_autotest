@@ -363,11 +363,32 @@ class control():
     # 判定规则
     judgement_rules = Template(save_path.base_path + "/public/18_判定功能.png", target_pos = 5,threshold=0.7) 
 
+    #添加规则
+    add_rules = Template(save_path.base_path + "/public/18_添加标准.png",threshold=0.7)
+
     # 开始推理 
     judgement_infering = Template(save_path.base_path + "/public/18_判定功能.png", target_pos = 6,threshold=0.7)   
 
     #复选框
     checkbox = Template(save_path.base_path + "/public/18_复选框.png",threshold=0.7) 
+
+    #分类判定范围
+    cls_checkbox = Template(save_path.base_path + "/public/18_判定范围.png",target_pos = 2,threshold=0.7)
+
+    #分类特征_OK
+    cls_ok = Template(save_path.base_path + "/public/18_分类特征ok.png",threshold=0.7)
+
+    #分类特征_NG
+    cls_ng = Template(save_path.base_path + "/public/18_分类特征ng.png",threshold=0.7)
+
+    #分割判定范围
+    seg_checkbox = Template(save_path.base_path + "/public/18_判定范围.png",target_pos = 5,threshold=0.7)
+
+    #分割规则
+    seg_rule = Template(save_path.base_path + "/public/18_分割规则.png",target_pos = 5,threshold=0.7)
+
+    #检测判定范围
+    det_checkbox = Template(save_path.base_path + "/public/18_判定范围.png",target_pos = 8,threshold=0.7)
 
     #保存
     save_button = Template(save_path.base_path + "/public/18_保存按钮.png",threshold=0.7)   
@@ -377,6 +398,15 @@ class control():
 
     #综合判定开始推理按钮
     judgement_infering_button = Template(save_path.base_path + "/public/18_判定开始推理.png",threshold=0.7)
+
+    #判定页面图像筛选框
+    judgement_search =  Template(save_path.base_path + "/public/18_图像筛选框.png",threshold=0.7)
+
+    #筛选结果
+    select_image = Template(save_path.base_path + "/public/18_筛选结果.png",threshold=0.7)
+
+    #取消选中复选框
+    cancel_select = Template(save_path.base_path + "/public/18_已勾选.png",threshold=0.7)
 
 #标注工具控件
 class label_control():   

@@ -47,13 +47,15 @@ class management():
         file_path = os.path.join(dataset)
         print(file_path)
         airtest_method.input_text(file_path)
-        airtest_method.touch_button(control.jump_click)
+        airtest_method.key_event('{ENTER}')
+        # airtest_method.touch_button(control.jump_click)
         airtest_method.operate_sleep()
 
     def click_project():
         '''选中方案'''
-        airtest_method.touch_button(control.click_project)       
-        airtest_method.touch_button(control.ok_button)
+        airtest_method.touch_button(control.click_project)  
+        airtest_method.key_event('{ENTER}')     
+        # airtest_method.touch_button(control.ok_button)
 
     def manage_remark(remark): 
         '''添加方案备注'''       

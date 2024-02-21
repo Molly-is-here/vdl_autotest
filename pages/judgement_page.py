@@ -13,16 +13,34 @@ class judgement():
             airtest_method.touch_button(control.judgement_page)
             data.project_flow()
 
-    def judgement_area():
+    def judgement_area(area):
         '''判定范围'''
         if not airtest_method.check_exit(control.judgement_area,'FALSE'):
             assert False,'找不到判定范围按钮'
         else:
             airtest_method.touch_button(control.judgement_area)
         '''勾选判定范围'''
-        if airtest_method.check_exit(control.checkbox):
-            airtest_method.touch_button(control.checkbox)  #勾选全部的判定范围
-        airtest_method.touch_button(control.save_button)  #若校验无未勾选的范围后点击保存
+        if airtest_method.check_exit(area):
+            airtest_method.touch_button(area)  #勾选判定范围
+        airtest_method.touch_button(control.save_button)  #点击保存
+
+    def judgement_rules():
+        '''添加判定标准'''
+        if not airtest_method.check_exit(control.judgement_rules,'FALSE'):
+            assert False,'找不到判定规则按钮'
+        else:
+            airtest_method.touch_button(control.judgement_rules)
+            airtest_method.touch_button(control.add_rules)
+
+    def select_image(content):
+        '''筛选图片'''
+        if not airtest_method.check_exit(control.judgement_search,'FALSE'):
+            assert False,'找不到图像搜索框'
+        else:
+            airtest_method.touch_button(control.judgement_search)
+            airtest_method.input_text(content)
+            airtest_method.double_click(control.select_image)
+
 
     def judgement_infering():
         '''开始推理'''
