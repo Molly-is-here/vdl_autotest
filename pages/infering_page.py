@@ -34,10 +34,18 @@ class infering():
       
     def begin_infering():
         '''开始推理'''
-        if not airtest_method.check_exit(control.return_infering,'FALSE',5):      
+        if not airtest_method.check_exit(control.begin_infering,'FALSE',10):      
+            assert False,'找不到重新推理按钮'
+        else:         
+            airtest_method.touch_button(control.begin_infering)
+
+    def return_infering():
+        '''重新推理'''
+        if not airtest_method.check_exit(control.return_infering,'FALSE',10):      
             assert False,'找不到重新推理按钮'
         else:         
             airtest_method.touch_button(control.return_infering)
+
         
     def review_infering():
         '''判断推理完成'''

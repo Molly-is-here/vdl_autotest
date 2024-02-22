@@ -34,7 +34,7 @@ def test_GPU_ONNX_infering():
 @allure.title('使用GPU-TRT推理')
 @pytest.mark.smoke 
 def test_GPU_TRT_infering():
-    if not airtest_method.check_exit(control.begin_infering,'FALSE'):      
+    if not airtest_method.check_exit(control.return_infering,'FALSE'):      
         assert False,'找不到开始推理按钮'
     else:         
         with allure.step(f'点击解锁按钮'):
@@ -43,8 +43,8 @@ def test_GPU_TRT_infering():
             infering.infering_pattern_choice()
         with allure.step(f'选择TRT模式'):
             infering.infering_pattern_TRT()
-        with allure.step(f'点击开始推理按钮'):
-            infering.begin_infering()
+        with allure.step(f'点击重新推理按钮'):
+            infering.return_infering()
         with allure.step(f'判断推理是否完成'):
             infering.review_infering()
             do_log.info('GPU-TRT推理完成,用例执行成功') 
@@ -52,7 +52,7 @@ def test_GPU_TRT_infering():
 @allure.title('使用CPU推理')
 @pytest.mark.smoke 
 def test_CPU_infering():
-    if not airtest_method.check_exit(control.begin_infering,'FALSE'):      
+    if not airtest_method.check_exit(control.return_infering,'FALSE'):      
         assert False,'找不到开始推理按钮'
     else: 
         with allure.step(f'点击解锁按钮'):
@@ -61,8 +61,8 @@ def test_CPU_infering():
             infering.infering_device_type()
         with allure.step(f'选择CPU设备'):
             infering.infering_device_CPU()
-        with allure.step(f'点击开始推理按钮'):
-            infering.begin_infering()
+        with allure.step(f'点击重新推理按钮'):
+            infering.return_infering()
         with allure.step(f'判断推理是否完成'):
             infering.review_infering()
             do_log.info('CPU推理完成,用例执行成功') 
