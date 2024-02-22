@@ -11,10 +11,12 @@ from common.Airtest_method import airtest_method
 from elements.public_control import control
 from elements.pipelines import *
 from common.handle_log import do_log
+from PIL import Image
 
 cls_pipelines = [cls_seg,cls_det,cls_uad,cls_seq]
 det_pipelines = [det_OCR,det_uad]
 seg_pipellines = [seg_det,seg_uad,seg_seg,seg_OCR,seg_seq]
+static_path = os.path.join(save_path.base_path, 'static')
 
 @allure.feature('串联方案测试')
 @allure.title('点击新建方案')
@@ -243,6 +245,25 @@ def test_GPU_ONNX_infering(dataset,file):
         judgement.judgement_done()
         do_log.info('综合判定推理结束')
 
+@allure.title('使用CPU推理')
+@pytest.mark.skip('跳过使用CPU推理校验') 
+def test_CPU_infering():
+    if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
+        assert False,'找不到开始推理按钮'
+    else: 
+        with allure.step(f'点击解锁按钮'):
+            infering.unlock_infering()
+        with allure.step(f'点击设备类型列表'):
+            infering.infering_device_type()
+        with allure.step(f'选择CPU设备'):
+            infering.infering_device_CPU()
+        with allure.step(f'开始推理'):
+            judgement.judgement_infering()
+            judgement.judgement_infering()
+        with allure.step(f'判断是否推理成功'):
+            judgement.judgement_done()
+            do_log.info('CPU推理完成,用例执行成功') 
+
 @allure.title('打开方案并切换至综合判定页面')
 @pytest.mark.skip('跳过打开方案')
 def test_open_pipelinespro():
@@ -268,13 +289,18 @@ def test_cls_judgement():
         airtest_method.touch_button(control.cls_ok)
         airtest_method.touch_button(control.cls_ng)
         airtest_method.touch_button(control.save_button)  #点击保存
+        airtest_method.operate_sleep()
         do_log.info('分类规则设置完成')
     with allure.step(f'使用GPU推理'): 
         dataset = r'D:\方案\士多啤梨'   
         test_GPU_ONNX_infering(dataset,'images')
+        test_CPU_infering()
     with allure.step(f'筛选图片'):
         judgement.select_image('3.png')
         airtest_method.operate_sleep(3.0)
+    with allure.step(f'截图保留结果'):       
+        cls_screenshot = os.path.join(static_path, "分类判定结果.png")        
+        airtest_method.screenshot(cls_screenshot)   #截图
     with allure.step(f'取消勾选分类判定范围'):
         judgement.judgement_area(control.cancel_select)
     with allure.step(f'关闭方案'):
@@ -294,14 +320,19 @@ def test_seg_judgement():
         keyevent("{BACKSPACE}")
         airtest_method.input_text('1')
         airtest_method.touch_button(control.save_button)  #点击保存
+        airtest_method.operate_sleep()
         do_log.info('分割规则设置完成')
     with allure.step(f'使用GPU推理'): 
         dataset = r'D:\方案\士多啤梨'   
         test_GPU_ONNX_infering(dataset,'images')
+        test_CPU_infering()
     with allure.step(f'筛选图片'):
         judgement.select_image('3.png')
         airtest_method.operate_sleep(3.0)
-    with allure.step(f'取消勾选分类判定范围'):
+    with allure.step(f'截图保留结果'):       
+        seg_screenshot = os.path.join(static_path, "分割判定结果.png")        
+        airtest_method.screenshot(seg_screenshot)   #截图
+    with allure.step(f'取消勾选分割判定范围'):
         judgement.judgement_area(control.cancel_select)
     with allure.step(f'关闭方案'):
         assess.template_file()
@@ -326,24 +357,7 @@ def test_seg_judgement():
 #             judgement.judgement_done()
 #             do_log.info('GPU-TRT推理完成,用例执行成功') 
 
-@allure.title('使用CPU推理')
-@pytest.mark.smoke 
-def test_CPU_infering():
-    if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
-        assert False,'找不到开始推理按钮'
-    else: 
-        with allure.step(f'点击解锁按钮'):
-            infering.unlock_infering()
-        with allure.step(f'点击设备类型列表'):
-            infering.infering_device_type()
-        with allure.step(f'选择CPU设备'):
-            infering.infering_device_CPU()
-        with allure.step(f'开始推理'):
-            judgement.judgement_infering()
-            judgement.judgement_infering()
-        with allure.step(f'判断是否推理成功'):
-            judgement.judgement_done()
-            do_log.info('CPU推理完成,用例执行成功') 
+
 
     
         

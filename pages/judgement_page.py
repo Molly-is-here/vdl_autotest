@@ -21,8 +21,10 @@ class judgement():
             airtest_method.touch_button(control.judgement_area)
         '''勾选判定范围'''
         if airtest_method.check_exit(area):
-            airtest_method.touch_button(area)  #勾选判定范围
+            airtest_method.touch_button(area)  #勾选判定范围  
+            airtest_method.operate_sleep()        
         airtest_method.touch_button(control.save_button)  #点击保存
+        airtest_method.operate_sleep()
 
     def judgement_rules():
         '''添加判定标准'''
