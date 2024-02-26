@@ -168,7 +168,7 @@ class control():
     #删除弹窗提示
     delete_prompt = Template(save_path.base_path + "/public/08_删除提示.png", threshold=0.7)
 
-    #删除确认按钮
+    #确认按钮
     training_okbutton = Template(save_path.base_path + "/public/08_确认按钮.png", threshold=0.7)
 
     #模型选择
@@ -354,6 +354,9 @@ class control():
     #选择CPU设备
     device_CPU = Template(save_path.base_path + "/public/17_选择CPU.png",target_pos = 5,threshold=0.7)
 
+    #批量推理
+    batch_infering = Template(save_path.base_path + "/public/17_批量推理.png",threshold=0.7)
+
     #综合判定
     judgement_page = Template(save_path.base_path + "/public/18_综合判定.png", threshold=0.7)
 
@@ -407,6 +410,15 @@ class control():
 
     #取消选中复选框
     cancel_select = Template(save_path.base_path + "/public/18_已勾选.png",threshold=0.7)
+
+    #高级配置
+    advanced = Template(save_path.base_path + "/public/18_高级配置.png",threshold=0.7)
+
+    #不使用加速
+    not_use_acceleration = Template(save_path.base_path + "/public/18_不使用加速.png",threshold=0.7)
+
+    #使用trt加速
+    use_trt_acceleration = Template(save_path.base_path + "/public/18_使用trt加速.png",threshold=0.7)
 
 #标注工具控件
 class label_control():   

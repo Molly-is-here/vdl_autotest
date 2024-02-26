@@ -90,5 +90,15 @@ class infering():
             airtest_method.touch_button(control.device_CPU)
             airtest_method.operate_sleep(2.0)
 
+    def batch_infering(batch):
+        '''批量推理'''
+        if not airtest_method.check_exit(control.batch_infering,'FALSE'):      
+            assert False,'找不到批量推理编辑框'
+        else:         
+            airtest_method.touch_button(control.batch_infering)
+            airtest_method.key_event("{BACKSPACE}")
+            airtest_method.input_text(f'{batch}')
+
+
 
 

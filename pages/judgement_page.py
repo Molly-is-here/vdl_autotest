@@ -34,6 +34,31 @@ class judgement():
             airtest_method.touch_button(control.judgement_rules)
             airtest_method.touch_button(control.add_rules)
 
+    def advanced_trt_acceleration():
+        '''高级配置-trt加速'''
+        if not airtest_method.check_exit(control.advanced,'FALSE'):
+            assert False,'找不到高级配置按钮'
+        else:
+            airtest_method.touch_button(control.advanced)
+        if not airtest_method.check_exit(control.not_use_acceleration,'FALSE'):
+            assert False,'找不到使用加速按钮'
+        else:
+            airtest_method.touch_button(control.not_use_acceleration)
+            airtest_method.touch_button(control.use_trt_acceleration)
+            airtest_method.touch_button(control.training_okbutton)
+
+    def advanced_batch_infering(batch):
+        '''高级配置-批量推理'''
+        if not airtest_method.check_exit(control.advanced,'FALSE'):
+            assert False,'找不到高级配置按钮'
+        else:
+            airtest_method.touch_button(control.advanced)
+            airtest_method.touch_button(control.batch_infering)
+            airtest_method.key_event("{BACKSPACE}")
+            airtest_method.input_text(f'{batch}')
+            airtest_method.touch_button(control.training_okbutton)
+
+
     def select_image(content):
         '''筛选图片'''
         if not airtest_method.check_exit(control.judgement_search,'FALSE'):
@@ -56,7 +81,7 @@ class judgement():
         if not airtest_method.check_exit(control.judgement_done,'FALSE',3600000):
             assert False,'判定推理失败'
         else:
-            airtest_method.operate_sleep(5.0)
+            airtest_method.operate_sleep(10.0)
 
 
 

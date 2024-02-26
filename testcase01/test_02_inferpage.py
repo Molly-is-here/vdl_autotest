@@ -7,7 +7,7 @@ from tools.monitoring import *
 from tools.create_html import create_html_file
 import threading
 from PIL import Image
-from tools.ocr_identify import ocr_organize
+from tools.ocr import ocr_organize
 from pages.infering_page import infering
 from elements.public_control import control
 

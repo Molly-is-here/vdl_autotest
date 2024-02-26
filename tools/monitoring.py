@@ -10,7 +10,7 @@ import pandas as pd
 import statistics
 from common.Airtest_method import airtest_method 
 from PIL import Image
-from tools.ocr_identify import ocr_organize
+from tools.ocr import ocr_organize
 from tools.calculating import calculate_data
 
 def get_training_utilization(name,status,event):

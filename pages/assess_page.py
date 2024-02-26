@@ -36,6 +36,7 @@ class assess():
     def export_model():
         '''导出模型'''
         airtest_method.touch_button(control.export_model)
+        airtest_method.operate_sleep()
 
         airtest_method.touch_button(control.file_name)
         airtest_method.operate_sleep()

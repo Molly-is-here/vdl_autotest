@@ -11,7 +11,7 @@ from common.Airtest_method import airtest_method
 from elements.public_control import control
 from elements.pipelines import *
 from common.handle_log import do_log
-from PIL import Image
+from tools import ocr
 
 cls_pipelines = [cls_seg,cls_det,cls_uad,cls_seq]
 det_pipelines = [det_OCR,det_uad]
@@ -264,6 +264,22 @@ def test_CPU_infering():
             judgement.judgement_done()
             do_log.info('CPU推理完成,用例执行成功') 
 
+@allure.title('使用GPU-TRT推理')
+@pytest.mark.skip('跳过使用GPU-TRT推理校验') 
+def test_GPU_TRT_infering():
+    if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
+        assert False,'找不到开始推理按钮'
+    else:         
+        with allure.step(f'点击解锁按钮'):
+            infering.unlock_infering()
+        with allure.step(f'高级配置进行trt设置'):
+            judgement.advanced_trt_acceleration()
+        with allure.step(f'开始推理'):
+            judgement.judgement_infering()
+        with allure.step(f'判断是否推理成功'):
+            judgement.judgement_done()
+            do_log.info('GPU-TRT推理完成,用例执行成功') 
+            
 @allure.title('打开方案并切换至综合判定页面')
 @pytest.mark.skip('跳过打开方案')
 def test_open_pipelinespro():
@@ -293,14 +309,22 @@ def test_cls_judgement():
         do_log.info('分类规则设置完成')
     with allure.step(f'使用GPU推理'): 
         dataset = r'D:\方案\士多啤梨'   
-        test_GPU_ONNX_infering(dataset,'images')
+        test_GPU_ONNX_infering(dataset,'images')  
+    with allure.step(f'使用CPU推理'):
         test_CPU_infering()
+    with allure.step('使用TRT推理'):
+        test_GPU_TRT_infering()
     with allure.step(f'筛选图片'):
         judgement.select_image('3.png')
         airtest_method.operate_sleep(3.0)
-    with allure.step(f'截图保留结果'):       
-        cls_screenshot = os.path.join(static_path, "分类判定结果.png")        
-        airtest_method.screenshot(cls_screenshot)   #截图
+    with allure.step(f'截图识别结果'):             
+        cls_results =  ocr.translate_text(1198,199,1302,226)
+        do_log.info(f'分类判定结果{cls_results}')
+        if cls_results == 'NG':
+            cls_screenshot = os.path.join(static_path, "分类判定结果.png")        
+            airtest_method.screenshot(cls_screenshot)   #截图
+        else:
+            assert False,'未识别判定结果'
     with allure.step(f'取消勾选分类判定范围'):
         judgement.judgement_area(control.cancel_select)
     with allure.step(f'关闭方案'):
@@ -325,37 +349,36 @@ def test_seg_judgement():
     with allure.step(f'使用GPU推理'): 
         dataset = r'D:\方案\士多啤梨'   
         test_GPU_ONNX_infering(dataset,'images')
+    with allure.step(f'使用CPU推理'):
         test_CPU_infering()
     with allure.step(f'筛选图片'):
         judgement.select_image('3.png')
         airtest_method.operate_sleep(3.0)
-    with allure.step(f'截图保留结果'):       
-        seg_screenshot = os.path.join(static_path, "分割判定结果.png")        
-        airtest_method.screenshot(seg_screenshot)   #截图
-    with allure.step(f'取消勾选分割判定范围'):
+    with allure.step(f'截图识别结果'):             
+        seg_results =  ocr.translate_text(1198,199,1302,226)
+        do_log.info(f'分割判定结果{seg_results}')
+        if seg_results == 'NG':
+            seg_screenshot = os.path.join(static_path, "分割判定结果.png")        
+            airtest_method.screenshot(seg_screenshot)   #截图
+        else:
+            assert False,'未识别判定结果'
+  
+@allure.title('批量推理')
+@pytest.mark.smoke
+def test_batch_infering():
+    with allure.step(f'开启批量推理'):
+        judgement.advanced_batch_infering(3)
+    with allure.step(f'开始推理'):
+            judgement.judgement_infering()
+    with allure.step(f'判断是否推理成功'):
+        judgement.judgement_done()
+        do_log.info('批量推理完成,用例执行成功')
+    with allure.step(f'取消勾选判定范围'):
         judgement.judgement_area(control.cancel_select)
     with allure.step(f'关闭方案'):
         assess.template_file()
         assess.template_close()
-    
 
-# @allure.title('使用GPU-TRT推理')
-# @pytest.mark.smoke 
-# def test_GPU_TRT_infering():
-#     if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
-#         assert False,'找不到开始推理按钮'
-#     else:         
-#         with allure.step(f'点击解锁按钮'):
-#             infering.unlock_infering()
-#         with allure.step(f'点击模式选择列表'):
-#             infering.infering_pattern_choice()
-#         with allure.step(f'选择TRT模式'):
-#             infering.infering_pattern_TRT()
-#         with allure.step(f'开始推理'):
-#             judgement.judgement_infering()
-#         with allure.step(f'判断是否推理成功'):
-#             judgement.judgement_done()
-#             do_log.info('GPU-TRT推理完成,用例执行成功') 
 
 
 

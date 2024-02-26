@@ -11,7 +11,7 @@ from tools.monitoring import *
 from tools.create_html import create_html_file
 import threading
 from PIL import Image
-from tools.ocr_identify import ocr_organize
+from tools.ocr import ocr_organize
 
 auto_setup(__file__)
 
