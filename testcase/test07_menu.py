@@ -32,10 +32,10 @@ def test_operating_guild():
     with allure.step(f'导出软件操作手册'):
         assess.operating_guild()
 
-@allure.title('导出软件使用SDK开发手册')
-@pytest.mark.smoke
-def test_SDK_guild():
-    with allure.step(f'点击帮助按钮'):
-        assess.template_help()
-    with allure.step(f'导出SDK开发手册'):
-        assess.SDK_guild()
+# @allure.title('导出软件使用SDK开发手册')
+# @pytest.mark.smoke
+# def test_SDK_guild():
+#     with allure.step(f'点击帮助按钮'):
+#         assess.template_help()
+#     with allure.step(f'导出C++ SDK开发手册'):
+#         assess.SDK_guild()

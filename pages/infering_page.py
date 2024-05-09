@@ -68,12 +68,19 @@ class infering():
         else:         
             airtest_method.touch_button(control.pattern_choice)
  
-    def infering_pattern_TRT():
-        '''选择TRT模式'''
-        if not airtest_method.check_exit(control.pattern_TRT,'FALSE'):      
-            assert False,'找不到TRT模式'
+    def infering_FP32_TRT():
+        '''选择TRT-FP32模式'''
+        if not airtest_method.check_exit(control.FP32_TRT,'FALSE'):      
+            assert False,'找不到TRT-FP32模式'
         else:         
-            airtest_method.touch_button(control.pattern_TRT)
+            airtest_method.touch_button(control.FP32_TRT)
+
+    def infering_FP16_TRT():
+        '''选择TRT-FP16模式'''
+        if not airtest_method.check_exit(control.FP16_TRT,'FALSE'):      
+            assert False,'找不到TRT-FP16模式'
+        else:         
+            airtest_method.touch_button(control.FP16_TRT)
      
     def infering_device_type():
         '''设备类型'''

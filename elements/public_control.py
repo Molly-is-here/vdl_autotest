@@ -85,7 +85,7 @@ class control():
     data_management_page = Template(save_path.base_path + "/public/03_数据管理页面.png", threshold=0.7)
 
     #点击添加图像下划线
-    add_image_underscore = Template(save_path.base_path + "/public/05_添加图像下划线.png", target_pos = 9,threshold=0.7)
+    add_image_underscore = Template(save_path.base_path + "/public/05_添加图像下划线.png", target_pos = 8,threshold=0.7)
 
     #点击添加图像
     add_image = Template(save_path.base_path + "/public/05_添加图像.png", threshold=0.7)
@@ -345,8 +345,11 @@ class control():
     #模式选择
     pattern_choice = Template(save_path.base_path + "/public/17_模式选择.png", threshold=0.7)
 
-    #选择TRT模式
-    pattern_TRT = Template(save_path.base_path + "/public/17_切换为TRT.png", threshold=0.7)
+    #TRT FP32模式
+    FP32_TRT = Template(save_path.base_path + "/public/17_FP32.png", threshold=0.7)
+
+    #TRT FP16模式
+    FP16_TRT = Template(save_path.base_path + "/public/17_FP16.png", threshold=0.7)
 
     #设备类型
     device_type = Template(save_path.base_path + "/public/17_设备类型.png", threshold=0.7)

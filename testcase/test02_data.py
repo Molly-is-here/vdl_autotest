@@ -7,29 +7,30 @@ from pages.data_page import data
 from common.handle_log import do_log
 
 @allure.feature('数据管理页面')
-# @allure.title('通过下划线导入图像')
-# @pytest.mark.smoke
-# def test_add_image_underscore():    
-#     if not airtest_method.check_exit(control.add_image_underscore,'FALSE') :
-#         assert False,'找不到添加图像按钮'
-#     else:
-#         with allure.step(f'点击导入图像下划线'):
-#             airtest_method.touch_button(control.add_image_underscore)
-#     airtest_method.touch_button(control.choice_file)   
-#     file_path = save_path.dataset_path + '\导入mask\images'
-#     airtest_method.input_text(file_path)
-#     airtest_method.touch_button(control.jump_click)
-#     airtest_method.touch_button(control.click_area)
-#     '''全选图片'''
-#     airtest_method.key_event("^a")
-#     airtest_method.touch_button(control.ok_button)
-#     if not airtest_method.check_exit(control.upload_label,'FALSE') :
-#         do_log.error('导入失败，用例执行失败')
-#         assert False,'找不到导入完成标志'
-#     else:
-#         with allure.step(f'点击完成按钮'):
-#             airtest_method.touch_button(control.upload_done)
-#             do_log.info('成功导入图像,用例执行成功')
+@allure.title('通过下划线导入图像')
+@pytest.mark.smoke
+def test_add_image_underscore():    
+    if not airtest_method.check_exit(control.add_image_underscore,'FALSE') :
+        assert False,'找不到添加图像按钮'
+    else:
+        with allure.step(f'点击导入图像下划线'):
+            airtest_method.touch_button(control.add_image_underscore)
+    airtest_method.touch_button(control.choice_file)   
+    file_path = save_path.dataset_path + '\导入mask\images'
+    airtest_method.input_text(file_path)
+    airtest_method.key_event("{ENTER}")
+    # airtest_method.touch_button(control.jump_click)
+    airtest_method.touch_button(control.click_area)
+    '''全选图片'''
+    airtest_method.key_event("^a")
+    airtest_method.touch_button(control.ok_button)
+    if not airtest_method.check_exit(control.upload_label,'FALSE') :
+        do_log.error('导入失败，用例执行失败')
+        assert False,'找不到导入完成标志'
+    else:
+        with allure.step(f'点击完成按钮'):
+            airtest_method.touch_button(control.upload_done)
+            do_log.info('成功导入图像,用例执行成功')
 
 @allure.title('导入图像')
 @pytest.mark.smoke
@@ -69,7 +70,7 @@ def test_search_image():
     with allure.step(f'筛选列表筛选是否标注条件'):
         airtest_method.touch_button(control.manage_search)
         airtest_method.touch_button(control.unfinish_labeled)
-        airtest_method.touch_button(control.add_file)
+        # airtest_method.touch_button(control.add_file)
         if not airtest_method.check_exit(control.null_results,'TRUE',5) :
             assert False,'组合筛选无效'
         else:           

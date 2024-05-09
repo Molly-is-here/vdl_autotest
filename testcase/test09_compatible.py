@@ -6,8 +6,8 @@ from pages.marking_page import mark
 from pages.training_page import training
 from pages.assess_page import assess
 from elements.public_control import control
-from common.handle_log import do_log
 from common.Airtest_method import airtest_method
+from tools.compatible_html import create_html_file
 import pytest
 import allure
 
@@ -33,6 +33,9 @@ def test_compatible_smoke():
         if item == save_path.uad:
             dataset = save_path.uad_project
             name = 'UAD'
+        if item == save_path.seqocr:
+            dataset = save_path.seqocr_dataset
+            name = 'SEQOCR'
 
         with allure.step(f'当前运行{name}算法方案'):
             '''方案管理页面'''
@@ -44,9 +47,9 @@ def test_compatible_smoke():
 
             '''模型训练页面'''
             training.model_training()
-            if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG': 
+            if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR': 
                 training.add_card()
-                training.set_study()
+                # training.set_study()
                 training.mouse_move()
                 training.zidingyi_button()
                 training.cut_benchsize()
@@ -58,13 +61,17 @@ def test_compatible_smoke():
 
             '''模型评估页面'''
             assess.model_assess()
-            if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG':
+            if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR':
                 assess.assess_success() 
             else:
                 if not airtest_method.check_exit(control.confusion_matrix,'FALSE',360000) :
                     assert False,'评估未完成'
-                else:
-                    airtest_method.operate_sleep()
+
+            airtest_method.operate_sleep(15.0)
+            ct_screenshot = os.path.join(save_path.base_path, f"{name}评估完成.png") 
+            airtest_method.screenshot(ct_screenshot)
+            create_html_file("V0.8.4",name,ct_screenshot)
+
 
             '''HOME键返回方案管理页面'''
             assess.home()

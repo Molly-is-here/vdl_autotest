@@ -31,6 +31,7 @@ class save_path():
     seg_project = project_path + "\分割算法"
     ocr_project = project_path + "\OCR算法"
     uad_project = project_path + "\无监督算法"
+    seqocr_project = project_path + "\字符串算法"
 
     '''串联pipelines数据集'''
     cls_seg = pipelines_path + "\分类-分割"
