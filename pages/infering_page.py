@@ -51,8 +51,6 @@ class infering():
         '''判断推理完成'''
         if not airtest_method.check_exit(control.infering_finished,'FALSE',36000) :
             assert False,'推理未完成'
-        else:     
-            return True
             
     def unlock_infering():
         '''解锁推理按钮'''  

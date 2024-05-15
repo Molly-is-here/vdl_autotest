@@ -58,7 +58,7 @@ def create_html_file(version,name,images,write_header=True):
     </body>
     </html>
     '''
-    html_name = save_path.base_path + '\\' + 'static' + '\\' + name + '评估指标.html'
+    html_name = save_path.base_path + '\\' + 'static' + '\\' + version + '评估指标.html'
     if not os.path.exists(html_name):
         with open(html_name, 'a') as output_file:
             output_file.write(html_code)

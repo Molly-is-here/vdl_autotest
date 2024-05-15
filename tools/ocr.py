@@ -1,5 +1,7 @@
 import easyocr
 from PIL import ImageGrab
+from elements.public_control import control
+from common.Airtest_method import airtest_method 
 
 
 def ocr_organize(file_path_list):
@@ -23,10 +25,10 @@ def translate_text(left, top, right, bottom):
     return results[0][1]
 
 
-if __name__ == "__main__":
-    # ocr_path = []
-    # path1 = r"C:\Users\yunli\Desktop\ly_autotest\VDL_autotest\elements\static\SEG_infer_min.png"
-    # path2 = r"C:\Users\yunli\Desktop\ly_autotest\VDL_autotest\elements\static\SEG_infer_max.png"1198,199,1302,226
-    # ocr_path = [path1,path2]
-    # ocr_organize(ocr_path)
-    translate_text()
+
+# if __name__ == "__main__":
+#     # ocr_path = []
+#     # path1 = r"C:\Users\yunli\Desktop\ly_autotest\VDL_autotest\elements\static\SEG_infer_min.png"
+#     # path2 = r"C:\Users\yunli\Desktop\ly_autotest\VDL_autotest\elements\static\SEG_infer_max.png"1198,199,1302,226
+#     # ocr_path = [path1,path2]
+#     ocr_organize(ocr_path)

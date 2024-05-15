@@ -27,6 +27,11 @@ class assess():
             assert False,'评估未完成'
         else:
             airtest_method.operate_sleep(5.0)
+
+    def assess_done():       
+        '''通过后处理参数配置判断评估是否完成''' 
+        if not airtest_method.check_exit(control.process_setting,'FALSE',360000) :
+            assert False,'评估未完成'  
   
     def more_button():
          '''点击更多按钮'''

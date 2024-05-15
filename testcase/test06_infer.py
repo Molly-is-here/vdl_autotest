@@ -34,6 +34,7 @@ def test_GPU_ONNX_infering():
 @allure.title('批量推理')
 @pytest.mark.smoke
 def test_batch_infering():
+    infering.review_infering()
     if not airtest_method.check_exit(control.return_infering,'FALSE'):      
         assert False,'找不到开始推理按钮'
     else:    
@@ -45,7 +46,8 @@ def test_batch_infering():
 
 @allure.title('使用GPU-FP32-TRT推理')
 @pytest.mark.smoke 
-def test_GPU_TRT_infering():
+def test_GPU_fp32_infering():
+    infering.review_infering()
     if not airtest_method.check_exit(control.return_infering,'FALSE'):      
         assert False,'找不到开始推理按钮'
     else:         
@@ -64,7 +66,8 @@ def test_GPU_TRT_infering():
 
 @allure.title('使用GPU-FP16-TRT推理')
 @pytest.mark.smoke 
-def test_GPU_TRT_infering():
+def test_GPU_fp16_infering():
+    infering.review_infering()
     if not airtest_method.check_exit(control.return_infering,'FALSE'):      
         assert False,'找不到开始推理按钮'
     else:         

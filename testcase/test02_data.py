@@ -65,13 +65,13 @@ def test_add_file():
 def test_search_image():
     with allure.step(f'搜索框输入关键字'):
         airtest_method.touch_button(control.manage_input)
-        project_name = '5'
+        project_name = '0'
         airtest_method.input_text(project_name)
     with allure.step(f'筛选列表筛选是否标注条件'):
         airtest_method.touch_button(control.manage_search)
-        airtest_method.touch_button(control.unfinish_labeled)
-        # airtest_method.touch_button(control.add_file)
-        if not airtest_method.check_exit(control.null_results,'TRUE',5) :
+        airtest_method.touch_button(control.finish_labeled)
+        airtest_method.touch_button(control.add_file)
+        if not airtest_method.check_exit(control.add_image_underscore,'TRUE',5) :
             assert False,'组合筛选无效'
         else:           
             do_log.info('组合筛选生效,用例执行成功')

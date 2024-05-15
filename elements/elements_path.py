@@ -15,7 +15,7 @@ class save_path():
     ocr = base_path + "/public/OCR算法.png"
     uad = base_path + "/public/无监督算法.png"
     seqocr = base_path + "/public/字符串算法.png"
-    project_list = [cls,det,uad,ocr,seqocr,seg]
+    project_list = [cls,det,seg,ocr,uad,seqocr]
 
     '''冒烟测试数据集'''
     cls_dataset = smoke_path + "\分类算法"
@@ -25,13 +25,14 @@ class save_path():
     uad_dataset = smoke_path + "\无监督算法"
     seqocr_dataset = smoke_path + "\Seqocr算法"
 
-    '''兼容性测试方案'''
-    cls_project = project_path + "\分类算法"
-    det_project = project_path + "\检测算法"
-    seg_project = project_path + "\分割算法"
-    ocr_project = project_path + "\OCR算法"
-    uad_project = project_path + "\无监督算法"
-    seqocr_project = project_path + "\字符串算法"
+    '''算法校验测试方案'''
+    cls_project = project_path + "\分类"
+    det_project = project_path + "\检测"
+    seg_project = project_path + "\分割"
+    ocr_project = project_path + "\OCR"
+    uad_project = project_path + "\无监督"
+    seqocr_project = project_path + "\字符串"
+    compare_project = [cls_project,det_project,seg_project,ocr_project,uad_project,seqocr_project]
 
     '''串联pipelines数据集'''
     cls_seg = pipelines_path + "\分类-分割"

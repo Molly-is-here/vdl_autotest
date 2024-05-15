@@ -61,6 +61,7 @@ def test_search_project():
         airtest_method.touch_button(control.manage_input)
         project_name = '测试發'
         airtest_method.input_text(project_name)
+        airtest_method.key_event("{ENTER}")
     with allure.step(f'筛选列表筛选算法类型'):
         airtest_method.touch_button(control.manage_search)
         airtest_method.touch_button(control.search_seg)

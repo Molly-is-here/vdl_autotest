@@ -117,8 +117,8 @@ class control():
     #完成按钮
     upload_done = Template(save_path.base_path + "/public/05_完成按钮1.png", threshold=0.7)
 
-    #未完成标注
-    unfinish_labeled = Template(save_path.base_path + "/public/03_未完成标注.png", threshold=0.7)
+    #已标注标注
+    finish_labeled = Template(save_path.base_path + "/public/03_已标注.png", threshold=0.7)
 
     #结果为空
     null_results = Template(save_path.base_path + "/public/03_结果为空.png", threshold=0.7)
@@ -235,7 +235,7 @@ class control():
     set_study = Template(save_path.base_path + "/public/11_设置学习次数.png",threshold=0.7)
 
     #点击开始训练
-    star_training = Template(save_path.base_path + "/public/12_开始训练.png", threshold=0.7)
+    star_training = Template(save_path.base_path + "/public/12_开始训练.png",threshold=0.7)
 
     #继续训练
     continu_training = Template(save_path.base_path + "/public/08_继续训练.png", threshold=0.7)
@@ -251,6 +251,9 @@ class control():
 
     #点击查看评估
     review_assess = Template(save_path.base_path + "/public/12_查看评估.png",rgb=True,threshold=0.7)
+
+    #停止训练
+    stop_training = Template(save_path.base_path + "/public/12_停止训练.png",rgb=True,threshold=0.7)
 
     #切换至模型评估页面
     model_assess = Template(save_path.base_path + "/public/13_模型评估页面.png", threshold=0.7)
@@ -290,6 +293,12 @@ class control():
 
     #混淆矩阵
     confusion_matrix =  Template(save_path.base_path + "/public/14_混淆矩阵.png", threshold=0.7)
+
+    #敏感区域
+    sensitive_area = Template(save_path.base_path + "/public/14_敏感区域.png", threshold=0.7)
+
+    #后处理参数配置
+    process_setting = Template(save_path.base_path + "/public/14_后处理参数配置.png", threshold=0.7)
 
     #判断导出成功
     report_success =  Template(save_path.base_path + "/public/16_判断报告是否导出成功.png", threshold=0.7)
