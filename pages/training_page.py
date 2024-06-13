@@ -112,7 +112,7 @@ class training():
         keyevent("{BACKSPACE}")
         keyevent("{BACKSPACE}")
         keyevent("{BACKSPACE}")
-        airtest_method.input_text('30')
+        airtest_method.input_text('1')
         airtest_method.operate_sleep()
      
     def star_training():

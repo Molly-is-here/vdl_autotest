@@ -58,6 +58,9 @@ class assess():
 
         airtest_method.touch_button(control.export_button)
         airtest_method.operate_sleep(30.0)
+        for i in range(2):
+            airtest_method.touch_button(control.training_okbutton)
+            airtest_method.operate_sleep()
 
     def export_SDK(path):
         '''导出SDK'''
@@ -87,6 +90,9 @@ class assess():
             airtest_method.touch_button(control.export_SDK)
             airtest_method.touch_button(control.export_button)
             airtest_method.operate_sleep(60.0)
+            for i in range(2):
+                airtest_method.touch_button(control.training_okbutton)
+                airtest_method.operate_sleep()
 
     def unzip_SDK():
         '''解压SDK压缩包'''

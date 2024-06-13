@@ -71,6 +71,9 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][1])
 
                         training.set_study()
+                        training.mouse_move()
+                        training.zidingyi_button()
+                        training.cut_benchsize()
                         training.star_training()
 
                         '''模型评估页面'''
@@ -169,7 +172,10 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study()                            
+                        training.set_study()  
+                        training.mouse_move()
+                        training.zidingyi_button()
+                        training.cut_benchsize()                          
                         training.star_training()
 
                         '''模型评估页面'''
@@ -220,7 +226,10 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study()                            
+                        training.set_study()   
+                        training.mouse_move()
+                        training.zidingyi_button()
+                        training.cut_benchsize()                         
                         training.star_training()
 
                         '''模型评估页面'''
@@ -272,7 +281,10 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study()                            
+                        training.set_study() 
+                        training.mouse_move()
+                        training.zidingyi_button() 
+                        training.cut_benchsize()                          
                         training.star_training()
 
                         '''模型评估页面'''
@@ -323,7 +335,10 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study()                            
+                        training.set_study()  
+                        training.mouse_move()
+                        training.zidingyi_button()
+                        training.cut_benchsize()                          
                         training.star_training()
 
                         '''模型评估页面'''

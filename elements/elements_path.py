@@ -33,7 +33,8 @@ class save_path():
     uad_project = project_path + "\无监督"
     seqocr_project = project_path + "\字符串"
     compare_project = [cls_project,det_project,seg_project,ocr_project,uad_project,seqocr_project]
-
+    # compare_project = [seqocr_project]
+    
     '''串联pipelines数据集'''
     cls_seg = pipelines_path + "\分类-分割"
     cls_det = pipelines_path + "\分类-检测"

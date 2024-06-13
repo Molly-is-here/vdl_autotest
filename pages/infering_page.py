@@ -49,8 +49,11 @@ class infering():
         
     def review_infering():
         '''判断推理完成'''
+        airtest_method.operate_sleep()
         if not airtest_method.check_exit(control.infering_finished,'FALSE',36000) :
             assert False,'推理未完成'
+        else:
+            airtest_method.operate_sleep()
             
     def unlock_infering():
         '''解锁推理按钮'''  
@@ -94,6 +97,7 @@ class infering():
         else:         
             airtest_method.touch_button(control.device_CPU)
             airtest_method.operate_sleep(2.0)
+            airtest_method.touch_button(control.images_input)
 
     def batch_infering(batch):
         '''批量推理'''

@@ -223,10 +223,10 @@ class control():
     zidingyi_edit_box2 = Template(save_path.base_path + "/public/09_自定义编辑框.png",target_pos = 5,threshold=0.7)
 
     #鼠标定位至批次大小
-    mouse_move = Template(save_path.base_path + "/public/09_开benchsize.png", threshold=0.7)
+    mouse_move = Template(save_path.base_path + "/public/09_开benchsize1.png", target_pos= 5,threshold=0.7)
 
     #选项为自定义
-    zidingyi_button = Template(save_path.base_path + "/public/10_选择自定义.png", threshold=0.7)
+    zidingyi_button = Template(save_path.base_path + "/public/10_选择自定义.png", target_pos= 8, threshold=0.7)
 
     #下调benchsize
     cut_benchsize = Template(save_path.base_path + "/public/11_benchsize下调按钮.png",target_pos = 6,threshold=0.7)
@@ -431,6 +431,21 @@ class control():
 
     #使用trt加速
     use_trt_acceleration = Template(save_path.base_path + "/public/18_使用trt加速.png",threshold=0.7)
+
+    #类别级别
+    type_image = Template(save_path.base_path + "/public/类别级别.png",threshold=0.7)
+
+    #像素级别
+    pixel_image = Template(save_path.base_path + "/public/像素级别.png",threshold=0.7)
+
+    #字符级别
+    ocr_image = Template(save_path.base_path + "/public/字符级别.png",threshold=0.7)
+
+    #内容级别
+    content_image = Template(save_path.base_path + "/public/内容级别.png",threshold=0.7)
+
+    #切换为类别级别
+    change_type_image = Template(save_path.base_path + "/public/切换为类别级别.png",threshold=0.7)
 
 #标注工具控件
 class label_control():   

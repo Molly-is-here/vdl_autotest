@@ -87,6 +87,7 @@ def test_GPU_fp16_infering():
 @allure.title('使用CPU推理')
 @pytest.mark.smoke 
 def test_CPU_infering():
+    infering.review_infering()
     if not airtest_method.check_exit(control.return_infering,'FALSE'):      
         assert False,'找不到开始推理按钮'
     else: 
