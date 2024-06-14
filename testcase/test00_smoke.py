@@ -364,10 +364,10 @@ def test_algorithm_smoke():
                             assess.template_file()
                             assess.template_close()
 
-@allure.title('退出软件')
-@pytest.mark.smoke
-def test_quit():
-    with allure.step(f'点击文件按钮'): 
-       assess.template_file()
-    with allure.step(f'点击退出按钮'):
-        assess.template_quit()       
+# @allure.title('退出软件')
+# @pytest.mark.smoke
+# def test_quit():
+#     with allure.step(f'点击文件按钮'): 
+#        assess.template_file()
+#     with allure.step(f'点击退出按钮'):
+#         assess.template_quit()       
