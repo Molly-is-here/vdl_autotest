@@ -56,6 +56,7 @@ def test_seg_pipelines():
             with allure.step(f'新建方案'):
                 test_create_proj()
                 test_create_model(pipelines.name)
+                do_log.info(f"当前创建的pipelines为{pipelines.name}")
             with allure.step(f'点击导入文件夹按钮'):
                 file_path = pipelines.file_path + '\images'
                 data.add_file(file_path)
@@ -117,6 +118,7 @@ def test_det_pipelines():
             with allure.step(f'新建方案'):
                 test_create_proj()
                 test_create_model(pipelines.name)
+                do_log.info(f"当前创建的pipelines为{pipelines.name}")
             with allure.step(f'点击导入文件夹按钮'):
                 file_path = pipelines.file_path + '\images'
                 data.add_file(file_path)
@@ -179,6 +181,7 @@ def test_cls_pipelines():
             with allure.step(f'新建方案'):
                 test_create_proj()
                 test_create_model(pipelines.name)
+                do_log.info(f"当前创建的pipelines为{pipelines.name}")
             with allure.step(f'点击导入文件夹按钮'):
                 file_path = pipelines.file_path + '\images'
                 data.add_file(file_path)
@@ -233,11 +236,41 @@ def test_cls_pipelines():
             with allure.step(f'切换方案'):
                 test_close_project()
 
+
+            
+@allure.title('打开方案并切换至综合判定页面')
+@pytest.mark.skip('跳过打开方案')
+def test_open_pipelinespro():
+    '''打开方案，切换至综合判定'''
+    with allure.step(f'打开串联方案'):
+        dataset = r"D:\方案\抹茶大福"
+        management.open_project(dataset)
+        management.click_project()
+        airtest_method.operate_sleep(5.0)
+    with allure.step(f'切换至综合判定页面'):
+        judgement.judgement_page()
+        do_log.info('成功切换至综合判定页面')
+
+@allure.title('勾选判定范围')
+@pytest.mark.smoke
+def test_judgement():
+    test_open_pipelinespro()
+    with allure.step(f'勾选判定范围'):
+        judgement.judgement_area(control.judge_checkbox)
+        airtest_method.operate_sleep()
+        do_log.info('判定范围勾选成功')
+    with allure.step(f'设置判定规则'):
+        judgement.judgement_rules()
+        airtest_method.touch_button(control.save_button)  #点击保存
+        airtest_method.operate_sleep()
+        do_log.info('规则设置完成')
+
 @allure.title('使用GPU-ONNX推理')
-@pytest.mark.skip('跳过使用GPU推理校验')
-def test_GPU_ONNX_infering(dataset,file):
+@pytest.mark.smoke
+def test_GPU_ONNX_infering():
     with allure.step(f'导入图像'):
-        infering.images_input(dataset,file)
+        dataset = r'D:\方案\抹茶大福'
+        infering.images_input(dataset,'sources')
         do_log.info('图像导入成功')
     with allure.step(f'开始推理'):
         judgement.judgement_infering()
@@ -246,7 +279,7 @@ def test_GPU_ONNX_infering(dataset,file):
         do_log.info('综合判定推理结束')
 
 @allure.title('使用CPU推理')
-@pytest.mark.skip('跳过使用CPU推理校验') 
+@pytest.mark.smoke
 def test_CPU_infering():
     if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
         assert False,'找不到开始推理按钮'
@@ -265,7 +298,7 @@ def test_CPU_infering():
             do_log.info('CPU推理完成,用例执行成功') 
 
 @allure.title('使用GPU-TRT推理')
-@pytest.mark.skip('跳过使用GPU-TRT推理校验') 
+@pytest.mark.smoke
 def test_GPU_TRT_infering():
     if not airtest_method.check_exit(control.judgement_infering_button,'FALSE'):      
         assert False,'找不到开始推理按钮'
@@ -279,89 +312,6 @@ def test_GPU_TRT_infering():
         with allure.step(f'判断是否推理成功'):
             judgement.judgement_done()
             do_log.info('GPU-TRT推理完成,用例执行成功') 
-            
-@allure.title('打开方案并切换至综合判定页面')
-@pytest.mark.skip('跳过打开方案')
-def test_open_pipelinespro():
-    '''打开方案，切换至综合判定'''
-    with allure.step(f'打开串联方案'):
-        dataset = r"D:\方案\士多啤梨"
-        management.open_project(dataset)
-        management.click_project()
-        airtest_method.operate_sleep(5.0)
-    with allure.step(f'切换至综合判定页面'):
-        judgement.judgement_page()
-        do_log.info('成功切换至综合判定页面')
-
-@allure.title('勾选分类判定范围')
-@pytest.mark.smoke
-def test_cls_judgement():
-    test_open_pipelinespro()
-    with allure.step(f'勾选分类判定范围'):
-        judgement.judgement_area(control.cls_checkbox)
-        do_log.info('分类判定范围勾选成功')
-    with allure.step(f'设置分类判定规则'):
-        judgement.judgement_rules()
-        airtest_method.touch_button(control.cls_ok)
-        airtest_method.touch_button(control.cls_ng)
-        airtest_method.touch_button(control.save_button)  #点击保存
-        airtest_method.operate_sleep()
-        do_log.info('分类规则设置完成')
-    with allure.step(f'使用GPU推理'): 
-        dataset = r'D:\方案\士多啤梨'   
-        test_GPU_ONNX_infering(dataset,'images')  
-    with allure.step(f'使用CPU推理'):
-        test_CPU_infering()
-    with allure.step('使用TRT推理'):
-        test_GPU_TRT_infering()
-    with allure.step(f'筛选图片'):
-        judgement.select_image('3.png')
-        airtest_method.operate_sleep(3.0)
-    with allure.step(f'截图识别结果'):             
-        cls_results =  ocr.translate_text(1198,199,1302,226)
-        do_log.info(f'分类判定结果{cls_results}')
-        if cls_results == 'NG':
-            cls_screenshot = os.path.join(static_path, "分类判定结果.png")        
-            airtest_method.screenshot(cls_screenshot)   #截图
-        else:
-            assert False,'未识别判定结果'
-    with allure.step(f'取消勾选分类判定范围'):
-        judgement.judgement_area(control.cancel_select)
-    with allure.step(f'关闭方案'):
-        assess.template_file()
-        assess.template_close()
-
-@allure.title('勾选分割判定范围')
-@pytest.mark.smoke
-def test_seg_judgement():
-    test_open_pipelinespro()
-    with allure.step(f'勾选分割判定范围'):
-        judgement.judgement_area(control.seg_checkbox)
-        do_log.info('分割判定范围勾选成功')
-    with allure.step(f'设置分割判定规则'):
-        judgement.judgement_rules()
-        airtest_method.touch_button(control.seg_rule)
-        keyevent("{BACKSPACE}")
-        airtest_method.input_text('1')
-        airtest_method.touch_button(control.save_button)  #点击保存
-        airtest_method.operate_sleep()
-        do_log.info('分割规则设置完成')
-    with allure.step(f'使用GPU推理'): 
-        dataset = r'D:\方案\士多啤梨'   
-        test_GPU_ONNX_infering(dataset,'images')
-    with allure.step(f'使用CPU推理'):
-        test_CPU_infering()
-    with allure.step(f'筛选图片'):
-        judgement.select_image('3.png')
-        airtest_method.operate_sleep(3.0)
-    with allure.step(f'截图识别结果'):             
-        seg_results =  ocr.translate_text(1198,199,1302,226)
-        do_log.info(f'分割判定结果{seg_results}')
-        if seg_results == 'NG':
-            seg_screenshot = os.path.join(static_path, "分割判定结果.png")        
-            airtest_method.screenshot(seg_screenshot)   #截图
-        else:
-            assert False,'未识别判定结果'
   
 @allure.title('批量推理')
 @pytest.mark.smoke

@@ -20,7 +20,9 @@ class judgement():
         else:
             airtest_method.touch_button(control.judgement_area)
         '''勾选判定范围'''
-        if airtest_method.check_exit(area):
+        if not airtest_method.check_exit(area):
+            assert False,'勾选判定范围失败'
+        else:
             airtest_method.touch_button(area)  #勾选判定范围  
             airtest_method.operate_sleep()        
         airtest_method.touch_button(control.save_button)  #点击保存
@@ -44,7 +46,7 @@ class judgement():
             assert False,'找不到使用加速按钮'
         else:
             airtest_method.touch_button(control.not_use_acceleration)
-            airtest_method.touch_button(control.use_trt_acceleration)
+            airtest_method.touch_button(control.use_trt_16acceleration)
             airtest_method.touch_button(control.training_okbutton)
 
     def advanced_batch_infering(batch):
