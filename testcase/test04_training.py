@@ -82,10 +82,38 @@ def test_delete():
                 airtest_method.touch_button(control.training_okbutton)
                 do_log.info('成功删除卡片，用例执行成功')
 
+@allure.title('设置为模板')                
+@pytest.mark.smoke
+def test_set_template():
+    with allure.step(f'先设置训练参数'):
+        training.set_study()
+        training.mouse_move()
+        training.zidingyi_button()             
+        training.cut_benchsize()
+    with allure.step(f'训练参数设置为模板'):
+        airtest_method.right_click(coords=(199,195)) #右键
+        training.set_template()
+    with allure.step(f'使用模版开启训练'):
+        airtest_method.touch_button(control.add_card)
+        airtest_method.touch_button(control.create_using_template)
+    with allure.step(f'点击开始训练'):
+            training.star_training()
+    with allure.step(f'判断是否完成训练-评估'):
+        assess.model_assess()
+    with allure.step(f'判断是否评估成功'):  
+        if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
+            assert False,'评估未完成'
+        else:
+            airtest_method.operate_sleep()
+            do_log.info('图像裁切训练成功，用例执行成功')
+    with allure.step(f'返回模型训练页面'): 
+        training.model_training()
+
 @allure.title('图像裁切')                
 @pytest.mark.smoke
 def test_image_cropping():
     with allure.step(f'选择图像裁切按钮'):
+        training.add_card()
         training.image_cropping()
         airtest_method.operate_sleep()
         if not airtest_method.check_exit(control.cropping_true,'FALSE',5) :        
@@ -93,7 +121,6 @@ def test_image_cropping():
         else:  
             with allure.step(f'选择是，确认开启图像裁切'):       
                 airtest_method.touch_button(control.cropping_true)
-
         airtest_method.operate_sleep()
         with allure.step(f'设置学习次数'):
             training.set_study() 
@@ -104,6 +131,7 @@ def test_image_cropping():
         with allure.step(f'点击开始训练'):
             training.star_training()
         with allure.step(f'判断是否完成训练-评估'):
+            airtest_method.operate_sleep(60.0)
             assess.model_assess()
         with allure.step(f'判断是否评估成功'):  
             if not airtest_method.check_exit(control.infering_finished,'FALSE',360000) :
@@ -159,6 +187,7 @@ def test_add_training():
     with allure.step(f'开启训练'):
         airtest_method.operate_sleep(120.0)      
         assess.model_assess()
+        airtest_method.operate_sleep(10.0)
     with allure.step(f'判断是否评估成功'):
         if not airtest_method.check_exit(control.report_button,'FALSE',360000) :
             assert False,'评估未完成'

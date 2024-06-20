@@ -19,7 +19,10 @@ class training():
         airtest_method.touch_button(control.nomal_training)
         airtest_method.operate_sleep()
 
-    
+    def set_template():
+        '''设置为模版'''
+        airtest_method.touch_button(control.set_template)
+
     def rename_button():
         '''重命名'''
         airtest_method.touch_button(control.rename_button)

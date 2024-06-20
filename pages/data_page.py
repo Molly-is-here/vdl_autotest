@@ -47,8 +47,10 @@ class data():
         airtest_method.touch_button(control.ok_button)
         if not airtest_method.check_exit(control.upload_label,'FALSE') :
             assert False,'找不到导入完成标志'
-        else:
-            airtest_method.touch_button(control.upload_done)
+        # else:
+            # data.add_tag('多的是你不知道的事')
+            # airtest_method.touch_button(control.upload_done)
+
 
     def add_label(file_path):
         '''导入标注'''   
@@ -70,6 +72,23 @@ class data():
         else:
             airtest_method.touch_button(control.upload_done)
 
+    def add_image_underscore(file_path):
+        '''下划线添加图像'''
+        if not airtest_method.check_exit(control.add_image_underscore,'FALSE') :
+            assert False,'找不到添加图像下划线'
+        else:
+            airtest_method.touch_button(control.add_image_underscore)
+        airtest_method.touch_button(control.choice_file)   
+        airtest_method.input_text(file_path)
+        airtest_method.key_event("{ENTER}")
+        # airtest_method.touch_button(control.jump_click)
+        airtest_method.touch_button(control.click_area)
+        '''全选图片'''
+        airtest_method.key_event("^a")
+        airtest_method.touch_button(control.ok_button)
+        if not airtest_method.check_exit(control.upload_label,'FALSE') :
+            assert False,'找不到导入完成标志'
+
     def project_flow():
         '''点击方案流程'''
         if not airtest_method.check_exit(control.project_flow,'FALSE',5) :
@@ -85,7 +104,7 @@ class data():
             airtest_method.touch_button(control.add_dataset)
 
     def add_pre_module(element):
-        '''添加后置模块'''
+        '''添加前置模块'''
         data.add_dataset()
         if not airtest_method.check_exit(element,'FALSE',5) :
             assert False,'未找到前置模块'
@@ -107,6 +126,21 @@ class data():
         data.project_flow()
         airtest_method.touch_button(control.dataset_module)
         data.project_flow()
+
+    def add_tag(content):
+        '''添加标签'''       
+        if not airtest_method.check_exit(control.tag_dropdown,'FALSE',5) :
+            assert False,'未找到标签下拉框'
+        else:
+            airtest_method.touch_button(control.tag_dropdown)
+            airtest_method.touch_button(control.tag_searching)
+            airtest_method.input_text(content)
+            airtest_method.key_event('{ENTER}')
+            airtest_method.touch_button(control.checkbox)
+            airtest_method.touch_button(control.upload_label)
+            airtest_method.touch_button(control.upload_done)
+
+
         
         
     

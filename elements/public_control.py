@@ -117,6 +117,12 @@ class control():
     #完成按钮
     upload_done = Template(save_path.base_path + "/public/05_完成按钮1.png", threshold=0.7)
 
+    #标签下拉框
+    tag_dropdown = Template(save_path.base_path + "/public/05_标签下拉框.png", threshold=0.7)
+
+    #标签搜索框
+    tag_searching = Template(save_path.base_path + "/public/05_标签搜索框.png", threshold=0.7)
+
     #已标注标注
     finish_labeled = Template(save_path.base_path + "/public/03_已标注.png", threshold=0.7)
 
@@ -243,6 +249,12 @@ class control():
     #增量训练
     add_training = Template(save_path.base_path + "/public/08_增量训练.png", threshold=0.7)
 
+    #参数配置为模版
+    set_template = Template(save_path.base_path + "/public/08_保存参数为模板.png", threshold=0.7)
+
+    #通过模板创建
+    create_using_template = Template(save_path.base_path + "/public/08_通过模板创建.png", threshold=0.7)
+
     #任务完成标志
     task_finished = Template(save_path.base_path + "/public/12_任务完成1.png", threshold=0.7)
 
@@ -306,6 +318,9 @@ class control():
     #点击文件按钮
     template_file = Template(save_path.base_path + "/public/15_文件按钮.png", threshold=0.7)
 
+    #点击导出SDK按钮
+    template_SDK = Template(save_path.base_path + "/public/15_导出SDK.png", threshold=0.7)
+
     #点击帮助按钮
     template_help = Template(save_path.base_path + "/public/15_帮助按钮.png", threshold=0.7)
 
@@ -323,6 +338,12 @@ class control():
 
     #点击SDK开发手册
     SDK_guild = Template(save_path.base_path + "/public/16_SDK开发手册.png", threshold=0.7)
+
+    #c++
+    guild_c =  Template(save_path.base_path + "/public/16_c++.png", threshold=0.7)
+
+    #csharp
+    guild_csharp =  Template(save_path.base_path + "/public/16_csharp.png", threshold=0.7)
 
     #判断SDK开发手册导出成功
     SDK_success = Template(save_path.base_path + "/public/16_判断SDK开发手册导出成功.png", threshold=0.7)
@@ -493,6 +514,12 @@ class label_control():
 
     #屏蔽区域
     masking_area = Template(save_path.base_path + "/auto_label/02_屏蔽区域.png" , threshold=0.7)
+
+    #动态正选
+    dynamic_selection = Template(save_path.base_path + "/auto_label/02_动态屏蔽.png" ,target_pos= 4, threshold=0.7)
+
+    #动态反选
+    dynamic_deselection = Template(save_path.base_path + "/auto_label/02_动态屏蔽.png" ,target_pos= 5, threshold=0.7)
     
     #自动标注
     auto_marking = Template(save_path.base_path + "/auto_label/03_自动标注.png" , threshold=0.7)

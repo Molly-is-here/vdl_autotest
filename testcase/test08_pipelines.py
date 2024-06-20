@@ -9,13 +9,14 @@ from pages.judgement_page import judgement
 from pages.infering_page import infering
 from common.Airtest_method import airtest_method
 from elements.public_control import control
+from elements.public_control import label_control
 from elements.pipelines import *
 from common.handle_log import do_log
 from tools import ocr
 
 cls_pipelines = [cls_seg,cls_det,cls_uad,cls_seq]
 det_pipelines = [det_OCR,det_uad]
-seg_pipellines = [seg_det,seg_uad,seg_seg,seg_OCR,seg_seq]
+seg_pipellines = [seg_uad,seg_seg,seg_det,seg_OCR,seg_seq]
 static_path = os.path.join(save_path.base_path, 'static')
 
 @allure.feature('串联方案测试')
@@ -43,11 +44,25 @@ def test_create_model(remark):
 @allure.title('切换方案')
 @pytest.mark.skip("串联方案创建完成后切换方案")
 def test_close_project():
-    with allure.step(f'关闭方案'):    
-        '''关闭方案'''
+    '''关闭方案'''
+    with allure.step(f'关闭方案'):          
         assess.template_file()
         assess.template_close()
         airtest_method.operate_sleep(10.0)
+
+@allure.title('后置模块屏蔽区域-动态正选')
+@pytest.mark.skip("屏蔽区域在串联方案中加入")
+def test_dynamic_selection():
+    with allure.step(f'动态正选'):
+        airtest_method.touch_button(label_control.masking_area)
+        airtest_method.touch_button(label_control.dynamic_selection)
+
+@allure.title('后置模块屏蔽区域-动态反选')
+@pytest.mark.skip("屏蔽区域在串联方案中加入")
+def test_dynamic_deselection():
+    with allure.step(f'动态反选'):
+        airtest_method.touch_button(label_control.masking_area)
+        airtest_method.touch_button(label_control.dynamic_deselection)
 
 @allure.title('文件夹导入分割串联数据集')
 @pytest.mark.smoke
@@ -91,6 +106,12 @@ def test_seg_pipelines():
                 label2_path = pipelines.file_path + '\labels2'
                 mark.import_label(label2_path)
                 do_log.info('后置模块标注导入成功')
+            if pipelines == seg_uad:
+                with allure.step(f'动态正选'):
+                    test_dynamic_selection()
+            if pipelines == seg_seg:
+                with allure.step(f'动态反选'):
+                    test_dynamic_deselection()
             with allure.step(f'自动划分数据集'):
                 mark.auto_divide()
             with allure.step(f'开启训练'):

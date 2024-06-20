@@ -156,7 +156,16 @@ class assess():
         else:          
             airtest_method.touch_button(control.template_file)
             airtest_method.operate_sleep(2.0)
- 
+
+    def template_SDK():
+        '''点击导出SDK按钮'''
+        if not airtest_method.check_exit(control.template_SDK,'FALSE') :
+            assert False,'未找到导出SDK按钮'
+        else:          
+            airtest_method.touch_button(control.template_SDK)
+            airtest_method.touch_button(control.export_button)
+            airtest_method.operate_sleep(30.0)
+
     def template_help():
         '''点击帮助按钮'''
         if not airtest_method.check_exit(control.template_help,'FALSE') :
@@ -194,16 +203,24 @@ class assess():
             else:
                 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
 
-    def SDK_guild():
+    def SDK_guild(type):
         '''导出SDK开发手册'''
         if not airtest_method.check_exit(control.SDK_guild,'FALSE') :
             assert False,'未找到SDK开发手册按钮'
         else:
-            airtest_method.touch_button(control.SDK_guild)
-            if not airtest_method.check_exit(control.SDK_success,'FALSE',10) :
-                assert False,'SDK开发手册未导出成功'
-            else:
-                open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
+            airtest_method.move_to((303,63),(338,161))
+            if type == 'c++':
+                airtest_method.touch_button(control.guild_c)
+                if not airtest_method.check_exit(control.SDK_success,'FALSE',10) :
+                    assert False,'SDK开发手册未导出成功'
+                else:
+                    open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
+            if type == 'csharp':
+                airtest_method.touch_button(control.guild_csharp)
+                if not airtest_method.check_exit(control.SDK_success,'FALSE',10) :
+                    assert False,'SDK开发手册未导出成功'
+                else:
+                    open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
   
     def home():
         '''home键'''
