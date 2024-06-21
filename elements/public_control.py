@@ -145,7 +145,7 @@ class control():
     auto_divide = Template(save_path.base_path + "/public/06_自动划分.png", threshold=0.7)
 
     #导入标注
-    import_label = Template(save_path.base_path + "/public/06_导入标注.png", threshold=0.7)
+    import_label = Template(save_path.base_path + "/public/06_导入标注_01.png",target_pos= 4,threshold=0.7)
 
     #模型训练页面
     model_training = Template(save_path.base_path + "/public/07_模型训练页面.png", threshold=0.7)

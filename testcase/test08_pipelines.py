@@ -17,6 +17,8 @@ from tools import ocr
 cls_pipelines = [cls_seg,cls_det,cls_uad,cls_seq]
 det_pipelines = [det_OCR,det_uad]
 seg_pipellines = [seg_uad,seg_seg,seg_det,seg_OCR,seg_seq]
+seq_pipelines = [seq_cls,seq_uad,seq_ocr]
+uad_pipelines = [uad_seg]
 static_path = os.path.join(save_path.base_path, 'static')
 
 @allure.feature('串联方案测试')
@@ -257,8 +259,133 @@ def test_cls_pipelines():
             with allure.step(f'切换方案'):
                 test_close_project()
 
+@allure.title('文件夹导入字符串串联数据集')
+@pytest.mark.smoke
+def test_seq_pipelines():
+    for pipelines in seq_pipelines: 
+            with allure.step(f'新建方案'):
+                test_create_proj()
+                test_create_model(pipelines.name)
+                do_log.info(f"当前创建的pipelines为{pipelines.name}")
+            with allure.step(f'点击导入文件夹按钮'):
+                file_path = pipelines.file_path + '\images'
+                data.add_file(file_path)
+                do_log.info('成功导入图像,用例执行成功')
+            with allure.step(f'点击方案流程'):
+                data.project_flow()
+                do_log.info('方案流程画布打开,用例执行成功')
+            with allure.step(f'数据源添加字符串模块作为首模块'):
+                data.add_pre_module(pipelines.pre_module)
+                mark.image_label()  #点击图像标注按钮关闭方案流程画布
+                do_log.info('字符串首模块创建成功,用例执行成功')
+            with allure.step(f'导入前置模块标注'):
+                label1_path = pipelines.file_path + '\labels1'
+                mark.import_label(label1_path)
+                do_log.info('前置模块标注导入成功')
+            with allure.step(f'自动划分数据集'):
+                mark.auto_divide()
+            with allure.step(f'开启训练'):
+                training.model_training()
+                training.add_card()
+                training.set_study()
+                training.star_training()
+                assess.model_assess()
+                assess.assess_success() 
+                do_log.info('前置模块训练评估完成')
+            with allure.step(f'添加后置模块'):
+                data.project_flow()                
+                data.add_pre_module(pipelines.post_module)
+                mark.image_label()   #点击图像标注按钮关闭方案流程画布                
+                do_log.info(f'后置模块创建成功')
+            with allure.step(f'导入后置模块标注'):
+                label2_path = pipelines.file_path + '\labels2'
+                mark.import_label(label2_path)
+                do_log.info('后置模块标注导入成功')
+            with allure.step(f'自动划分数据集'):
+                mark.auto_divide()
+            with allure.step(f'开启训练'):
+                training.model_training()
+                training.add_card()
+                if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
+                    training.star_training() 
+                else:
+                    training.set_study()
+                    training.star_training() 
+                assess.model_assess()                             
+                assess.assess_success()
+                training.model_training()
+                do_log.info('后置模块训练评估完成')
+            with allure.step(f'返回数据源管理页面'):
+                data.dataset_management()
+                do_log.info('成功返回数据源管理页面')
+            with allure.step(f'切换方案'):
+                test_close_project()
 
-            
+@allure.title('文件夹导入无监督串联数据集')
+@pytest.mark.smoke
+def test_uad_pipelines():
+    for pipelines in uad_pipelines: 
+            with allure.step(f'新建方案'):
+                test_create_proj()
+                test_create_model(pipelines.name)
+                do_log.info(f"当前创建的pipelines为{pipelines.name}")
+            with allure.step(f'点击导入文件夹按钮'):
+                file_path = pipelines.file_path + '\images'
+                data.add_file(file_path)
+                do_log.info('成功导入图像,用例执行成功')
+            with allure.step(f'点击方案流程'):
+                data.project_flow()
+                do_log.info('方案流程画布打开,用例执行成功')
+            with allure.step(f'数据源添加无监督模块作为首模块'):
+                data.add_pre_module(pipelines.pre_module)
+                mark.image_label()  #点击图像标注按钮关闭方案流程画布
+                do_log.info('无监督首模块创建成功,用例执行成功')
+            with allure.step(f'导入前置模块标注'):
+                label1_path = pipelines.file_path + '\labels1'
+                mark.import_label(label1_path)
+                do_log.info('前置模块标注导入成功')
+            with allure.step(f'自动划分数据集'):
+                mark.auto_divide()
+            with allure.step(f'开启训练'):
+                training.model_training()
+                training.add_card()
+                if pipelines.pre_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
+                    training.star_training() 
+                else:
+                    training.set_study()
+                    training.star_training()
+                assess.model_assess()
+                assess.assess_success() 
+                do_log.info('前置模块训练评估完成')
+            with allure.step(f'添加后置模块'):
+                data.project_flow()                
+                data.add_pre_module(pipelines.post_module)
+                mark.image_label()   #点击图像标注按钮关闭方案流程画布                
+                do_log.info(f'后置模块创建成功')
+            with allure.step(f'导入后置模块标注'):
+                label2_path = pipelines.file_path + '\labels2'
+                mark.import_label(label2_path)
+                do_log.info('后置模块标注导入成功')
+            with allure.step(f'自动划分数据集'):
+                mark.auto_divide()
+            with allure.step(f'开启训练'):
+                training.model_training()
+                training.add_card()
+                if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
+                    training.star_training() 
+                else:
+                    training.set_study()
+                    training.star_training() 
+                assess.model_assess()                             
+                assess.assess_success()
+                training.model_training()
+                do_log.info('后置模块训练评估完成')
+            with allure.step(f'返回数据源管理页面'):
+                data.dataset_management()
+                do_log.info('成功返回数据源管理页面')
+            with allure.step(f'切换方案'):
+                test_close_project()
+
 @allure.title('打开方案并切换至综合判定页面')
 @pytest.mark.skip('跳过打开方案')
 def test_open_pipelinespro():

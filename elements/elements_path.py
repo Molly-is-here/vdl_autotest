@@ -48,4 +48,10 @@ class save_path():
     seg_uad = pipelines_path + "\分割-无监督"
     seg_seg = pipelines_path + "\分割-分割"
     seg_seq = pipelines_path + "\分割-字符串"
+    seq_uad = pipelines_path + "\字符串-无监督"
+    seq_cls = pipelines_path + "\字符串-分类"
+    seq_ocr = pipelines_path + "\字符串-OCR"
+    ocr_cls = pipelines_path + "\OCR-分类"
+    ocr_uad = pipelines_path + "\OCR-无监督"
+    uad_seg = pipelines_path + "\无监督-分割"
 

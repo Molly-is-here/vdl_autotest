@@ -53,4 +53,5 @@ def test_SDK_guild():
         assess.SDK_guild('c++')
     with allure.step(f'导出Csharp SDK开发手册'):
         assess.SDK_guild('csharp')
+        assess.template_help()
     do_log.info('SDK开发手册导出成功，用例执行成功')
