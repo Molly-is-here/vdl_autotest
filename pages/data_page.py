@@ -47,9 +47,8 @@ class data():
         airtest_method.touch_button(control.ok_button)
         if not airtest_method.check_exit(control.upload_label,'FALSE') :
             assert False,'找不到导入完成标志'
-        # else:
-            # data.add_tag('多的是你不知道的事')
-            # airtest_method.touch_button(control.upload_done)
+        else:
+            airtest_method.touch_button(control.upload_done)
 
 
     def add_label(file_path):

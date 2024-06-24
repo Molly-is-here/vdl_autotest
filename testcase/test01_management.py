@@ -68,9 +68,26 @@ def test_search_project():
         if not airtest_method.check_exit(control.choice_proj,'FALSE',5) :
             assert False,'找不到选中方案'
         else:
-            airtest_method.touch_button(control.choice_proj)
-            airtest_method.double_click(control.choice_proj)
+            airtest_method.touch_button(control.choice_proj)   
             do_log.info('成功混合筛选出方案,用例执行成功')
+
+@allure.title('右键关闭方案')
+@pytest.mark.smoke
+def test_closed_project():
+    with allure.step(f'右键关闭方案'):
+        airtest_method.right_click((530,804))
+        airtest_method.operate_sleep()
+        airtest_method.touch_button(control.right_click_toclosed)
+        do_log.info('成功关闭方案,用例执行成功')
+
+@allure.title('双击打开方案')
+@pytest.mark.smoke
+def test_opened_project():
+    with allure.step(f'双击打开方案'):
+        airtest_method.double_click(control.choice_proj)
+        airtest_method.operate_sleep(5.0)
+        do_log.info('成功打开方案,用例执行成功')
+
 
 
 

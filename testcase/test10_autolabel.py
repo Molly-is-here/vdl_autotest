@@ -136,7 +136,7 @@ def test_OCR_autolabel():
 
 @allure.title('seq_OCR算法自动标注')
 @pytest.mark.smoke
-def test_seq_OCR_autolabel():  
+def test_seqOCR_autolabel():  
     name = 'SEQ_OCR自动标注'  #方案名称
     item = save_path.seqocr  #方案类型
     dataset = save_path.seqocr_dataset  #数据集

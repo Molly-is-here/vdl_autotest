@@ -48,6 +48,9 @@ class control():
     #选中方案
     click_project = Template(save_path.base_path + "/public/03_pro标志.png", threshold=0.7)
 
+    #右键关闭
+    right_click_toclosed = Template(save_path.base_path + "/public/02_右键编辑菜单.png",target_pos= 2, threshold=0.7)
+
     #点击home键
     home_button = Template(save_path.base_path + "/public/04_home键.png", threshold=0.7)
 

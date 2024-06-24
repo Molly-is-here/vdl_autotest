@@ -23,7 +23,7 @@ def test_add_image_underscore():
         file_path = save_path.dataset_path + '\导入mask\images'
         data.add_image_underscore(file_path)  
     with allure.step(f'添加标签'):
-        test_add_tag('第1批自动化标签')
+        test_add_tag('自动化标签')
     do_log.info('成功导入图像,用例执行成功')
 
 @allure.title('导入图像')
@@ -33,8 +33,8 @@ def test_add_image():
     with allure.step(f'点击导入图像按钮'):
         file_path = save_path.dataset_path + '\导入mask\images'
         data.add_image(file_path)
-    with allure.step(f'添加标签'):
-        test_add_tag('第2批自动化标签')
+    # with allure.step(f'添加标签'):
+    #     test_add_tag('第2批自动化标签')
     do_log.info('成功导入图像,用例执行成功')
             
 @allure.title('导入标注')

@@ -25,7 +25,8 @@ run_command = [
                 # f'{addpath}/testcase/test09_compatible.py',   
                 f'--alluredir={addpath}/report', '--clean-alluredir']
  
-# run_command = [ f'{addpath}/testcase/test08_pipelines.py',
+# run_command = [ f'{addpath}/testcase/test01_management.py',
+#                 f'{addpath}/testcase/test02_data.py',
 #                 f'--alluredir={addpath}/report', '--clean-alluredir']
 pytest.main(run_command) 
 
