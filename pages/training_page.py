@@ -8,7 +8,7 @@ class training():
     
     def model_training():
         '''切换至模型训练页面'''
-        if not airtest_method.check_exit(control.model_training,'FALSE') :
+        if not airtest_method.check_exit(control.model_training,'FALSE',5) :
             assert False,'找不到模型训练tab按钮'
         else:
             airtest_method.touch_button(control.model_training)
@@ -19,25 +19,44 @@ class training():
         airtest_method.touch_button(control.nomal_training)
         airtest_method.operate_sleep()
 
+    def renamed_card(content):
+        '''重命名卡片'''
+        airtest_method.touch_button(control.new_card)
+        airtest_method.right_click(coords=(199,195)) #鼠标右键（自己填坐标）
+        airtest_method.touch_button(control.rename_button)
+        airtest_method.key_event("^a") #全选
+        airtest_method.input_text(content)
+  
+    def edit_comment(content):
+        '''修改备注'''
+        if not airtest_method.check_exit(control.more_button,'FALSE',5) :
+            assert False,'找不到更多按钮'
+        else:
+            airtest_method.touch_button(control.more_button,2)
+        airtest_method.touch_button(control.edit_comment)
+        airtest_method.input_text(content)
+
+    def copy_card():
+        '''复制卡片'''
+        if not airtest_method.check_exit(control.more_button,'FALSE',5) :
+            assert False,'找不到更多按钮'
+        else:
+            airtest_method.touch_button(control.more_button,2)
+        airtest_method.touch_button(control.copy_button)
+
+    def delete_card():
+        '''删除卡片'''
+        airtest_method.right_click(coords=(199,195)) #鼠标右键（自己填坐标）
+        airtest_method.touch_button(control.delete_button)
+        if not airtest_method.check_exit(control.delete_prompt,'FALSE',10):
+            assert False,'未出现删除提示，删除失败'
+        else:
+            airtest_method.touch_button(control.training_okbutton)
+
     def set_template():
         '''设置为模版'''
+        airtest_method.right_click(coords=(199,195)) #鼠标右键（自己填坐标）
         airtest_method.touch_button(control.set_template)
-
-    def rename_button():
-        '''重命名'''
-        airtest_method.touch_button(control.rename_button)
-
-    def edit_comment():
-        '''修改备注'''
-        airtest_method.touch_button(control.edit_comment)
-
-    def copy_button():
-        '''复制'''
-        airtest_method.touch_button(control.copy_button)
-  
-    def delete_button():
-     '''删除'''
-     airtest_method.touch_button(control.delete_button)
            
     def choice_model(type):
         '''选择模型类型'''
@@ -95,6 +114,11 @@ class training():
             assert False,'找不到图像裁切按钮'
         else:         
             airtest_method.touch_button(control.image_cropping)
+        airtest_method.operate_sleep()
+        if not airtest_method.check_exit(control.cropping_true,'FALSE',5) :        
+            assert False,'找不到是按钮'
+        else:      
+            airtest_method.touch_button(control.cropping_true)
             
     def mouse_move():
         '''将鼠标移动至自定义'''
@@ -109,13 +133,13 @@ class training():
         '''下调benchsize'''
         airtest_method.touch_button(control.cut_benchsize,times= 3)
     
-    def set_study():
+    def set_study(learning_times):
         '''设置学习次数'''
         airtest_method.touch_button(control.set_study)
         keyevent("{BACKSPACE}")
         keyevent("{BACKSPACE}")
         keyevent("{BACKSPACE}")
-        airtest_method.input_text('1')
+        airtest_method.input_text(learning_times)
         airtest_method.operate_sleep()
      
     def star_training():
@@ -147,6 +171,10 @@ class training():
   
     def add_training():
         '''增量训练'''
+        if not airtest_method.check_exit(control.more_button,'FALSE',5) :
+            assert False,'找不到更多按钮'
+        else:
+            airtest_method.touch_button(control.more_button)
         if not airtest_method.check_exit(control.add_training,'FALSE',5) :        
             assert False,'找不到增量训练按钮'
         else:         

@@ -20,6 +20,7 @@ pip install allure-pytest
 二、文件层级介绍
 ·common：公共类
 ·configs:日志设置
+·drafts:草稿箱
 ·elements：控件元素
 ·logs：日志存储
 ·pages：各个页面操作方法

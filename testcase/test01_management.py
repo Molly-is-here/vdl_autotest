@@ -3,7 +3,6 @@ import allure
 from pages.management_page import management
 from common.Airtest_method import airtest_method
 from elements.public_control import control
-from tools.radom_character import radom_Name
 from common.handle_log import do_log
 
 
@@ -13,18 +12,17 @@ from common.handle_log import do_log
 def test_create_proj():   
     with allure.step(f'点击新建方案按钮'):
         management.create_project()
-        do_log.info('成功点击新建方案按钮,用例执行成功')
+    do_log.info('成功点击新建方案按钮,用例执行成功')
 
 @allure.title('编辑框仅输入单个字符创建方案失败')
 @pytest.mark.smoke
 def test_input_name():
-    with allure.step(f'点击编辑框'):
-        airtest_method.touch_button(control.select_textbox)
-        project_name = '1'
-    with allure.step(f'输入字符'):
-        airtest_method.input_text(project_name)
+    project_name = '1'
+    with allure.step(f'输入单个字符'):
+        management.input_name(project_name)
     with allure.step(f'点击创建按钮'):
         management.create_success()
+    with allure.step(f'校验异常情况'):
         if airtest_method.check_exit(control.proj_error,'TRUE',5):
             do_log.error(f'字符长度输入校验,用例执行失败')
             allure.attach('字符长度输入校验失败', name="异常情况", attachment_type=allure.attachment_type.TEXT)
@@ -32,61 +30,48 @@ def test_input_name():
 @allure.title('编辑框输入多个字符创建方案成功')
 @pytest.mark.smoke
 def test_create_model():
-    with allure.step(f'方案名称输入随机数'):
-        random_string = radom_Name.get_character(3)
-        airtest_method.input_text(random_string)
-        do_log.info('方案名称成功输入,用例执行成功')
-    with allure.step(f'选择模型类型'):       
+    with allure.step(f'方案名称输入多字符'):
+        airtest_method.key_event('{BACKSPACE}')
+        management.input_name('Auto')
+    with allure.step(f'以分割算法为例'):       
         if not airtest_method.check_exit(control.seg_item,'FALSE',5) :
             assert False,'找不到分割算法控件'   
         else:
             airtest_method.touch_button(control.seg_item)    
-    with allure.step(f'输入方案备注'):
-        management.manage_remark('fafa')  
     with allure.step(f'点击创建按钮'):
         management.create_success()
-        do_log.info('方案成功新建,用例执行成功')
+    do_log.info('方案成功新建,用例执行成功')
 
 @allure.title('方案管理页面筛选框组合筛选')
 @pytest.mark.smoke
 def test_search_project():
     with allure.step(f'点击home键返回方案管理页面'):
-        if not airtest_method.check_exit(control.home_button,'FALSE',10) :
-            assert False,'找不到home键'
-        else:
-            airtest_method.touch_button(control.home_button)
-            do_log.info('成功切换回方案管理页面,用例执行成功')  
-        airtest_method.operate_sleep()
-    with allure.step(f'搜索框输入关键字'):
-        airtest_method.touch_button(control.manage_input)
-        project_name = '测试發'
-        airtest_method.input_text(project_name)
-        airtest_method.key_event("{ENTER}")
-    with allure.step(f'筛选列表筛选算法类型'):
-        airtest_method.touch_button(control.manage_search)
-        airtest_method.touch_button(control.search_seg)
-        if not airtest_method.check_exit(control.choice_proj,'FALSE',5) :
-            assert False,'找不到选中方案'
-        else:
-            airtest_method.touch_button(control.choice_proj)   
-            do_log.info('成功混合筛选出方案,用例执行成功')
+        management.home()    
+    with allure.step(f'混合筛选'):
+        management.mixed_filtering('Auto') 
+    do_log.info('成功混合筛选出方案,用例执行成功')
+
+@allure.title('右键编辑')
+@pytest.mark.smoke
+def test_right_click_toedit():
+    with allure.step(f'鼠标右键进行编辑'):
+        text = 'o*￣▽￣*o hihi嗨嗨'
+        management.right_click_toedit(text)
+    do_log.info('右键编辑添加备注成功,用例执行成功')
 
 @allure.title('右键关闭方案')
 @pytest.mark.smoke
 def test_closed_project():
     with allure.step(f'右键关闭方案'):
-        airtest_method.right_click((530,804))
-        airtest_method.operate_sleep()
-        airtest_method.touch_button(control.right_click_toclosed)
-        do_log.info('成功关闭方案,用例执行成功')
+        management.right_click_toclosed()
+    do_log.info('成功关闭方案,用例执行成功')
 
 @allure.title('双击打开方案')
 @pytest.mark.smoke
 def test_opened_project():
     with allure.step(f'双击打开方案'):
-        airtest_method.double_click(control.choice_proj)
-        airtest_method.operate_sleep(5.0)
-        do_log.info('成功打开方案,用例执行成功')
+        management.double_click_toopened()
+    do_log.info('成功打开方案,用例执行成功')
 
 
 

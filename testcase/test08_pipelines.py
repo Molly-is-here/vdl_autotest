@@ -19,6 +19,7 @@ det_pipelines = [det_OCR,det_uad]
 seg_pipellines = [seg_uad,seg_seg,seg_det,seg_OCR,seg_seq]
 seq_pipelines = [seq_cls,seq_uad,seq_ocr]
 uad_pipelines = [uad_seg]
+learning_times = '1'
 static_path = os.path.join(save_path.base_path, 'static')
 
 @allure.feature('串联方案测试')
@@ -94,7 +95,7 @@ def test_seg_pipelines():
             with allure.step(f'开启训练'):
                 training.model_training()
                 training.add_card()
-                training.set_study()
+                training.set_study(learning_times)
                 training.star_training()
                 assess.model_assess()
                 assess.assess_success() 
@@ -122,7 +123,7 @@ def test_seg_pipelines():
                 if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
                     training.star_training() 
                 else:
-                    training.set_study()
+                    training.set_study(learning_times)
                     training.star_training() 
                 assess.model_assess()                                          
                 assess.assess_success() 
@@ -162,7 +163,7 @@ def test_det_pipelines():
             with allure.step(f'开启训练'):
                 training.model_training()
                 training.add_card()
-                training.set_study()
+                training.set_study(learning_times)
                 training.star_training()
                 assess.model_assess()
                 assess.assess_success() 
@@ -184,7 +185,7 @@ def test_det_pipelines():
                 if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
                     training.star_training() 
                 else:
-                    training.set_study()
+                    training.set_study(learning_times)
                     training.star_training() 
                 assess.model_assess()            
                 training.review_assess('后置模块')               
@@ -225,7 +226,7 @@ def test_cls_pipelines():
             with allure.step(f'开启训练'):
                 training.model_training()
                 training.add_card()
-                training.set_study()
+                training.set_study(learning_times)
                 training.star_training()
                 assess.model_assess()
                 assess.assess_success() 
@@ -247,7 +248,7 @@ def test_cls_pipelines():
                 if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
                     training.star_training() 
                 else:
-                    training.set_study()
+                    training.set_study(learning_times)
                     training.star_training() 
                 assess.model_assess()                             
                 assess.assess_success()
@@ -287,7 +288,7 @@ def test_seq_pipelines():
             with allure.step(f'开启训练'):
                 training.model_training()
                 training.add_card()
-                training.set_study()
+                training.set_study(learning_times)
                 training.star_training()
                 assess.model_assess()
                 assess.assess_success() 
@@ -309,7 +310,7 @@ def test_seq_pipelines():
                 if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
                     training.star_training() 
                 else:
-                    training.set_study()
+                    training.set_study(learning_times)
                     training.star_training() 
                 assess.model_assess()                             
                 assess.assess_success()
@@ -352,7 +353,7 @@ def test_uad_pipelines():
                 if pipelines.pre_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
                     training.star_training() 
                 else:
-                    training.set_study()
+                    training.set_study(learning_times)
                     training.star_training()
                 assess.model_assess()
                 assess.assess_success() 
@@ -374,7 +375,7 @@ def test_uad_pipelines():
                 if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
                     training.star_training() 
                 else:
-                    training.set_study()
+                    training.set_study(learning_times)
                     training.star_training() 
                 assess.model_assess()                             
                 assess.assess_success()

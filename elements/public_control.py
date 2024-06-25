@@ -51,6 +51,9 @@ class control():
     #右键关闭
     right_click_toclosed = Template(save_path.base_path + "/public/02_右键编辑菜单.png",target_pos= 2, threshold=0.7)
 
+    #右键编辑
+    edited = Template(save_path.base_path + "/public/02_右键编辑.png",threshold=0.7)
+
     #点击home键
     home_button = Template(save_path.base_path + "/public/04_home键.png", threshold=0.7)
 
@@ -68,6 +71,9 @@ class control():
 
     #方案备注
     manage_remark = Template(save_path.base_path + "/public/03_方案备注.png", threshold=0.7)
+
+    #创建时备注
+    create_remark = Template(save_path.base_path + "/public/03_创建时备注.png", threshold=0.7)
 
     #点击打开方案按钮
     openproj_button = Template(save_path.base_path + "/public/03_打开.png", threshold=0.7)

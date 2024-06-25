@@ -16,6 +16,7 @@ import allure
 import os
 
 auto_setup(__file__)
+learning_times = '1'
 
 @allure.title('六类算法冒烟')
 @pytest.mark.smoke
@@ -70,7 +71,7 @@ def test_algorithm_smoke():
                         training.image_scaling(params_list[0][0])
                         training.color_mode(params_list[0][1])
 
-                        training.set_study()
+                        training.set_study(learning_times)
                         training.mouse_move()
                         training.zidingyi_button()
                         training.cut_benchsize()
@@ -172,7 +173,7 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study()  
+                        training.set_study(learning_times)  
                         training.mouse_move()
                         training.zidingyi_button()
                         training.cut_benchsize()                          
@@ -226,7 +227,7 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study()   
+                        training.set_study(learning_times)   
                         training.mouse_move()
                         training.zidingyi_button()
                         training.cut_benchsize()                         
@@ -281,7 +282,7 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study() 
+                        training.set_study(learning_times) 
                         training.mouse_move()
                         training.zidingyi_button() 
                         training.cut_benchsize()                          
@@ -335,7 +336,7 @@ def test_algorithm_smoke():
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study()  
+                        training.set_study(learning_times)  
                         training.mouse_move()
                         training.zidingyi_button()
                         training.cut_benchsize()                          

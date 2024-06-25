@@ -15,6 +15,7 @@ import pytest
 import allure
 
 auto_setup(__file__)
+learning_times = '30'
 
 @allure.title('六类算法对比测试')
 @pytest.mark.smoke
@@ -85,7 +86,7 @@ def test_compatible_smoke():
                 training.model_training()
                 if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR': 
                     training.add_card()
-                    training.set_study()
+                    training.set_study(learning_times)
                     training.mouse_move()
                     training.zidingyi_button()
                     training.cut_benchsize()

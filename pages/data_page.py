@@ -4,7 +4,14 @@ import os
 from airtest.core.api import *
 
 class data():
-     
+    
+    def data_management_page():
+        '''数据管理页面'''
+        if not airtest_method.check_exit(control.data_management_page,'FALSE',5) :
+            assert False,'找不到数据管理tab按钮'
+        else:
+            airtest_method.touch_button(control.data_management_page)
+
     def finish_button():
         '''点击完成''' 
         airtest_method.touch_button(control.upload_done)
@@ -138,6 +145,21 @@ class data():
             airtest_method.touch_button(control.checkbox)
             airtest_method.touch_button(control.upload_label)
             airtest_method.touch_button(control.upload_done)
+
+    def mixed_filtering(content):
+        '''混合筛选'''
+        if not airtest_method.check_exit(control.manage_input,'FALSE',10) :
+            assert False,'找不到方案搜索框'
+        else:
+            airtest_method.touch_button(control.manage_input)
+        airtest_method.input_text(content)
+        airtest_method.key_event("{ENTER}")  #关键字筛选
+
+        airtest_method.touch_button(control.manage_search) #标注状态筛选
+        airtest_method.touch_button(control.finish_labeled)
+        airtest_method.touch_button(control.add_file)
+        if not airtest_method.check_exit(control.add_image_underscore,'TRUE',5) :
+            assert False,'组合筛选无效'
 
 
         

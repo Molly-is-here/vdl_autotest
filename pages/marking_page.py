@@ -6,13 +6,19 @@ from common.Airtest_method import airtest_method
 class mark():
     
     def image_label():
-        '''切换至图像标注'''
-        airtest_method.touch_button(control.image_label)
+        '''切换至图像标注页面'''
+        if not airtest_method.check_exit(control.image_label,'FALSE',5) :
+            assert False,'找不到图像标注tab按钮'
+        else:
+            airtest_method.touch_button(control.image_label)
         airtest_method.operate_sleep()
   
     def auto_divide():
         '''自动划分'''
-        airtest_method.touch_button(control.auto_divide)
+        if not airtest_method.check_exit(control.auto_divide,'FALSE',10) :
+            assert False,'找不到数据划分按钮'
+        else:
+            airtest_method.touch_button(control.auto_divide)
         airtest_method.operate_sleep()
 
     def import_label(file_path):

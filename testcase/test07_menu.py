@@ -1,7 +1,6 @@
 import pytest
 import allure
 from common.Airtest_method import airtest_method
-from elements.public_control import control
 from pages.assess_page import assess
 from common.handle_log import do_log
 
