@@ -2,7 +2,7 @@ from airtest.core.api import *
 from elements.elements_path import save_path
 
 #公共控件
-class control():
+class light_control():
     #分割算法
     seg_item = Template(save_path.seg,threshold=0.7)
 
@@ -26,6 +26,69 @@ class control():
 
     #字符串串联模块
     seq_module = Template(save_path.base_path + "/public/字符串模块.png" , threshold=0.7)
+
+    #快速定位模块
+    rapid_module = Template(save_path.base_path + "/public/快速定位模块.png" , threshold=0.7)
+
+    #单张测试
+    single_test = Template(save_path.base_path + "/public/20_单张测试.png" , threshold=0.7)
+
+    #全量测试
+    full_test = Template(save_path.base_path + "/public/20_全量测试.png" , threshold=0.7)
+
+    #过滤参数1
+    filter_parameter1 = Template(save_path.base_path + "/public/20_过滤参数1.png" ,target_pos= 6, threshold=0.7)
+
+    #更新数据到后置模块
+    update_to_post_module = Template(save_path.base_path + "/public/20_更新数据到后置模块.png" ,threshold=0.7)
+
+    #ROI模块
+    roi_module = Template(save_path.base_path + "/public/ROI模块.png" , threshold=0.7)
+
+    #新建ROI
+    add_roi = Template(save_path.base_path + "/public/19_自定义ROI.png" ,target_pos= 2 , threshold=0.7)
+
+    #ROI-大小-左边编辑框
+    roi_size_left = Template(save_path.base_path + "/public/19_自定义ROI.png" ,target_pos= 4 , threshold=0.7)
+
+    #ROI-大小-右边编辑框
+    roi_size_right = Template(save_path.base_path + "/public/19_自定义ROI.png" ,target_pos= 6 , threshold=0.7)
+
+    #ROI-位移-左边编辑框
+    roi_displacement_left = Template(save_path.base_path + "/public/19_自定义ROI.png" ,target_pos= 7, threshold=0.7)
+
+    #ROI-位移-右边编辑框
+    roi_displacement_right = Template(save_path.base_path + "/public/19_自定义ROI.png" ,target_pos= 9 , threshold=0.7)
+
+    #ROI模式切换
+    roi_mode_switching = Template(save_path.base_path + "/public/19_模式切换.png" ,threshold=0.7)
+
+    #ROI比例切分
+    proportional_splitting = Template(save_path.base_path + "/public/19_比例切分.png" ,threshold=0.7)
+
+    #比例切分-大小-左边编辑框
+    splitting_size_left = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 4, threshold=0.7)
+
+    #比例切分-大小-右边编辑框
+    splitting_size_right = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 6, threshold=0.7)
+
+    #比例切分-位移-左边编辑框
+    splitting_displacement_left = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 7, threshold=0.7)
+
+    #比例切分-位移-右边编辑框
+    splitting_displacement_right = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 9, threshold=0.7)
+
+    #比例切分-数量-左边编辑框
+    splitting_number_left = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 4, threshold=0.7)
+
+    #比例切分-数量-右边编辑框
+    splitting_number_right = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 6, threshold=0.7)
+
+    #比例切分-间隔-左边编辑框
+    splitting_interval_left = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 7, threshold=0.7)
+
+    #比例切分-间隔-右边编辑框
+    splitting_interval_right = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 9, threshold=0.7)
 
     #点击窗口最大化
     max_screen = Template(save_path.base_path + "/public/01_窗口最大化.png" , threshold=0.7)
@@ -198,6 +261,12 @@ class control():
     #高精度
     high_power = Template(save_path.base_path + "/public/09_高精度.png", threshold=0.7)
 
+    #无监督分类
+    uad_cls = Template(save_path.base_path + "/public/09_无监督分类.png",threshold=0.7)
+
+    #无监督分割
+    uad_seg = Template(save_path.base_path + "/public/09_无监督分割.png",threshold=0.7)
+
     #模型A低功耗
     modelA_low_power = Template(save_path.base_path + "/public/09_模型A低功耗.png", threshold=0.7)
 
@@ -249,6 +318,15 @@ class control():
     #设置学习次数
     set_study = Template(save_path.base_path + "/public/11_设置学习次数.png",threshold=0.7)
 
+    #字符串阶段一
+    seq_step1_study = Template(save_path.base_path + "/public/11_字符串设置学习次数.png",target_pos = 4,threshold=0.7)
+
+    #字符串阶段二
+    seq_step2_study = Template(save_path.base_path + "/public/11_字符串设置学习次数.png",target_pos = 5,threshold=0.7)
+
+    #字符串阶段三
+    seq_step3_study = Template(save_path.base_path + "/public/11_字符串设置学习次数.png",target_pos = 6,threshold=0.7)
+
     #点击开始训练
     star_training = Template(save_path.base_path + "/public/12_开始训练.png",threshold=0.7)
 
@@ -276,7 +354,7 @@ class control():
     #停止训练
     stop_training = Template(save_path.base_path + "/public/12_停止训练.png",rgb=True,threshold=0.7)
 
-    #切换至模型评估页面
+    #模型评估页面
     model_assess = Template(save_path.base_path + "/public/13_模型评估页面.png", threshold=0.7)
 
     #切换至类别级别
@@ -353,6 +431,9 @@ class control():
 
     #csharp
     guild_csharp =  Template(save_path.base_path + "/public/16_csharp.png", threshold=0.7)
+
+    #python
+    guild_python = Template(save_path.base_path + "/public/16_python.png", threshold=0.7)
 
     #判断SDK开发手册导出成功
     SDK_success = Template(save_path.base_path + "/public/16_判断SDK开发手册导出成功.png", threshold=0.7)
@@ -500,6 +581,9 @@ class label_control():
     #矩形工具
     rectangle_tool = Template(save_path.base_path + "/auto_label/01_矩形工具.png" , threshold=0.7)
 
+    #快速定位矩形工具
+    rapid_rectangle_tool = Template(save_path.base_path + "/auto_label/02_快速定位矩形工具.png" , target_pos= 5,threshold=0.7)
+
     #环形工具
     circle_tool = Template(save_path.base_path + "/auto_label/06_环形工具.png" , threshold=0.7)
 
@@ -544,3 +628,111 @@ class label_control():
 
     #NG样本工具
     NG_sample_tool = Template(save_path.base_path + "/auto_label/05_NG样本.png" ,threshold=0.7)
+
+#深色版本公共控件
+class dark_control():
+    #分割模块
+    seg_module = Template(save_path.base_path + "/public_dark/分割模块.png", threshold=0.7)
+    
+    #新建方案
+    create_project = Template(save_path.base_path + "/public_dark/00_新建方案.png" , threshold=0.7) 
+
+    #选中编辑框
+    select_textbox = Template(save_path.base_path + "/public_dark/00_方案名称编辑框.png", threshold=0.7)
+
+    #方案类型
+    project_type = Template(save_path.base_path + "/public_dark/00_方案类型.png", threshold=0.7)
+    
+    #多模型串并联方案
+    pipelines_project = Template(save_path.base_path + "/public_dark/00_多模型串并联方案.png", threshold=0.7)
+
+    #创建按钮
+    create_button = Template(save_path.base_path + "/public_dark/00_创建按钮.png", threshold=0.7)
+
+    #添加图像
+    add_image = Template(save_path.base_path + "/public_dark/01_添加图像.png", threshold=0.7)
+
+    #导入成功
+    upload_label = Template(save_path.base_path + "/public_dark/01_导入成功.png", threshold=0.7)
+
+    #完成按钮
+    upload_done = Template(save_path.base_path + "/public_dark/01_完成按钮.png", threshold=0.7)
+
+    #添加标注
+    add_label = Template(save_path.base_path + "/public_dark/01_添加标注.png", threshold=0.7)
+    
+    #方案流程
+    project_flow = Template(save_path.base_path + "/public_dark/01_方案流程.png", threshold=0.7)
+    
+    #数据源
+    data_source = Template(save_path.base_path + "/public_dark/02_数据源.png",target_pos= 6 , threshold=0.7)
+
+    #图像标注页面
+    image_label = Template(save_path.base_path + "/public_dark/02_图像标注页面.png", threshold=0.7)
+
+    #自动划分按钮
+    auto_divide = Template(save_path.base_path + "/public_dark/02_自动划分.png", threshold=0.7)
+
+    #导入标注
+    import_label =  Template(save_path.base_path + "/public_dark/02_导入标注.png", threshold=0.7) 
+    
+    #添加模块
+    add_module = Template(save_path.base_path + "/public_dark/02_添加模块.png", threshold=0.7) 
+
+    #模型训练页面
+    model_training = Template(save_path.base_path + "/public_dark/03_模型训练.png", threshold=0.7)
+    
+    #新增训练小卡片
+    add_card = Template(save_path.base_path + "/public_dark/03_新增训练小卡片.png", threshold=0.7)
+
+    #常规训练
+    nomal_training = Template(save_path.base_path + "/public_dark/03_常规训练.png", threshold=0.7)
+
+    #设置学习次数
+    set_study = Template(save_path.base_path + "/public_dark/03_设置学习次数.png", threshold=0.7)
+    
+    #鼠标定位至批次大小
+    mouse_move = Template(save_path.base_path + "/public_dark/03_开batchsize.png", target_pos= 5,threshold=0.7)
+    
+    #选项为自定义
+    zidingyi_button = Template(save_path.base_path + "/public_dark/03_选择自定义.png", target_pos= 8, threshold=0.7)
+
+    #下调benchsize
+    cut_benchsize = Template(save_path.base_path + "/public_dark/03_下调batchsize按钮.png",target_pos = 6,threshold=0.7)
+
+    #开始训练
+    star_training = Template(save_path.base_path + "/public_dark/03_开始训练.png", threshold=0.7)
+
+    #模型评估页面
+    model_assess = Template(save_path.base_path + "/public_dark/04_模型评估.png", threshold=0.7)
+
+    #评估完成
+    infering_finished = Template(save_path.base_path + "/public_dark/04_评估完成.png",rgb= True,threshold=0.7)
+    
+    #模型推理页面
+    model_infering =  Template(save_path.base_path + "/public_dark/05_模型推理.png",threshold=0.7)   
+    
+    #导入图片
+    images_input = Template(save_path.base_path + "/public_dark/05_导入图片.png",threshold=0.7)
+
+    #开始推理
+    begin_infering = Template(save_path.base_path + "/public_dark/05_开始推理.png",threshold=0.7)
+
+def get_button_from_string(button_string):
+    """
+    根据给定的字符串获取按钮对象。
+
+    参数:
+        button_string (str): 包含模块名和属性名的字符串，如 'control.create_project'
+
+    返回:
+        object: 按钮对象
+    """
+    module_name, attr_name = button_string.split('.')  # 分割模块名和属性名
+    module = globals().get(module_name)  # 获取模块对象
+    
+    if module is None:
+        raise ImportError(f"模块 '{module_name}' 未找到")
+    
+    button_object = getattr(module, attr_name)  # 获取实际按钮对象
+    return button_object

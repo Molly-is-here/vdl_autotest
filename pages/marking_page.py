@@ -1,44 +1,60 @@
-from elements.public_control import control
 from elements.public_control import label_control
 from common.Base_method import BasePage
 from common.Airtest_method import airtest_method 
+from elements.public_control import light_control,get_button_from_string
 
 class mark():
     
-    def image_label():
-        '''切换至图像标注页面'''
-        if not airtest_method.check_exit(control.image_label,'FALSE',5) :
+    def image_label(color):
+        '''切换至图像标注页面
+        color light:浅色主题 dark:深色主题
+        '''
+        image_label_element = get_button_from_string(f"{color}_control.image_label")
+        if not airtest_method.check_exit(image_label_element,'FALSE',5) :
             assert False,'找不到图像标注tab按钮'
         else:
-            airtest_method.touch_button(control.image_label)
+            airtest_method.touch_button(image_label_element)
         airtest_method.operate_sleep()
   
-    def auto_divide():
-        '''自动划分'''
-        if not airtest_method.check_exit(control.auto_divide,'FALSE',10) :
+    def auto_divide(color):
+        '''自动划分
+        color light:浅色主题 dark:深色主题
+        '''
+        auto_divide_element = get_button_from_string(f"{color}_control.auto_divide")
+        
+        if not airtest_method.check_exit(auto_divide_element,'FALSE',10) :
             assert False,'找不到数据划分按钮'
         else:
-            airtest_method.touch_button(control.auto_divide)
+            airtest_method.touch_button(auto_divide_element)
         airtest_method.operate_sleep()
 
-    def import_label(file_path):
-        '''串联方案导入标注'''
-        if not airtest_method.check_exit(control.import_label,'FALSE') :
+    def import_label(file_path,color):
+        '''串联方案导入标注
+        color light:浅色主题 dark:深色主题
+        '''
+        #导入标注
+        import_label_element = get_button_from_string(f"{color}_control.import_label")
+        #导入完成
+        upload_done = get_button_from_string(f"{color}_control.upload_done")
+        
+        if not airtest_method.check_exit(import_label_element,'FALSE') :
             assert False,'未找到导入标注按钮'
         else:
-            airtest_method.touch_button(control.import_label)
-        airtest_method.touch_button(control.choice_file1) 
+            airtest_method.touch_button(import_label_element)
+        if not airtest_method.check_exit(light_control.choice_file,'FALSE') :
+            assert False,'未找到导入文件夹按钮'
+        else:
+            airtest_method.touch_button(light_control.choice_file) 
         airtest_method.input_text(file_path)
         airtest_method.key_event("{ENTER}")
-        # airtest_method.touch_button(control.jump_click)
-        airtest_method.touch_button(control.click_area)
-        '''全选'''
+        airtest_method.touch_button(light_control.click_area)
+        #全选
         airtest_method.key_event("^a")
-        airtest_method.touch_button(control.ok_button1)
-        if not airtest_method.check_exit(control.upload_label,'FALSE') :
+        airtest_method.key_event("{ENTER}")
+        if not airtest_method.check_exit(upload_done,'FALSE') :
             assert False,'找不到导入完成标志'
         else:
-            airtest_method.touch_button(control.upload_done)
+            airtest_method.touch_button(upload_done)
 
     def add_label(label_name):
         '''添加特征标签'''
@@ -48,7 +64,7 @@ class mark():
             airtest_method.touch_button(label_control.add_characteristic)
         airtest_method.touch_button(label_control.name_edit)
         airtest_method.input_text(label_name)
-        if not airtest_method.check_exit(label_control.confirm_button,'FALSE') :
+        if not airtest_method.check_exit(label_control.confirm_button,'FALSE',5) :
                 assert False,'未找到确认按钮'
         else:
             airtest_method.touch_button(label_control.confirm_button)
@@ -71,6 +87,7 @@ class mark():
 
     def rectangle_marking(start_points,end_points):
         '''矩形标注'''
+        airtest_method.operate_sleep()
         if not airtest_method.check_exit(label_control.rectangle_tool,'FALSE') :
             assert False,'未找到矩形工具'
         else:
@@ -136,10 +153,10 @@ class mark():
             airtest_method.touch_button(label_control.masking_area)
             BasePage.click_multiple_points(v1,v2,v3,)
             airtest_method.click_coordinate_point(v1)  #三点确认一个多边形
-            if not airtest_method.check_exit(label_control.select_true,'FALSE') :
-                assert False,'未找到确认按钮'
-            else:
-                airtest_method.touch_button(label_control.select_true) 
+            # if not airtest_method.check_exit(label_control.select_true,'FALSE') :
+            #     assert False,'未找到确认按钮'
+            # else:
+            #     airtest_method.touch_button(label_control.select_true) 
 
     def AI_marking(start_points,end_points,marking_points):
         '''AI标注'''
@@ -225,6 +242,16 @@ class mark():
                 assert False,'未找到确认按钮'
             else:
                 airtest_method.touch_button(label_control.select_true) 
+
+    def rapid_rectangle_marking(v1,v2,v3):
+        '''快速定位矩形标注'''
+        if not airtest_method.check_exit(label_control.rapid_rectangle_tool,'FALSE') :
+            assert False,'未找到矩形工具'
+        else:
+            airtest_method.touch_button(label_control.rapid_rectangle_tool)
+            BasePage.click_multiple_points(v1,v2,v3)  #三点确定矩形框和方向
+            airtest_method.key_event("^s") #保存方案
+            airtest_method.operate_sleep()
 
     def seq_circle_marking(v1,v2,v3,v4):
         '''字符串算法环形标注'''

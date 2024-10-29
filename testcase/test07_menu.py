@@ -1,9 +1,11 @@
+__author__ = "yunliu"
 import pytest
 import allure
 from common.Airtest_method import airtest_method
 from pages.assess_page import assess
 from common.handle_log import do_log
 
+airtest_method.operate_sleep(5.0)
 
 @allure.feature('菜单栏')
 @allure.title('关闭方案')
@@ -52,5 +54,7 @@ def test_SDK_guild():
         assess.SDK_guild('c++')
     with allure.step(f'导出Csharp SDK开发手册'):
         assess.SDK_guild('csharp')
+    with allure.step(f'导出Python SDK开发手册'):
+        assess.SDK_guild('python')
         assess.template_help()
     do_log.info('SDK开发手册导出成功，用例执行成功')

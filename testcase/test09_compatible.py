@@ -5,17 +5,17 @@ from pages.management_page import management
 from pages.marking_page import mark
 from pages.training_page import training
 from pages.assess_page import assess
-from elements.public_control import control
+from elements.public_control import light_control
 from common.Airtest_method import airtest_method
 from pages.open_sofrware import open_Software
-from tools.compatible_html import create_html_file
 from tools.docqq import *
 from pathlib import Path
 import pytest
 import allure
 
 auto_setup(__file__)
-learning_times = '30'
+learning_times = '1'
+color = 'light'
 
 @allure.title('六类算法对比测试')
 @pytest.mark.smoke
@@ -80,28 +80,29 @@ def test_compatible_smoke():
                 management.click_project()
 
                 '''图像标注页面'''
-                mark.image_label()
+                mark.image_label(color)
 
                 # '''模型训练页面'''
-                training.model_training()
+                training.model_training(color)
                 if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR': 
-                    training.add_card()
-                    training.set_study(learning_times)
-                    training.mouse_move()
-                    training.zidingyi_button()
-                    training.cut_benchsize()
+                    training.add_card(color)
+                    if name == 'SEQOCR':
+                        training.seq_set_study(learning_times,color)
+                    else:
+                        training.set_study(learning_times,color)
+                    training.cut_benchsize(color)
                 else:
-                    training.add_card()
+                    training.add_card(color)
 
-                training.star_training()    #开始训练
-                training.training_success(dataset_name)    #判断是否训练完成
-
+                training.star_training(color)    #开始训练
+                
                 '''模型评估页面'''
-                assess.model_assess()
+                assess.model_assess(color)
+                assess.assess_success(color)
                 if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR':
                     assess.assess_done() 
                 else:
-                    if not airtest_method.check_exit(control.sensitive_area,'FALSE',360000) :
+                    if not airtest_method.check_exit(light_control.sensitive_area,'FALSE',360000) :
                         assert False,'评估未完成'
 
                 airtest_method.operate_sleep(15.0)
@@ -113,13 +114,13 @@ def test_compatible_smoke():
                     screenshot_images.append(image_screenshot)
                     
                     #类别级别截图
-                    airtest_method.touch_button(control.type_image)
+                    airtest_method.touch_button(light_control.type_image)
                     type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
                     airtest_method.screenshot(type_screenshot)
                     screenshot_images.append(type_screenshot)
                     
                     #像素级别截图
-                    airtest_method.touch_button(control.pixel_image)
+                    airtest_method.touch_button(light_control.pixel_image)
                     pixel_screenshot = os.path.join(save_path.base_path, f"{dataset_name}像素级别.jpg")
                     airtest_method.screenshot(pixel_screenshot)
                     screenshot_images.append(pixel_screenshot)
@@ -130,7 +131,7 @@ def test_compatible_smoke():
                     screenshot_images.append(image_screenshot)
 
                     #类别级别截图
-                    airtest_method.touch_button(control.type_image)
+                    airtest_method.touch_button(light_control.type_image)
                     type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
                     airtest_method.screenshot(type_screenshot)
                     screenshot_images.append(type_screenshot)
@@ -141,7 +142,7 @@ def test_compatible_smoke():
                     screenshot_images.append(image_screenshot)
 
                     #字符级别截图
-                    airtest_method.touch_button(control.ocr_image)
+                    airtest_method.touch_button(light_control.ocr_image)
                     ocr_screenshot = os.path.join(save_path.base_path, f"{dataset_name}字符级别.jpg")
                     airtest_method.screenshot(ocr_screenshot)
 
@@ -153,13 +154,13 @@ def test_compatible_smoke():
                     screenshot_images.append(image_screenshot)
 
                     #内容级别截图
-                    airtest_method.touch_button(control.content_image)
+                    airtest_method.touch_button(light_control.content_image)
                     content_screenshot = os.path.join(save_path.base_path, f"{dataset_name}内容级别.jpg")
                     airtest_method.screenshot(content_screenshot)
                     screenshot_images.append(content_screenshot)
 
                     #类别级别截图
-                    airtest_method.touch_button(control.type_image)
+                    airtest_method.touch_button(light_control.type_image)
                     type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
                     airtest_method.screenshot(type_screenshot)
                     screenshot_images.append(type_screenshot)
@@ -170,7 +171,7 @@ def test_compatible_smoke():
                     screenshot_images.append(project_screenshot)
 
                     #切换为类别级别
-                    airtest_method.touch_button(control.change_type_image)
+                    airtest_method.touch_button(light_control.change_type_image)
                     change_type_image = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
                     airtest_method.screenshot(change_type_image)
                     screenshot_images.append(change_type_image)
@@ -180,14 +181,12 @@ def test_compatible_smoke():
                     airtest_method.screenshot(type_screenshot)
                     screenshot_images.append(type_screenshot)
 
-                # ct_screenshot = os.path.join(save_path.base_path, f"{dataset_name}评估完成.png") 
-                # airtest_method.screenshot(ct_screenshot)
+                ct_screenshot = os.path.join(save_path.base_path, f"{dataset_name}评估完成.png") 
+                airtest_method.screenshot(ct_screenshot)
                 # create_html_file("V0.9.0",dataset_name,screenshot_images)
-                content = ["","V1.0.0",dataset_name]
-                run("https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=38041l",content,screenshot_images)
+                content = ["","V1.3.0",dataset_name]
+                run("https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=c1zt2p&_t=1726731212102&u=46f694f1d02b448b9de7e4eb8e458757",content,screenshot_images)
                 
-
-
                 '''HOME键返回方案管理页面'''
                 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
                 assess.home()

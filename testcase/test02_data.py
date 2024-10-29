@@ -1,11 +1,11 @@
+__author__ = "yunliu"
 import pytest
 import allure
-from common.Airtest_method import airtest_method
-from elements.public_control import control
 from elements.elements_path import save_path
 from pages.data_page import data
 from common.handle_log import do_log
 
+color = 'light'
 @allure.feature('数据管理页面')
 
 @allure.title('添加标签')
@@ -32,7 +32,7 @@ def test_add_image():
     '''导入图像''' 
     with allure.step(f'点击导入图像按钮'):
         file_path = save_path.dataset_path + '\导入mask\images'
-        data.add_image(file_path)
+        data.add_image(file_path,color)
     do_log.info('成功导入图像,用例执行成功')
             
 @allure.title('导入标注')
@@ -41,7 +41,7 @@ def test_add_label():
     '''导入标注'''   
     with allure.step(f'点击导入标注按钮'):
         file_path = save_path.dataset_path + '\导入mask\\64个mask'
-        data.add_label(file_path)
+        data.add_label(file_path,color)
     do_log.info('成功导入标注,用例执行成功')
 
 @allure.title('导入图像+标注')

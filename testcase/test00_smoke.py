@@ -6,9 +6,8 @@ from pages.management_page import management
 from pages.marking_page import mark
 from pages.training_page import training
 from pages.assess_page import assess
-from elements.public_control import control
+from elements.public_control import light_control
 from common.handle_log import do_log
-from common.Airtest_method import airtest_method
 from common.Base_method import search_file
 from tools.radom_character import radom_Name
 import pytest
@@ -17,6 +16,7 @@ import os
 
 auto_setup(__file__)
 learning_times = '1'
+color = 'light'
 
 @allure.title('六类算法冒烟')
 @pytest.mark.smoke
@@ -43,9 +43,9 @@ def test_algorithm_smoke():
             name = 'SEQ'
 
         current_dir = os.getcwd()
-        model_selection = [control.high_power,control.low_power]  #模型类型
-        color_mode = [0,control.gray_image]  #颜色模式，0为默认
-        scaling_selection = [0,control.equal_size,control.zidingyi_size]  #图像缩放，0为默认
+        model_selection = [light_control.high_power,light_control.low_power]  #模型类型
+        color_mode = [0,light_control.gray_image]  #颜色模式，0为默认
+        scaling_selection = [0,light_control.equal_size,light_control.zidingyi_size]  #图像缩放，0为默认
     
         if name == 'SEQ':        #seq OCR算法仅有高性能模型类型                     
             with allure.step(f'{name}算法冒烟'):
@@ -53,8 +53,8 @@ def test_algorithm_smoke():
                 for i in range(count):
                     params_list= radom_Name.get_params(scaling_selection,color_mode)
                     for file in search_file.get_file(dataset):
-                        management.create_project()       
-                        project_name = management.input_name(name)  
+                        management.create_project(color)       
+                        project_name = management.input_name(name,color)  
                         management.create_model(item)
 
                         '''数据管理页面'''
@@ -62,24 +62,21 @@ def test_algorithm_smoke():
                         data.add_file(file_path)
 
                         '''图像标注页面'''
-                        mark.image_label()
-                        mark.auto_divide()
+                        mark.image_label(color)
+                        mark.auto_divide(color)
 
                         '''模型训练页面'''  
-                        training.model_training()
-                        training.add_card()                     
+                        training.model_training(color)
+                        training.add_card(color)                     
                         training.image_scaling(params_list[0][0])
                         training.color_mode(params_list[0][1])
 
-                        training.set_study(learning_times)
-                        training.mouse_move()
-                        training.zidingyi_button()
-                        training.cut_benchsize()
-                        training.star_training()
+                        training.seq_set_study(learning_times,color)
+                        training.star_training(color)
 
                         '''模型评估页面'''
-                        assess.model_assess()
-                        assess.assess_success()
+                        assess.model_assess(color)
+                        assess.assess_success(color)
 
                         '''调用SDK'''
                         assess.more_button()
@@ -101,52 +98,58 @@ def test_algorithm_smoke():
                             assess.template_close()
  
         if name == 'UAD':  
-            UADmodel_selection = [control.modelB,control.modelA_low_power,control.modelA_high_power]  #无监督算法有三种模型类型
+            show_type = [light_control.uad_seg,light_control.uad_cls]
             for file in search_file.get_file(dataset):
-                for type in UADmodel_selection:
-                    with allure.step(f'{name}算法冒烟'):
-                        
-                            '''方案管理页面'''
-                            management.create_project()       
-                            project_name = management.input_name(name)  
-                            management.create_model(item)
+                for moudle in show_type:
+                    UADmodel_selection = [light_control.modelB,light_control.modelA_low_power,light_control.modelA_high_power]  #无监督算法有三种模型类型
+                    for type in UADmodel_selection:
+                        with allure.step(f'{name}算法冒烟'):                       
+                                '''方案管理页面'''
+                                management.create_project(color)       
+                                project_name = management.input_name(name,color)  
+                                management.create_model(item)
 
-                            '''数据管理页面'''
-                            file_path = str(os.path.join(dataset,file))
-                            data.add_file(file_path)
+                                '''数据管理页面'''
+                                file_path = str(os.path.join(dataset,file))
+                                data.add_file(file_path)
 
-                            '''图像标注页面'''
-                            mark.image_label()
-                            mark.auto_divide()
+                                '''图像标注页面'''
+                                mark.image_label(color)
+                                mark.auto_divide(color)
 
-                            '''模型训练页面'''  
-                            training.model_training()
-                            training.add_card()
-                            training.uad_choice_model(type)
-                            training.star_training()
+                                '''模型训练页面'''  
+                                training.model_training(color)
+                                training.add_card(color)
+                                if moudle == light_control.uad_seg:
+                                    training.uad_moudle_type()
+                                else:
+                                    do_log.info("使用无监督分类算法训练")
+                                training.uad_choice_model(type)
+                                training.star_training(color)
+                                    
 
-                            '''模型评估页面'''
-                            assess.model_assess()
-                            assess.assess_success()
+                                '''模型评估页面'''
+                                assess.model_assess(color)
+                                assess.assess_success(color)
 
-                            '''调用SDK'''
-                            assess.more_button()
-                            assess.export_SDK(current_dir)
-                            assess.unzip_SDK()
-                            assess.copy_SDK_dll()
-                            assess.run_SDK(file_path,project_name)
+                                '''调用SDK'''
+                                assess.more_button()
+                                assess.export_SDK(current_dir)
+                                assess.unzip_SDK()
+                                assess.copy_SDK_dll()
+                                assess.run_SDK(file_path,project_name)
 
-                            # '''导出模型'''
-                            # assess.more_button()
-                            # assess.export_model()
+                                # '''导出模型'''
+                                # assess.more_button()
+                                # assess.export_model()
 
-                            # '''导出报告'''
-                            # assess.export_report()
+                                # '''导出报告'''
+                                # assess.export_report()
 
-                            with allure.step(f'关闭方案'):    
-                                '''关闭方案'''
-                                assess.template_file()
-                                assess.template_close()
+                                with allure.step(f'关闭方案'):    
+                                    '''关闭方案'''
+                                    assess.template_file()
+                                    assess.template_close()
 
         if name == 'OCR':       
             for file in search_file.get_file(dataset):   
@@ -155,8 +158,8 @@ def test_algorithm_smoke():
                     for i in range(count):
                         params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
                         '''方案管理页面'''
-                        management.create_project()       
-                        project_name = management.input_name(name)  
+                        management.create_project(color)       
+                        project_name = management.input_name(name,color)  
                         management.create_model(item)
 
                         '''数据管理页面'''
@@ -164,24 +167,21 @@ def test_algorithm_smoke():
                         data.add_file(file_path)
 
                         '''图像标注页面'''
-                        mark.image_label()
-                        mark.auto_divide()
+                        mark.image_label(color)
+                        mark.auto_divide(color)
 
                         '''模型训练页面'''  
-                        training.model_training()
-                        training.add_card()
+                        training.model_training(color)
+                        training.add_card(color)
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study(learning_times)  
-                        training.mouse_move()
-                        training.zidingyi_button()
-                        training.cut_benchsize()                          
-                        training.star_training()
+                        training.set_study(learning_times,color)                         
+                        training.star_training(color)
 
                         '''模型评估页面'''
-                        assess.model_assess()
-                        assess.assess_success()
+                        assess.model_assess(color)
+                        assess.assess_success(color)
 
                         '''调用SDK'''
                         assess.more_button()
@@ -209,8 +209,8 @@ def test_algorithm_smoke():
                     for i in range(count):
                         params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
                         '''方案管理页面'''
-                        management.create_project()       
-                        project_name = management.input_name(name)  
+                        management.create_project(color)       
+                        project_name = management.input_name(name,color)  
                         management.create_model(item)
 
                         '''数据管理页面'''
@@ -218,24 +218,21 @@ def test_algorithm_smoke():
                         data.add_file(file_path)
 
                         '''图像标注页面'''
-                        mark.image_label()
-                        mark.auto_divide()
+                        mark.image_label(color)
+                        mark.auto_divide(color)
 
                         '''模型训练页面'''  
-                        training.model_training()
-                        training.add_card()
+                        training.model_training(color)
+                        training.add_card(color)
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study(learning_times)   
-                        training.mouse_move()
-                        training.zidingyi_button()
-                        training.cut_benchsize()                         
-                        training.star_training()
+                        training.set_study(learning_times,color)                          
+                        training.star_training(color)
 
                         '''模型评估页面'''
-                        assess.model_assess()
-                        assess.assess_success()
+                        assess.model_assess(color)
+                        assess.assess_success(color)
 
                         '''调用SDK'''
                         assess.more_button()
@@ -257,15 +254,15 @@ def test_algorithm_smoke():
                             assess.template_close()
 
         if name == 'DET':   
-            DET_scaling_selection = [0,control.equal_size]  #图像缩放，0为默认       
+            DET_scaling_selection = [0,light_control.equal_size]  #图像缩放，0为默认       
             for file in search_file.get_file(dataset):   
                 with allure.step(f'{name}算法冒烟'):
                     count = min(len(model_selection),len(DET_scaling_selection),len(color_mode))
                     for i in range(count):
                         params_list= radom_Name.get_params(model_selection,DET_scaling_selection,color_mode)
                         '''方案管理页面'''
-                        management.create_project()       
-                        project_name = management.input_name(name)  
+                        management.create_project(color)       
+                        project_name = management.input_name(name,color)  
                         management.create_model(item)
 
                         '''数据管理页面'''
@@ -273,24 +270,21 @@ def test_algorithm_smoke():
                         data.add_file(file_path)
 
                         '''图像标注页面'''
-                        mark.image_label()
-                        mark.auto_divide()
+                        mark.image_label(color)
+                        mark.auto_divide(color)
 
                         '''模型训练页面'''  
-                        training.model_training()
-                        training.add_card()
+                        training.model_training(color)
+                        training.add_card(color)
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study(learning_times) 
-                        training.mouse_move()
-                        training.zidingyi_button() 
-                        training.cut_benchsize()                          
-                        training.star_training()
+                        training.set_study(learning_times,color)                     
+                        training.star_training(color)
 
                         '''模型评估页面'''
-                        assess.model_assess()
-                        assess.assess_success()
+                        assess.model_assess(color)
+                        assess.assess_success(color)
 
                         '''调用SDK'''
                         assess.more_button()
@@ -318,8 +312,8 @@ def test_algorithm_smoke():
                     for i in range(count):
                         params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
                         '''方案管理页面'''
-                        management.create_project()       
-                        project_name = management.input_name(name)  
+                        management.create_project(color)       
+                        project_name = management.input_name(name,color)  
                         management.create_model(item)
 
                         '''数据管理页面'''
@@ -327,24 +321,21 @@ def test_algorithm_smoke():
                         data.add_file(file_path)
 
                         '''图像标注页面'''
-                        mark.image_label()
-                        mark.auto_divide()
+                        mark.image_label(color)
+                        mark.auto_divide(color)
 
                         '''模型训练页面'''  
-                        training.model_training()
-                        training.add_card()
+                        training.model_training(color)
+                        training.add_card(color)
                         training.choice_model(params_list[0][0])                  
                         training.image_scaling(params_list[0][1])
                         training.color_mode(params_list[0][2])
-                        training.set_study(learning_times)  
-                        training.mouse_move()
-                        training.zidingyi_button()
-                        training.cut_benchsize()                          
-                        training.star_training()
+                        training.set_study(learning_times,color)                        
+                        training.star_training(color)
 
                         '''模型评估页面'''
-                        assess.model_assess()
-                        assess.assess_success()
+                        assess.model_assess(color)
+                        assess.assess_success(color)
 
                         '''调用SDK'''
                         assess.more_button()

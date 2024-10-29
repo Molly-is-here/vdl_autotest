@@ -13,6 +13,7 @@ import os
 
 auto_setup(__file__)
 current_dir = os.getcwd()
+color = 'light'
 
 @allure.title('检测算法自动标注')
 @pytest.mark.smoke
@@ -23,16 +24,16 @@ def test_det_autolabel():
 
     for file in search_file.get_file(dataset):
         '''方案管理页面'''
-        management.create_project()       
-        management.input_name(name)  
+        management.create_project(color)       
+        management.input_name(name,color)  
         management.create_model(item)
 
         '''数据管理页面'''
         file_path = str(os.path.join(dataset,file))
-        data.add_image(file_path)  #添加图像
+        data.add_image(file_path,color)  #添加图像
 
         '''图像标注页面'''
-        mark.image_label()
+        mark.image_label(color)
         with allure.step(f'绘制矩形标注'):
             mark.add_label('自动矩形标注')  #创建标签
             mark.rectangle_marking((873,400),(973,500))  #绘制矩形标注
@@ -55,25 +56,20 @@ def test_seg_autolabel():
 
     for file in search_file.get_file(dataset):
         '''方案管理页面'''
-        management.create_project()       
-        management.input_name(name)  
+        management.create_project(color)       
+        management.input_name(name,color)  
         management.create_model(item)
 
         '''数据管理页面'''
         file_path = str(os.path.join(dataset,file))
-        data.add_image(file_path)  #添加图像
+        data.add_image(file_path,color)  #添加图像
 
         '''图像标注页面'''
-        mark.image_label()
+        mark.image_label(color)
         with allure.step(f'绘制多边形标注'):
             mark.add_label('自动多边形标注')  #创建标签
             mark.polygon_marking((837,285),(823,348),(891,335))  #多边形标注
             do_log.info('成功绘制多边形标注')
-
-        # with allure.step(f'绘制线标注'):
-        #     mark.add_label('自动线标注')  #创建标签
-        #     mark.line_marking((827,808),(840,879))  #线标注
-        #     do_log.info('成功绘制线标注')
 
         with allure.step(f'绘制折线标注'):
             mark.add_label('自动折线标注')  #创建标签
@@ -111,16 +107,16 @@ def test_OCR_autolabel():
 
     for file in search_file.get_file(dataset):
         '''方案管理页面'''
-        management.create_project()       
-        management.input_name(name)  
+        management.create_project(color)       
+        management.input_name(name,color)  
         management.create_model(item)
 
         '''数据管理页面'''
         file_path = str(os.path.join(dataset,file))
-        data.add_image(file_path)  #添加图像
+        data.add_image(file_path,color)  #添加图像
 
         '''图像标注页面'''
-        mark.image_label()
+        mark.image_label(color)
         with allure.step(f'绘制矩形标注'):
             mark.add_label('0')  #创建标签
             mark.rectangle_marking((689,421),(826,633))  #绘制矩形标注
@@ -143,16 +139,16 @@ def test_seqOCR_autolabel():
 
     for file in search_file.get_file(dataset):
         '''方案管理页面'''
-        management.create_project()       
-        management.input_name(name)  
+        management.create_project(color)       
+        management.input_name(name,color)  
         management.create_model(item)
 
         '''数据管理页面'''
         file_path = str(os.path.join(dataset,file))
-        data.add_image(file_path)  #添加图像
+        data.add_image(file_path,color)  #添加图像
 
         '''图像标注页面'''
-        mark.image_label()
+        mark.image_label(color)
         with allure.step(f'绘制矩形标注'):
             mark.add_label('自动矩形标注')  #创建标签
             mark.seq_rectangle_marking((1053,616),(964,546),(1003,497))  #矩形标注
@@ -180,16 +176,16 @@ def test_cls_autolabel():
 
     for file in search_file.get_file(dataset):
         '''方案管理页面'''
-        management.create_project()       
-        management.input_name(name)  
+        management.create_project(color)       
+        management.input_name(name,color)  
         management.create_model(item)
 
         '''数据管理页面'''
         file_path = str(os.path.join(dataset,file))
-        data.add_image(file_path)  #添加图像
+        data.add_image(file_path,color)  #添加图像
 
         '''图像标注页面'''
-        mark.image_label()
+        mark.image_label(color)
         with allure.step(f'添加标注'):
             mark.add_label('自动标签')  #创建标签
             mark.add_marking()
@@ -211,16 +207,16 @@ def test_uad_autolabel():
 
     for file in search_file.get_file(dataset):
         '''方案管理页面'''
-        management.create_project()       
-        management.input_name(name)  
+        management.create_project(color)       
+        management.input_name(name,color)  
         management.create_model(item)
 
         '''数据管理页面'''
         file_path = str(os.path.join(dataset,file))
-        data.add_image(file_path)  #添加图像
+        data.add_image(file_path,color)  #添加图像
 
         '''图像标注页面'''
-        mark.image_label()
+        mark.image_label(color)
         with allure.step(f'OK样本'):
             mark.acceptable_sample()  #OK样本标注
             do_log.info('成功标注OK样本')

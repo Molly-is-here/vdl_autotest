@@ -1,20 +1,23 @@
+__author__ = "yunliu"
 import pytest
 import allure
 from common.handle_log import do_log
 from pages.assess_page import assess
 
+color = 'light'
 @allure.feature('模型评估页面')
 @allure.title('切换至模型评估页面')
 @pytest.mark.smoke
 def test_assess_page():
     with allure.step(f'点击模型评估tab按钮'):
-        assess.model_assess()
+        assess.model_assess(color)
     do_log.info('模型评估页面成功切换,用例执行成功')
 
 @allure.title('导出模型')
 @pytest.mark.smoke
-def test_export_model():  
-    assess.assess_success()
+def test_export_model(): 
+    with allure.step(f'等待评估完成'): 
+        assess.assess_success(color)
     with allure.step(f'点击更多按钮'):
         assess.more_button()
     with allure.step(f'选择导出模型'):

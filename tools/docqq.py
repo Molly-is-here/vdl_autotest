@@ -19,13 +19,16 @@ def docqq_easylogin(page):
     # logger.info("qq快捷登录（PC已经登录QQ）~~~~~~~~~~~~~~")
     try:
         # logger.info("点击 登录腾讯文档")
-        page.get_by_role("button", name="登录腾讯文档").click()
+        # page.get_by_role("blankpage-button-pc", name="立即登录").click()
+        page.locator("#blankpage-button-pc").click()
         time.sleep(3)
         # logger.info("点击 QQ登录->点击登录qq头像")
         page.get_by_text("QQ登录").click()
-        time.sleep(5)
+        time.sleep(3)
+        page.locator("div.dui-button-container:has-text('同意')").click()
+        time.sleep(3)
         # logger.info("点击qq头像~~~~~~~~~~~~~~")
-        pyautogui.click(1019, 621)
+        pyautogui.click(1036, 605)
         time.sleep(5)
         # logger.info("登录success")
     except Exception as err:
@@ -110,7 +113,7 @@ def row_write(page, content):
         for i in range(len(content)):
             # page.locator("#alloy-simple-text-editor").get_by_role("paragraph").click()
             # logger.info("上方文本输入框，坐标需自己填~~~~~~~~~~~~~~")
-            pyautogui.click(238, 245)
+            pyautogui.click(167, 261)
             time.sleep(1)
             # page.locator("#alloy-rich-text-editor").fill("1111111111")  #不生效
             text = str(content[i])
@@ -140,7 +143,7 @@ def type_chinese_text(text):
 
 def rm_tk():
     # logger.info("去除左上方页面弹框，坐标需自己填~~~~~~~~~~~~~~")
-    pyautogui.click(411,87)
+    pyautogui.click(413,112)
 
 
 def run(url, content,get_images):
@@ -152,7 +155,7 @@ def run(url, content,get_images):
         page = context.new_page()
         page.set_default_timeout(10000)
         open_url(page, url)
-        time.sleep(10)
+        time.sleep(5)
 
         # logger.info("去掉左上角讨厌的弹框~~~~~~~~~~~~~")
         rm_tk()
@@ -188,11 +191,11 @@ def run(url, content,get_images):
 
         insert = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\insert.png",threshold=0.7)
         cell_image = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\cell_image.png",threshold=0.7)
-        # airtest_method.touch_button(insert)
-        # airtest_method.touch_button(cell_image)
-        # airtest_method.operate_sleep(5.0)
+        airtest_method.touch_button(insert)
+        airtest_method.touch_button(cell_image)
+        airtest_method.operate_sleep(5.0)
         for element in get_images:
-            # input_content = os.path.join(r"D:\ly\VDL_autotest\VDL_autotest\elements",element")
+            input_content = os.path.join(r"D:\ly\VDL_autotest\VDL_autotest\elements",element)
             airtest_method.touch_button(insert)
             airtest_method.touch_button(cell_image)
             airtest_method.operate_sleep(5.0)
@@ -207,8 +210,8 @@ if __name__ == "__main__":
     默认输入：线上文档地址doc_url，写入内容按行row_content，默认从文档的下一行接着写，比如现在10行，则从第11行写
     2个坐标需修改：row_write 里的是文档上方编辑框，rm_tk 页面弹框
     '''
-    doc_url = "https://docs.qq.com/sheet/DY2NOYmlzcUtmaGNy?tab=BB08J2"  
+    doc_url = "https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=c1zt2p&_t=1726731212102&u=46f694f1d02b448b9de7e4eb8e458757"  
     row_content = ["2", "china", "中国新年好", "万事大吉", "Hello"]
-    run(doc_url, row_content)
+    run(doc_url, row_content,1)
     logger.info("run success")
     # time.sleep(200)
