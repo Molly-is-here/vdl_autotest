@@ -334,7 +334,7 @@ def test_det_pipelines():
             with allure.step(f'开启训练'):
                 training.model_training(color)
                 training.add_card(color)
-                if pipelines.post_module == control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
+                if pipelines.post_module == light_control.uad_module:  #后置模块若为无监督算法，不需要调整学习次数
                     training.star_training(color) 
                 else:
                     training.set_study(learning_times,color)
