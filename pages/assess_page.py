@@ -179,6 +179,23 @@ class assess():
         else:
             airtest_method.touch_button(light_control.template_close)
             airtest_method.operate_sleep(10.0)
+
+    def change_theme(color):
+        '''切换主题
+        color light:浅色主题 dark:深色主题
+        '''
+        if not airtest_method.check_exit(light_control.setting_button,'FALSE',5) :
+            assert False,'未找到设置按钮'
+        else:
+            airtest_method.touch_button(light_control.setting_button)
+        airtest_method.hover((256,75))
+        change_theme_element = get_button_from_string(f"{color}_control.change_theme")
+        if not airtest_method.check_exit(change_theme_element,'FALSE') :
+            assert False,'找不到主题切换'
+        else:
+            airtest_method.touch_button(change_theme_element)
+            airtest_method.touch_button(light_control.setting_button)
+        
  
     def user_guild():
         '''导出软件功能手册'''

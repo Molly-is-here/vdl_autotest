@@ -1,5 +1,4 @@
 '''封装AirTest基本方法'''
-# from airtest.core.api import * 
 import airtest.core.api as api
 from airtest.core.win import *
 from pywinauto.mouse import *
@@ -69,6 +68,12 @@ class airtest_method:
     def move_to(start_points,end_points):
         '''使用坐标的方式进行滑动'''
         api.swipe(start_points,end_points)
+        
+    def hover(points):
+        '''根据坐标点hover'''
+        move(points)
+        api.sleep(1.0)
+
 
 
     

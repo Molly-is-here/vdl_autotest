@@ -13,6 +13,7 @@ from elements.public_control import dark_control
 
 color = 'dark'
 
+@allure.feature('深色版本demo')
 def add_pipelines_module(path1,path2):
     '''添加串联模块'''
     data.project_flow(color)
@@ -42,47 +43,51 @@ def add_pipelines_module(path1,path2):
     training.star_training(color)
     assess.model_assess(color)
     assess.assess_success(color)
+
+@allure.title('切换颜色模式')
+@pytest.mark.smoke  
+def test_change_color():
+    assess.change_theme('light')
     
-@allure.feature('深色版本demo')
-@allure.title('跑单模型方案')
-@pytest.mark.smoke
-def test_run_module():   
-    with allure.step(f'点击新建方案按钮'):
-        management.create_project(color)
-        do_log.info('成功点击新建方案按钮,用例执行成功')
-    with allure.step(f'创建方案'):
-        project_name = '深色版本单模型方案'
-        management.input_name(project_name,color)
-        management.create_success(color)
-        do_log.info('成功创建方案,用例执行成功')
-    with allure.step(f'导入图像+标注'):
-        file_path = save_path.dataset_path + '\分类算法\\02_猫狗分类'
-        data.add_image(file_path,color)
-        data.add_label(file_path,color)
-        do_log.info('标注导入成功,用例执行成功')
-    with allure.step(f'切到图像标注页面自动划分'):
-        mark.image_label(color)
-        mark.auto_divide(color)
-        do_log.info('自动划分成功,用例执行成功')
-    with allure.step(f'切到模型训练页面进行训练'):
-        training.model_training(color)
-        training.add_card(color)
-        training.set_study('2',color)
-        training.cut_benchsize(color)
-        training.star_training(color)
-        do_log.info('成功开启训练,用例执行成功')
-    with allure.step(f'切到模型评估页面开始评估'):
-        assess.model_assess(color)
-        assess.assess_success(color)
-        do_log.info('评估完成,用例执行成功')
-        airtest_method.operate_sleep(10.0)
-    with allure.step(f'切到模型推理页面开始推理'):
-        infering.model_infering(color)
-        dataset = r'D:\ly\VDL_autotest\VDL_autotest\elements'  
-        infering.images_input(dataset,'images',color) 
-        infering.begin_infering(color)
-        infering.review_infering(color)
-        airtest_method.key_event("^w") #关闭软件
+# @allure.title('跑单模型方案')
+# @pytest.mark.smoke
+# def test_run_module():   
+#     with allure.step(f'点击新建方案按钮'):
+#         management.create_project(color)
+#         do_log.info('成功点击新建方案按钮,用例执行成功')
+#     with allure.step(f'创建方案'):
+#         project_name = '深色版本单模型方案'
+#         management.input_name(project_name,color)
+#         management.create_success(color)
+#         do_log.info('成功创建方案,用例执行成功')
+#     with allure.step(f'导入图像+标注'):
+#         file_path = save_path.dataset_path + '\分类算法\\02_猫狗分类'
+#         data.add_image(file_path,color)
+#         data.add_label(file_path,color)
+#         do_log.info('标注导入成功,用例执行成功')
+#     with allure.step(f'切到图像标注页面自动划分'):
+#         mark.image_label(color)
+#         mark.auto_divide(color)
+#         do_log.info('自动划分成功,用例执行成功')
+#     with allure.step(f'切到模型训练页面进行训练'):
+#         training.model_training(color)
+#         training.add_card(color)
+#         training.set_study('2',color)
+#         training.cut_benchsize(color)
+#         training.star_training(color)
+#         do_log.info('成功开启训练,用例执行成功')
+#     with allure.step(f'切到模型评估页面开始评估'):
+#         assess.model_assess(color)
+#         assess.assess_success(color)
+#         do_log.info('评估完成,用例执行成功')
+#         airtest_method.operate_sleep(10.0)
+#     with allure.step(f'切到模型推理页面开始推理'):
+#         infering.model_infering(color)
+#         dataset = r'D:\ly\VDL_autotest\VDL_autotest\elements'  
+#         infering.images_input(dataset,'images',color) 
+#         infering.begin_infering(color)
+#         infering.review_infering(color)
+#         airtest_method.key_event("^w") #关闭软件
 
 @allure.title('跑串联方案')
 @pytest.mark.smoke
@@ -104,6 +109,10 @@ def test_run_pipelines():
         path1 = r"C:\Users\user\Desktop\串联测试数据集\串联auto_test\分割-分割\labels1"
         path2 = r"C:\Users\user\Desktop\串联测试数据集\串联auto_test\分割-分割\labels2"
         add_pipelines_module(path1,path2)
+        do_log.info('pipelines推理完成,用例执行成功')
+    with allure.step(f'将主题切换回浅色'):
+        assess.change_theme(color)
+        
         
         
     

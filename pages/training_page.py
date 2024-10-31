@@ -31,17 +31,17 @@ class training():
         '''重命名卡片'''
         airtest_method.touch_button(light_control.new_card)
         airtest_method.right_click(coords=(199,195)) #鼠标右键（自己填坐标）
-        airtest_method.touch_button(light_control.rename_button)
+        airtest_method.touch_button(light_control.edit_button)
         airtest_method.key_event("^a") #全选
         airtest_method.input_text(content)
   
     def edit_comment(content):
         '''修改备注'''
-        if not airtest_method.check_exit(light_control.more_button,'FALSE',5) :
-            assert False,'找不到更多按钮'
+        if not airtest_method.check_exit(light_control.edit_comment,'FALSE',5) :
+            assert False,'找不到备注区域'
         else:
-            airtest_method.touch_button(light_control.more_button,2)
-        airtest_method.touch_button(light_control.edit_comment)
+            # airtest_method.touch_button(light_control.edit_comment)
+            airtest_method.double_click(light_control.edit_comment)
         airtest_method.input_text(content)
 
     def copy_card():

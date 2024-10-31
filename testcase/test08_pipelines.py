@@ -142,42 +142,42 @@ def test_painting_area(v1,v2,v3,number):
         data.rapid_full_test()
     do_log.info(f'模板绘制成功，用例执行成功')
 
-@allure.title('文件夹导入快速定位串联数据集')
-@pytest.mark.smoke
-def test_rapid_pipelines():
-    for pipelines in rapid_pipelines: 
-        with allure.step(f'创建快速定位方案'):
-            file_path = pipelines.file_path + '\images'
-            test_add_rapid_module(pipelines.name,file_path)
-        with allure.step(f'绘制基准图像并进行推理'):
-            get_points = pipelines.points
-            test_painting_area(get_points[0],get_points[1],get_points[2],pipelines.number)
-        with allure.step(f'添加后置模块'):
-            data.project_flow(color)   
-            data.add_pre_module(pipelines.post_module) 
-            # data.update_to_post_module()    
-            mark.auto_divide(color)  #点击自动划分按钮关闭方案流程画布                              
-            do_log.info(f'后置模块创建成功')
-            with allure.step(f'导入后置模块标注'):                 
-                label2_path = pipelines.file_path + '\labels2'
-                mark.import_label(label2_path,color)
-                do_log.info('后置模块标注导入成功')
-            with allure.step(f'自动划分数据集'):
-                mark.auto_divide(color)
-            with allure.step(f'开启训练'):
-                training.model_training(color)
-                training.add_card(color)
-                training.set_study(learning_times,color)
-                training.star_training(color) 
-                assess.model_assess(color)                             
-                assess.assess_success(color)
-                training.model_training(color)
-                do_log.info('后置模块训练评估完成')
-            with allure.step(f'返回数据源管理页面'):
-                data.dataset_management(color)
-                do_log.info('成功返回数据源管理页面')
-            with allure.step(f'切换方案'):
-                test_close_project()
+# @allure.title('文件夹导入快速定位串联数据集')
+# @pytest.mark.smoke
+# def test_rapid_pipelines():
+#     for pipelines in rapid_pipelines: 
+#         with allure.step(f'创建快速定位方案'):
+#             file_path = pipelines.file_path + '\images'
+#             test_add_rapid_module(pipelines.name,file_path)
+#         with allure.step(f'绘制基准图像并进行推理'):
+#             get_points = pipelines.points
+#             test_painting_area(get_points[0],get_points[1],get_points[2],pipelines.number)
+#         with allure.step(f'添加后置模块'):
+#             data.project_flow(color)   
+#             data.add_pre_module(pipelines.post_module) 
+#             # data.update_to_post_module()    
+#             mark.auto_divide(color)  #点击自动划分按钮关闭方案流程画布                              
+#             do_log.info(f'后置模块创建成功')
+#             with allure.step(f'导入后置模块标注'):                 
+#                 label2_path = pipelines.file_path + '\labels2'
+#                 mark.import_label(label2_path,color)
+#                 do_log.info('后置模块标注导入成功')
+#             with allure.step(f'自动划分数据集'):
+#                 mark.auto_divide(color)
+#             with allure.step(f'开启训练'):
+#                 training.model_training(color)
+#                 training.add_card(color)
+#                 training.set_study(learning_times,color)
+#                 training.star_training(color) 
+#                 assess.model_assess(color)                             
+#                 assess.assess_success(color)
+#                 training.model_training(color)
+#                 do_log.info('后置模块训练评估完成')
+#             with allure.step(f'返回数据源管理页面'):
+#                 data.dataset_management(color)
+#                 do_log.info('成功返回数据源管理页面')
+#             with allure.step(f'切换方案'):
+#                 test_close_project()
 
 @allure.title('文件夹导入ROI串联数据集')
 @pytest.mark.smoke

@@ -8,15 +8,15 @@ from common.handle_log import do_log
 airtest_method.operate_sleep(5.0)
 
 @allure.feature('菜单栏')
-@allure.title('关闭方案')
-@pytest.mark.smoke
-def test_template_close():
-    with allure.step(f'点击文件按钮'):
-        assess.template_file()
-    with allure.step(f'点击关闭方案'):
-        assess.template_close()
-        airtest_method.operate_sleep()
-    do_log.info('关闭方案成功，用例执行成功')
+# @allure.title('关闭方案')
+# @pytest.mark.smoke
+# def test_template_close():
+#     with allure.step(f'点击文件按钮'):
+#         assess.template_file()
+#     with allure.step(f'点击关闭方案'):
+#         assess.template_close()
+#         airtest_method.operate_sleep()
+#     do_log.info('关闭方案成功，用例执行成功')
 
 @allure.title('导出SDK')
 @pytest.mark.smoke

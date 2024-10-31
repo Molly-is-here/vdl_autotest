@@ -37,7 +37,7 @@ class light_control():
     full_test = Template(save_path.base_path + "/public/20_全量测试.png" , threshold=0.7)
 
     #过滤参数1
-    filter_parameter1 = Template(save_path.base_path + "/public/20_过滤参数1.png" ,target_pos= 6, threshold=0.7)
+    filter_parameter1 = Template(save_path.base_path + "/public/20_过滤参数.png" ,target_pos= 6, threshold=0.7)
 
     #更新数据到后置模块
     update_to_post_module = Template(save_path.base_path + "/public/20_更新数据到后置模块.png" ,threshold=0.7)
@@ -106,7 +106,7 @@ class light_control():
     open_project = Template(save_path.base_path + "/public/02_打开方案.png", threshold=0.7)
 
     #方案输入错误提示
-    proj_error = Template(save_path.base_path + "/public/03_方案输入错误提示.png", threshold=0.7)
+    proj_error = Template(save_path.base_path + "/public/03_方案输入错误提示.png",threshold=0.7)
 
     #选中方案
     click_project = Template(save_path.base_path + "/public/03_pro标志.png", threshold=0.7)
@@ -143,6 +143,9 @@ class light_control():
 
     #选中编辑框
     select_textbox = Template(save_path.base_path + "/public/03_方案名称编辑框.png", threshold=0.7)
+    
+    #输入框
+    input_textbox = Template(save_path.base_path + "/public/03_方案名称编辑框1.png", threshold=0.7)
 
     #确认按钮
     ok_button = Template(save_path.base_path + "/public/04_确认按钮.png", threshold=0.7)
@@ -157,7 +160,7 @@ class light_control():
     data_management_page = Template(save_path.base_path + "/public/03_数据管理页面.png", threshold=0.7)
 
     #点击添加图像下划线
-    add_image_underscore = Template(save_path.base_path + "/public/05_添加图像下划线.png", target_pos = 8,threshold=0.7)
+    add_image_underscore = Template(save_path.base_path + "/public/05_添加图像下划线.png",threshold=0.7)
 
     #点击添加图像
     add_image = Template(save_path.base_path + "/public/05_添加图像.png", threshold=0.7)
@@ -233,6 +236,9 @@ class light_control():
 
     #重命名
     rename_button = Template(save_path.base_path + "/public/08_重命名.png", threshold=0.7)
+    
+    #编辑
+    edit_button = Template(save_path.base_path + "/public/08_编辑.png", threshold=0.7)
 
     #修改备注
     edit_comment = Template(save_path.base_path + "/public/08_修改备注.png", threshold=0.7)
@@ -289,7 +295,7 @@ class light_control():
     cropping_true = Template(save_path.base_path + "/public/09_确定裁切.png", threshold=0.7)
 
     #图像缩放
-    image_scaling = Template(save_path.base_path + "/public/09_图像缩放1.png",target_pos = 5, threshold=0.7)
+    image_scaling = Template(save_path.base_path + "/public/09_图像缩放.png",target_pos = 5, threshold=0.7)
 
     #无监督算法图像缩放
     uad_image_scaling = Template(save_path.base_path + "/public/09_无监督图像缩放.png",target_pos = 5, threshold=0.7)
@@ -307,13 +313,13 @@ class light_control():
     zidingyi_edit_box2 = Template(save_path.base_path + "/public/09_自定义编辑框.png",target_pos = 5,threshold=0.7)
 
     #鼠标定位至批次大小
-    mouse_move = Template(save_path.base_path + "/public/09_开benchsize1.png", target_pos= 5,threshold=0.7)
+    mouse_move = Template(save_path.base_path + "/public/09_开benchsize.png", target_pos= 5,threshold=0.7)
 
     #选项为自定义
     zidingyi_button = Template(save_path.base_path + "/public/10_选择自定义.png", target_pos= 8, threshold=0.7)
 
     #下调benchsize
-    cut_benchsize = Template(save_path.base_path + "/public/11_benchsize下调按钮.png",target_pos = 6,threshold=0.7)
+    cut_benchsize = Template(save_path.base_path + "/public/11_batchsize下调按钮.png",target_pos = 6,threshold=0.7)
 
     #设置学习次数
     set_study = Template(save_path.base_path + "/public/11_设置学习次数.png",threshold=0.7)
@@ -404,6 +410,12 @@ class light_control():
 
     #点击文件按钮
     template_file = Template(save_path.base_path + "/public/15_文件按钮.png", threshold=0.7)
+
+    #点击设置按钮
+    setting_button = Template(save_path.base_path + "/public/15_设置按钮.png", threshold=0.7)
+
+    #深色版本
+    change_theme =  Template(save_path.base_path + "/public/15_深色主题.png", threshold=0.7)
 
     #点击导出SDK按钮
     template_SDK = Template(save_path.base_path + "/public/15_导出SDK.png", threshold=0.7)
@@ -633,6 +645,9 @@ class label_control():
 class dark_control():
     #分割模块
     seg_module = Template(save_path.base_path + "/public_dark/分割模块.png", threshold=0.7)
+    
+    #切换主题
+    change_theme = Template(save_path.base_path + "/public_dark/00_浅色主题.png", threshold=0.7)
     
     #新建方案
     create_project = Template(save_path.base_path + "/public_dark/00_新建方案.png" , threshold=0.7) 

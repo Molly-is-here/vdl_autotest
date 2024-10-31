@@ -24,7 +24,8 @@ def test_input_name():
     with allure.step(f'点击创建按钮'):
         management.create_success(color)
     with allure.step(f'校验异常情况'):
-        if airtest_method.check_exit(light_control.proj_error,'TRUE',5):
+        airtest_method.hover((882,320))
+        if airtest_method.check_exit(light_control.proj_error):
             do_log.error(f'字符长度输入校验,用例执行失败')
             allure.attach('字符长度输入校验失败', name="异常情况", attachment_type=allure.attachment_type.TEXT)
 
@@ -32,6 +33,7 @@ def test_input_name():
 @pytest.mark.smoke
 def test_create_model():
     with allure.step(f'方案名称输入多字符'):
+        airtest_method.touch_button(light_control.input_textbox)
         airtest_method.key_event('{BACKSPACE}')
         management.input_name('Auto',color)
     with allure.step(f'以分割算法为例'):       
