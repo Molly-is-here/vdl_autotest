@@ -71,7 +71,7 @@ def test_algorithm_smoke():
                         training.image_scaling(params_list[0][0])
                         training.color_mode(params_list[0][1])
 
-                        training.seq_set_study(learning_times,color)
+                        training.seq_set_study(learning_times)
                         training.star_training(color)
 
                         '''模型评估页面'''
@@ -84,13 +84,6 @@ def test_algorithm_smoke():
                         assess.unzip_SDK()
                         assess.copy_SDK_dll()
                         assess.run_SDK(file_path,project_name)
-
-                        # '''导出模型'''
-                        # assess.more_button()
-                        # assess.export_model()
-
-                        # '''导出报告'''
-                        # assess.export_report()
                             
                         with allure.step(f'关闭方案'):
                             '''关闭方案'''
@@ -139,13 +132,6 @@ def test_algorithm_smoke():
                                 assess.copy_SDK_dll()
                                 assess.run_SDK(file_path,project_name)
 
-                                # '''导出模型'''
-                                # assess.more_button()
-                                # assess.export_model()
-
-                                # '''导出报告'''
-                                # assess.export_report()
-
                                 with allure.step(f'关闭方案'):    
                                     '''关闭方案'''
                                     assess.template_file()
@@ -190,13 +176,6 @@ def test_algorithm_smoke():
                         assess.copy_SDK_dll()
                         assess.run_SDK(file_path,project_name)
 
-                        # '''导出模型'''
-                        # assess.more_button()
-                        # assess.export_model()
-
-                        # '''导出报告'''
-                        # assess.export_report()
-
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''
                             assess.template_file()
@@ -240,13 +219,6 @@ def test_algorithm_smoke():
                         assess.unzip_SDK()
                         assess.copy_SDK_dll()
                         assess.run_SDK(file_path,project_name)
-
-                        # '''导出模型'''
-                        # assess.more_button()
-                        # assess.export_model()
-
-                        # '''导出报告'''
-                        # assess.export_report()
 
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''
@@ -293,13 +265,6 @@ def test_algorithm_smoke():
                         assess.copy_SDK_dll()
                         assess.run_SDK(file_path,project_name)
 
-                        # '''导出模型'''
-                        # assess.more_button()
-                        # assess.export_model()
-
-                        # '''导出报告'''
-                        # assess.export_report()
-
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''
                             assess.template_file()
@@ -344,22 +309,7 @@ def test_algorithm_smoke():
                         assess.copy_SDK_dll()
                         assess.run_SDK(file_path,project_name)
 
-                        # '''导出模型'''
-                        # assess.more_button()
-                        # assess.export_model()
-
-                        # '''导出报告'''
-                        # assess.export_report()
-
                         with allure.step(f'关闭方案'):    
                             '''关闭方案'''
                             assess.template_file()
                             assess.template_close()
-
-# @allure.title('退出软件')
-# @pytest.mark.smoke
-# def test_quit():
-#     with allure.step(f'点击文件按钮'): 
-#        assess.template_file()
-#     with allure.step(f'点击退出按钮'):
-#         assess.template_quit()       

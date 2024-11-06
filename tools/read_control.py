@@ -28,8 +28,8 @@ def get_button_name(control,color):
     0 浅色
     1 深色
     '''
-    theme = read_control(control)
-    element = get_button_from_string(theme[color])
+    theme = read_control(control)  #按控件名称读取对应两种模式的控件
+    element = get_button_from_string(theme[color])  #通过0/1判断颜色模式
     return element
 
 

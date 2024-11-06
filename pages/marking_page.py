@@ -206,6 +206,7 @@ class mark():
             assert False,'未找到确认按钮'
         else:
             airtest_method.touch_button(label_control.confirm_button)
+            airtest_method.operate_sleep()
 
     def add_marking():
         '''添加标签'''

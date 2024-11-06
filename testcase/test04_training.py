@@ -84,30 +84,6 @@ def test_set_template():
     with allure.step(f'返回模型训练页面'): 
         training.model_training(color)
 
-# @allure.title('图像裁切')                
-# @pytest.mark.smoke
-# def test_image_cropping():
-#     with allure.step(f'确认图像裁切'):
-#         training.add_card(color)
-#         training.image_cropping()
-#         with allure.step(f'设置学习次数'):
-#             training.set_study('1',color) 
-#         with allure.step(f'调整benchsize'):             
-#             training.cut_benchsize(color)
-#         with allure.step(f'点击开始训练'):
-#             training.star_training(color)
-#         with allure.step(f'判断是否完成训练-评估'):
-#             airtest_method.operate_sleep(60.0)
-#             assess.model_assess()
-#         with allure.step(f'判断是否评估成功'):  
-#             if not airtest_method.check_exit(light_control.infering_finished,'FALSE',360000) :
-#                 assert False,'评估未完成'
-#             else:
-#                 airtest_method.operate_sleep()
-#                 do_log.info('图像裁切训练成功，用例执行成功')
-#         with allure.step(f'返回模型训练页面'): 
-#             training.model_training(color)
-
 # @allure.title('继续训练') 
 # @pytest.mark.smoke
 # def test_continute_training():

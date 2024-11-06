@@ -256,7 +256,7 @@ class light_control():
     training_okbutton = Template(save_path.base_path + "/public/08_确认按钮.png", threshold=0.7)
 
     #模型选择
-    choice_model = Template(save_path.base_path + "/public/09_模型选择1.png",target_pos = 5,threshold=0.7)
+    choice_model = Template(save_path.base_path + "/public/09_模型选择.png",target_pos = 5,threshold=0.7)
 
     #无监督模型选择
     uad_choice_model = Template(save_path.base_path + "/public/09_无监督模型选择.png",threshold=0.7)

@@ -26,8 +26,10 @@ class search_file():
                 if os.path.isfile(oldpath):
                     shutil.copy2(oldpath, newpath)
                 else:
-                    for file in search_file.get_file(oldpath):
-                        shutil.copy2(file, newpath)
+                    files = search_file.get_file(oldpath)
+                    for file in files:
+                        file_path = os.path.join(oldpath, file)
+                        shutil.copy2(file_path, newpath)
             else:
                 print('目标文件夹不存在')
         else:

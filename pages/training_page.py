@@ -22,7 +22,7 @@ class training():
         add_card_element = get_button_from_string(f"{color}_control.add_card")
         #常规训练
         nomal_training = get_button_from_string(f"{color}_control.nomal_training")
-        
+
         airtest_method.touch_button(add_card_element)
         airtest_method.touch_button(nomal_training)
         airtest_method.operate_sleep()
@@ -49,7 +49,7 @@ class training():
         if not airtest_method.check_exit(light_control.more_button,'FALSE',5) :
             assert False,'找不到更多按钮'
         else:
-            airtest_method.touch_button(light_control.more_button,2)
+            airtest_method.touch_button(light_control.more_button)
         airtest_method.touch_button(light_control.copy_button)
 
     def delete_card():
@@ -158,7 +158,10 @@ class training():
         training.mouse_move(color)
         training.zidingyi_button(color)
         cut_benchsize_element = get_button_from_string(f"{color}_control.cut_benchsize")
-        airtest_method.touch_button(cut_benchsize_element,times= 3)
+        if not airtest_method.check_exit(cut_benchsize_element,'FALSE',5) :        
+            assert False,'找不到下调benchsize按钮'
+        else:      
+            airtest_method.touch_button(cut_benchsize_element,times= 3)
     
     def set_study(learning_times,color):
         '''设置学习次数

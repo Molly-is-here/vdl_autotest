@@ -1,6 +1,7 @@
 import os
 
 class save_path():
+    '''适配浅色主题'''
     base_path = os.path.dirname(__file__)
     dataset_path = r"\\10.80.31.43\vimo数据SVNwc\15_VDL_autotest_dataset"      
     smoke_path = r"\\10.80.31.43\vimo数据SVNwc\14.VDL_SDK自动化\VDL_datasets"        #冒烟测试数据集
@@ -15,9 +16,9 @@ class save_path():
     ocr = base_path + "/public/OCR算法.png"
     uad = base_path + "/public/无监督算法.png"
     seqocr = base_path + "/public/字符串算法.png"
-    project_list = [cls,det,seg,ocr,uad,seqocr]
+    project_list = [cls,uad,ocr,seqocr,det,seg]
 
-    '''冒烟测试数据集'''
+    #冒烟测试数据集
     cls_dataset = smoke_path + "\分类算法"
     det_dataset = smoke_path + "\检测算法"
     seg_dataset = smoke_path + "\分割算法"
@@ -25,7 +26,7 @@ class save_path():
     uad_dataset = smoke_path + "\无监督算法"
     seqocr_dataset = smoke_path + "\Seqocr算法"
 
-    '''算法校验测试方案'''
+    #算法校验测试方案
     cls_project = project_path + "\分类"
     det_project = project_path + "\检测"
     seg_project = project_path + "\分割"
@@ -33,9 +34,8 @@ class save_path():
     uad_project = project_path + "\无监督"
     seqocr_project = project_path + "\字符串"
     compare_project = [cls_project,det_project,seg_project,ocr_project,uad_project,seqocr_project]
-    # compare_project = [seqocr_project]
     
-    '''串联pipelines数据集'''
+    #串联pipelines数据集
     cls_seg = pipelines_path + "\分类-分割"
     cls_det = pipelines_path + "\分类-检测"
     cls_uad = pipelines_path + "\分类-无监督"
@@ -61,4 +61,9 @@ class save_path():
     roi_OCR = pipelines_path + "\\roi-OCR"
     rapid_det = pipelines_path + "\快速定位_检测"
     rapid_seg = pipelines_path + "\快速定位_分割"
+
+
+class dark_save_path():
+    '''适配深色主题'''
+    
 
