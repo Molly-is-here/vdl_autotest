@@ -66,8 +66,9 @@ class infering():
         '''
         infering_finished = get_button_from_string(f"{color}_control.infering_finished")    
         airtest_method.operate_sleep()
-        if not airtest_method.check_exit(infering_finished,'FALSE',36000) :
+        if not airtest_method.check_exit(infering_finished,'FALSE',900) :
             assert False,'推理未完成'
+            
     def unlock_infering():
         '''解锁推理按钮'''  
         if not airtest_method.check_exit(light_control.unlock_logo,'FALSE'):      
