@@ -31,7 +31,7 @@ class training():
         '''重命名卡片'''
         airtest_method.touch_button(light_control.new_card)
         airtest_method.right_click(coords=(199,195)) #鼠标右键（自己填坐标）
-        airtest_method.touch_button(light_control.rename_button)
+        airtest_method.touch_button(light_control.edit_button)
         airtest_method.key_event("^a") #全选
         airtest_method.input_text(content)
   
