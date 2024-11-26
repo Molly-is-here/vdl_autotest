@@ -178,7 +178,7 @@ class assess():
             assert False,'未找到关闭按钮'
         else:
             airtest_method.touch_button(light_control.template_close)
-            airtest_method.operate_sleep(10.0)
+            # airtest_method.operate_sleep(10.0)
 
     def change_theme(color):
         '''切换主题
