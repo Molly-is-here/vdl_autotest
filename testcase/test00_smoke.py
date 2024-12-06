@@ -41,6 +41,12 @@ def test_algorithm_smoke():
         if item == save_path.seqocr:
             dataset = save_path.seqocr_dataset
             name = 'SEQ'
+        if item == save_path.clsocv:
+            dataset = save_path.clsocv_dataset
+            name = 'CLSOCV'
+        if item == save_path.uadocv:
+            dataset = save_path.uadocv_dataset
+            name = 'UADOCV'
 
         current_dir = os.getcwd()
         model_selection = [light_control.high_power,light_control.low_power]  #模型类型
@@ -313,3 +319,92 @@ def test_algorithm_smoke():
                             '''关闭方案'''
                             assess.template_file()
                             assess.template_close()
+
+        if name == 'CLSOCV':
+            for file in search_file.get_file(dataset):   
+                with allure.step(f'{name}算法冒烟'):
+                    count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                    for i in range(count):
+                        params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                        '''方案管理页面'''
+                        management.create_project(color)       
+                        project_name = management.input_name(name,color)  
+                        management.create_model(item)
+
+                        '''数据管理页面'''
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
+
+                        '''图像标注页面'''
+                        mark.image_label(color)
+                        # mark.auto_divide(color)
+
+                        '''模型训练页面'''  
+                        training.model_training(color)
+                        training.add_card(color)
+                        training.choice_model(params_list[0][0])                  
+                        training.image_scaling(params_list[0][1])
+                        training.color_mode(params_list[0][2])
+                        training.ocv_set_study(learning_times)                        
+                        training.star_training(color)
+
+                        '''模型评估页面'''
+                        assess.model_assess(color)
+                        assess.assess_success(color)
+
+                        '''调用SDK'''
+                        assess.more_button()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
+
+                        with allure.step(f'关闭方案'):    
+                            '''关闭方案'''
+                            assess.template_file()
+                            assess.template_close()
+
+        if name == 'UADOCV':
+            for file in search_file.get_file(dataset):   
+                with allure.step(f'{name}算法冒烟'):
+                    count = min(len(model_selection),len(scaling_selection),len(color_mode))
+                    for i in range(count):
+                        params_list= radom_Name.get_params(model_selection,scaling_selection,color_mode)
+                        '''方案管理页面'''
+                        management.create_project(color)       
+                        project_name = management.input_name(name,color)  
+                        management.create_model(item)
+
+                        '''数据管理页面'''
+                        file_path = str(os.path.join(dataset,file))
+                        data.add_file(file_path)
+
+                        '''图像标注页面'''
+                        mark.image_label(color)
+                        mark.auto_divide(color)
+
+                        '''模型训练页面'''  
+                        training.model_training(color)
+                        training.add_card(color)
+                        training.choice_model(params_list[0][0])                  
+                        training.image_scaling(params_list[0][1])
+                        training.color_mode(params_list[0][2])
+                        training.set_study(learning_times,color)                        
+                        training.star_training(color)
+
+                        '''模型评估页面'''
+                        assess.model_assess(color)
+                        assess.assess_success(color)
+
+                        '''调用SDK'''
+                        assess.more_button()
+                        assess.export_SDK(current_dir)
+                        assess.unzip_SDK()
+                        assess.copy_SDK_dll()
+                        assess.run_SDK(file_path,project_name)
+
+                        with allure.step(f'关闭方案'):    
+                            '''关闭方案'''
+                            assess.template_file()
+                            assess.template_close()            
+

@@ -124,7 +124,7 @@ def test_add_training():
     with allure.step(f'确认开启增量训练'):
         airtest_method.touch_button(light_control.training_okbutton)
     with allure.step(f'开启训练'):
-        airtest_method.operate_sleep(120.0)      
+        airtest_method.operate_sleep(80.0)      
         assess.model_assess(color)
         airtest_method.operate_sleep(10.0)
     with allure.step(f'判断是否评估成功'):

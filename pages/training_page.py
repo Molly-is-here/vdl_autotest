@@ -195,6 +195,21 @@ class training():
         airtest_method.input_text(learning_times)
         airtest_method.operate_sleep()
 
+    def ocv_set_study(learning_times):
+        '''OCV设置学习次数'''
+        #阶段1
+        airtest_method.touch_button(light_control.ocv_step1_study)
+        keyevent("^a")
+        keyevent("{BACKSPACE}")
+        airtest_method.input_text(learning_times)
+        airtest_method.operate_sleep()
+        #阶段2
+        airtest_method.touch_button(light_control.ocv_step2_study)
+        keyevent("^a")
+        keyevent("{BACKSPACE}")
+        airtest_method.input_text(learning_times)
+        airtest_method.operate_sleep()
+
     def star_training(color):
         '''点击开始训练
         color light:浅色主题 dark:深色主题

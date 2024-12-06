@@ -333,6 +333,12 @@ class light_control():
     #字符串阶段三
     seq_step3_study = Template(save_path.base_path + "/public/11_字符串设置学习次数.png",target_pos = 6,threshold=0.7)
 
+    #OCV阶段一
+    ocv_step1_study = Template(save_path.base_path + "/public/11_ocv设置学习次数.png",target_pos = 5,threshold=0.7)
+
+    #OCV阶段二
+    ocv_step2_study = Template(save_path.base_path + "/public/11_ocv设置学习次数.png",target_pos = 6,threshold=0.7)
+
     #点击开始训练
     star_training = Template(save_path.base_path + "/public/12_开始训练.png",threshold=0.7)
 

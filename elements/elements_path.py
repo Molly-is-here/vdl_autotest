@@ -16,7 +16,10 @@ class save_path():
     ocr = base_path + "/public/OCR算法.png"
     uad = base_path + "/public/无监督算法.png"
     seqocr = base_path + "/public/字符串算法.png"
-    project_list = [cls,uad,ocr,seqocr,det,seg]
+    clsocv = base_path + "/public/有监督字符检查.png"
+    uadocv = base_path + "/public/无监督字符检查.png"
+    project_list = [clsocv,uadocv,cls,uad,ocr,seqocr,det,seg]
+    # project_list = [uadocv]
 
     #冒烟测试数据集
     cls_dataset = smoke_path + "\分类算法"
@@ -25,6 +28,8 @@ class save_path():
     ocr_dataset = smoke_path + "\OCR算法"
     uad_dataset = smoke_path + "\无监督算法"
     seqocr_dataset = smoke_path + "\Seqocr算法"
+    clsocv_dataset = smoke_path + "\有监督字符检查"
+    uadocv_dataset = smoke_path + "\无监督字符检查"
 
     #算法校验测试方案
     cls_project = project_path + "\分类"

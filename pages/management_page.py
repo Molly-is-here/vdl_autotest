@@ -29,7 +29,7 @@ class management():
         color light:浅色主题 dark:深色主题
         '''
         select_textbox = get_button_from_string(f"{color}_control.select_textbox")
-        if not airtest_method.check_exit(select_textbox,'FALSE',5) :
+        if not airtest_method.check_exit(select_textbox,'FALSE',5):
             assert False,'找不到方案名称编辑框' 
         else:     
             airtest_method.touch_button(select_textbox)  
