@@ -337,7 +337,7 @@ def test_algorithm_smoke():
 
                         '''图像标注页面'''
                         mark.image_label(color)
-                        # mark.auto_divide(color)
+                        mark.auto_divide(color)
 
                         '''模型训练页面'''  
                         training.model_training(color)

@@ -65,7 +65,6 @@ def docqq_login(page, username, password):
     except Exception as err:
         logger.error(f"login FAIL:{err}")
 
-
 def docqq_export(page):
     # logger.info("导出腾讯文档~~~~~~~~~~~~~~")
     try:
@@ -82,7 +81,6 @@ def docqq_export(page):
     except Exception as err:
         logger.error(f"export FAIL:{err}")
 
-
 def docqq_rows(page):
     # logger.info("获取文档行数~~~~~~~~~~~~~~")
     try:
@@ -97,7 +95,6 @@ def docqq_rows(page):
     except Exception as err:
         logger.error(f"get rows FAIL:{err}")
 
-
 def open_url(page, url):
     # logger.info("打开腾讯文档~~~~~~~~~~~~~~")
     try:
@@ -105,7 +102,6 @@ def open_url(page, url):
         logger.info("打开文档success")
     except Exception as err:
         logger.error(f"open doc FAIL:{err}")
-
 
 def row_write(page, content):
     # logger.info("写入内容~~~~~~~~~~~~~~")
@@ -128,6 +124,15 @@ def row_write(page, content):
     except Exception as err:
         logger.error(f"write FAIL:{err}")
 
+def insert_image(page, image_path):
+    try:
+        page.get_by_role("tab", name="插入").click()
+        time.sleep(1)
+        page.get_by_role("button", name="单元格图片").click()
+        time.sleep(1)
+    except Exception as err:
+        logger.error(f"write FAIL:{err}")
+
 
 def contains_chinese(text):
     pattern = re.compile(r'[\u4e00-\u9fff]')  # 匹配中文字符的正则表达式
@@ -140,11 +145,9 @@ def type_chinese_text(text):
     # 模拟粘贴操作
     pyautogui.hotkey('ctrl', 'v')
 
-
 def rm_tk():
     # logger.info("去除左上方页面弹框，坐标需自己填~~~~~~~~~~~~~~")
     pyautogui.click(413,112)
-
 
 def run(url, content,get_images):
     with sync_playwright() as playwright:
@@ -189,16 +192,17 @@ def run(url, content,get_images):
         rm_tk()
         time.sleep(1)
 
-        insert = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\insert.png",threshold=0.7)
-        cell_image = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\cell_image.png",threshold=0.7)
-        airtest_method.touch_button(insert)
-        airtest_method.touch_button(cell_image)
-        airtest_method.operate_sleep(5.0)
+        # insert = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\insert.png",threshold=0.7)
+        # cell_image = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\cell_image.png",threshold=0.7)
+        # airtest_method.touch_button(insert)
+        # airtest_method.touch_button(cell_image)
+        # airtest_method.operate_sleep(5.0)
         for element in get_images:
-            input_content = os.path.join(r"D:\ly\VDL_autotest\VDL_autotest\elements",element)
-            airtest_method.touch_button(insert)
-            airtest_method.touch_button(cell_image)
-            airtest_method.operate_sleep(5.0)
+            # input_content = os.path.join(r"D:\ly\VDL_autotest\VDL_autotest\elements",element)
+            # airtest_method.touch_button(insert)
+            # airtest_method.touch_button(cell_image)
+            # airtest_method.operate_sleep(5.0)      
+            insert_image(page,element)
             airtest_method.input_text(element)
             airtest_method.key_event('{ENTER}')
             page.locator("#alloy-rich-text-editor").press("ArrowRight")

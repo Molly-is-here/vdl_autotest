@@ -215,6 +215,12 @@ class light_control():
 
     #图像标注页面
     image_label = Template(save_path.base_path + "/public/06_图像标注页面.png", threshold=0.7)
+
+    #训练比例60%
+    train_60 = Template(save_path.base_path + "/public/06_训练比例60.png", threshold=0.7)
+
+    #训练比例
+    train_ratio = Template(save_path.base_path + "/public/06_训练比例.png", threshold=0.7)
     
     #自动划分按钮
     auto_divide = Template(save_path.base_path + "/public/06_自动划分.png", threshold=0.7)
@@ -690,6 +696,12 @@ class dark_control():
 
     #图像标注页面
     image_label = Template(save_path.base_path + "/public_dark/02_图像标注页面.png", threshold=0.7)
+
+    #训练比例60%
+    train_60 = Template(save_path.base_path + "/public_dark/02_训练比例60.png", threshold=0.7)
+
+    #训练比例
+    train_ratio = Template(save_path.base_path + "/public_dark/02_训练比例.png", threshold=0.7)
 
     #自动划分按钮
     auto_divide = Template(save_path.base_path + "/public_dark/02_自动划分.png", threshold=0.7)
