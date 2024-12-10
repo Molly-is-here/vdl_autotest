@@ -87,6 +87,7 @@ def test_run_module():
         infering.images_input(dataset,'images',color) 
         infering.begin_infering(color)
         infering.review_infering(color)
+        airtest_method.operate_sleep(2.0)
         airtest_method.key_event("^w") #关闭软件
 
 @allure.title('跑串联方案')

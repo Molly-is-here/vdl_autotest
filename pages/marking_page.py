@@ -55,6 +55,7 @@ class mark():
         airtest_method.touch_button(light_control.click_area)
         #全选
         airtest_method.key_event("^a")
+
         airtest_method.key_event("{ENTER}")
         if not airtest_method.check_exit(upload_done,'FALSE') :
             assert False,'找不到导入完成标志'

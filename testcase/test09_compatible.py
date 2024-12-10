@@ -14,7 +14,7 @@ import pytest
 import allure
 
 auto_setup(__file__)
-learning_times = '1'
+learning_times = '30'
 color = 'light'
 
 @allure.title('六类算法对比测试')

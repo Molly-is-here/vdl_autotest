@@ -166,7 +166,7 @@ class light_control():
     add_image = Template(save_path.base_path + "/public/05_添加图像.png", threshold=0.7)
 
     #点击空白区域
-    click_area = Template(save_path.base_path + "/public/05_点击空白区域.png", threshold=0.7)
+    click_area = Template(save_path.base_path + "/public/05_点击空白区域.png",target_pos=2, threshold=0.7)
 
     #点击添加标注
     add_label = Template(save_path.base_path + "/public/05_添加标注.png", threshold=0.7)
@@ -178,7 +178,7 @@ class light_control():
     choice_file1 = Template(save_path.base_path + "/public/05_路径编辑框1.png",threshold=0.7)
 
     #选择文件夹按钮
-    choice_file = Template(save_path.base_path + "/public/05_路径编辑框3.png",target_pos = 5, threshold=0.7)
+    choice_file = Template(save_path.base_path + "/public/05_路径编辑框.png",target_pos = 5, threshold=0.7)
 
     #输入文件夹名称
     print_name = Template(save_path.base_path + "/public/03_输入文件夹名称.png", threshold=0.7)
