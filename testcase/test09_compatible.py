@@ -17,7 +17,7 @@ auto_setup(__file__)
 learning_times = '30'
 color = 'light'
 
-@allure.title('六类算法对比测试')
+@allure.title('八类算法对比测试')
 @pytest.mark.smoke
 def test_compatible_smoke():
    for item in save_path.project_list:
@@ -71,6 +71,22 @@ def test_compatible_smoke():
                     folder_name = entry.name
                     dataset = os.path.join(save_path.compare_project[5],folder_name) 
                     dataset_list.append(dataset)  
+        if item == save_path.uadocv:
+            name = 'UADOCV'
+            folder_path = Path(save_path.compare_project[6])
+            for entry in folder_path.iterdir():
+                if entry.is_dir():
+                    folder_name = entry.name
+                    dataset = os.path.join(save_path.compare_project[6],folder_name) 
+                    dataset_list.append(dataset)
+        if item == save_path.clsocv:
+            name = 'CLSOCV'
+            folder_path = Path(save_path.compare_project[7])
+            for entry in folder_path.iterdir():
+                if entry.is_dir():
+                    folder_name = entry.name
+                    dataset = os.path.join(save_path.compare_project[7],folder_name) 
+                    dataset_list.append(dataset)
 
         for project_path in dataset_list:
             dataset_name = os.path.basename(project_path)
@@ -87,19 +103,24 @@ def test_compatible_smoke():
                 if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR': 
                     training.add_card(color)
                     if name == 'SEQOCR':
-                        training.seq_set_study(learning_times,color)
+                        training.seq_set_study(learning_times)
                     else:
                         training.set_study(learning_times,color)
                     training.cut_benchsize(color)
                 else:
-                    training.add_card(color)
-
+                    if name == 'UAD' or name == 'UADOCV' or name == 'CLSOCV':
+                        training.add_card(color) 
+                    if name == 'UADOCV':
+                        training.set_study(learning_times,color)
+                    if name == 'CLSOCV':
+                        training.ocv_set_study(learning_times)
+                
                 training.star_training(color)    #开始训练
                 
                 '''模型评估页面'''
                 assess.model_assess(color)
                 assess.assess_success(color)
-                if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR':
+                if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR' or name == 'UADOCV' or name == 'CLSOCV':
                     assess.assess_done() 
                 else:
                     if not airtest_method.check_exit(light_control.sensitive_area,'FALSE',360000) :
@@ -170,13 +191,26 @@ def test_compatible_smoke():
                     airtest_method.screenshot(project_screenshot)
                     screenshot_images.append(project_screenshot)
 
-                    #切换为类别级别
-                    airtest_method.touch_button(light_control.change_type_image)
-                    change_type_image = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
-                    airtest_method.screenshot(change_type_image)
-                    screenshot_images.append(change_type_image)
+                    # #切换为类别级别
+                    # airtest_method.touch_button(light_control.change_type_image)
+                    # change_type_image = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
+                    # airtest_method.screenshot(change_type_image)
+                    # screenshot_images.append(change_type_image)
 
                 if name == 'CLS':
+                    type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
+                    airtest_method.screenshot(type_screenshot)
+                    screenshot_images.append(type_screenshot)
+
+                if name == 'UADOCV' or name == 'CLSOCV':
+                    #字符级别截图
+                    airtest_method.touch_button(light_control.ocr_image)
+                    ocr_screenshot = os.path.join(save_path.base_path, f"{dataset_name}字符级别.jpg")
+                    airtest_method.screenshot(ocr_screenshot)
+                    screenshot_images.append(ocr_screenshot)
+                    airtest_method.operate_sleep()
+
+                    airtest_method.touch_button(light_control.type_image)
                     type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
                     airtest_method.screenshot(type_screenshot)
                     screenshot_images.append(type_screenshot)
@@ -184,7 +218,7 @@ def test_compatible_smoke():
                 ct_screenshot = os.path.join(save_path.base_path, f"{dataset_name}评估完成.png") 
                 airtest_method.screenshot(ct_screenshot)
                 # create_html_file("V0.9.0",dataset_name,screenshot_images)
-                content = ["","V1.3.0",dataset_name]
+                content = ["","V1.4.0",dataset_name]
                 run("https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=c1zt2p&_t=1726731212102&u=46f694f1d02b448b9de7e4eb8e458757",content,screenshot_images)
                 
                 '''HOME键返回方案管理页面'''

@@ -197,12 +197,13 @@ class mark():
         if not airtest_method.check_exit(label_control.auto_marking,'FALSE') :
             assert False,'未找到自动标注工具'
         else:
+            airtest_method.key_event('{DOWN}')
             airtest_method.touch_button(label_control.auto_marking)
             if not airtest_method.check_exit(label_control.begin_marking,'FALSE') :
                 assert False,'未找到开始标注按钮'
-            else:
+            else:                
                 airtest_method.touch_button(label_control.begin_marking)
-                airtest_method.operate_sleep(10)
+                airtest_method.operate_sleep(5.0)
                 if not airtest_method.check_exit(label_control.apply,'FALSE') :
                     assert False,'未找到应用按钮'
                 else:

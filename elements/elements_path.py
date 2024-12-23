@@ -18,8 +18,8 @@ class save_path():
     seqocr = base_path + "/public/字符串算法.png"
     clsocv = base_path + "/public/有监督字符检查.png"
     uadocv = base_path + "/public/无监督字符检查.png"
-    project_list = [clsocv,uadocv,cls,uad,ocr,seqocr,det,seg]
-    # project_list = [uadocv]
+    # project_list = [clsocv,uadocv,cls,uad,ocr,seqocr,det,seg]
+    project_list = [uadocv]
 
     #冒烟测试数据集
     cls_dataset = smoke_path + "\分类算法"
@@ -38,7 +38,9 @@ class save_path():
     ocr_project = project_path + "\OCR"
     uad_project = project_path + "\无监督"
     seqocr_project = project_path + "\字符串"
-    compare_project = [cls_project,det_project,seg_project,ocr_project,uad_project,seqocr_project]
+    uadocv_project = project_path + "\无监督字符检查"
+    clsocv_project = project_path + "\有监督字符检查"
+    compare_project = [cls_project,det_project,seg_project,ocr_project,uad_project,seqocr_project,uadocv_project,clsocv_project]
     
     #串联pipelines数据集
     cls_seg = pipelines_path + "\分类-分割"

@@ -144,11 +144,8 @@ class management():
             airtest_method.touch_button(light_control.right_click_toclosed)
 
     def double_click_toopened():
-        '''双击打开方案'''
-        if not airtest_method.check_exit(light_control.choice_proj,'FALSE',5) :
-            assert False,'找不到筛选方案'
-        else:
-            airtest_method.double_click(light_control.choice_proj)
+        '''双击打开方案'''        
+        airtest_method.double_click((557,804))
         airtest_method.operate_sleep(5.0)
     
 

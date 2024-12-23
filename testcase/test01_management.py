@@ -24,7 +24,7 @@ def test_input_name():
     with allure.step(f'点击创建按钮'):
         management.create_success(color)
     with allure.step(f'校验异常情况'):
-        airtest_method.hover((882,320))
+        airtest_method.hover((993,353))  #自己写入坐标
         if airtest_method.check_exit(light_control.proj_error):
             do_log.error(f'字符长度输入校验,用例执行失败')
             allure.attach('字符长度输入校验失败', name="异常情况", attachment_type=allure.attachment_type.TEXT)

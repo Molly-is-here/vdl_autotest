@@ -74,6 +74,9 @@ def docqq_export(page):
         time.sleep(1)
         with page.expect_download() as download_info:
             page.get_by_role("menuitem", name="本地Excel表格 (.xlsx)").click()
+            page.get_by_text("普通下载").wait_for(state="visible")
+            page.get_by_text("普通下载").click()
+        time.sleep(1)
         download = download_info.value
         new_path = os.path.join(os.getcwd(), download.suggested_filename)
         download.save_as(new_path)
