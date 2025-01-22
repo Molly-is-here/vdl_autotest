@@ -113,7 +113,7 @@ class assess():
         current_dir = os.path.join(os.getcwd(),'export_SDK') 
         search_file.copy_files(save_path.SDK_exe_path,current_dir)   # 拷贝exe
 
-        opencv_path = os.path.join(current_dir, 'vimo-inference-win64-cpp', 'opencv', 'x64', 'vc15', 'bin','opencv_world420.dll')  # opencv依赖路径
+        opencv_path = os.path.join(current_dir, 'vimo-inference-win64-cpp', 'opencv', 'x64', 'vc15', 'bin','opencv_world490d.dll')  # opencv依赖路径
         search_file.copy_files(opencv_path, current_dir)  # 拷贝opencv依赖
 
         bin_path = os.path.join(current_dir, 'vimo-inference-win64-cpp', 'bin')  # bin目录下依赖路径
@@ -124,7 +124,7 @@ class assess():
         '''运行SDK'''
         current_dir = os.path.join(os.getcwd(),'export_SDK') 
         vimosln_path = os.path.join(current_dir,'model.vimosln')            
-        command = f'cd {current_dir} & .\\test_executor_1023_1.exe --config {vimosln_path} --images {img_path} --name {moduleid} --output {json_path}'    
+        command = f'cd {current_dir} & .\\demo.exe --config {vimosln_path} --images {img_path} --name {moduleid} --output {json_path}'    
         result = subprocess.run(command, shell=True, capture_output=True, text=True)        
         if result.stdout:
             output = result.stdout  # 保存输出信息
@@ -264,3 +264,19 @@ class assess():
             assert False,'未成功退出'
         else:
             airtest_method.touch_button(light_control.template_quit)
+
+    def import_generation_model():
+        '''导入缺陷生成预置模型'''
+        if not airtest_method.check_exit(light_control.setting_button,'FALSE') :
+            assert False,'未找到设置按钮'
+        else:
+            airtest_method.touch_button(light_control.setting_button)
+        if not airtest_method.check_exit(light_control.template_extension,'FALSE'):
+            assert False,'未找到导入扩展包按钮'
+        else:
+            airtest_method.touch_button(light_control.template_extension)
+            airtest_method.input_text(r"D:\generation.smgen")
+            airtest_method.key_event('{ENTER}')
+            airtest_method.touch_button(light_control.template_import)
+            airtest_method.operate_sleep(30.0)
+            airtest_method.touch_button(light_control.upload_done)

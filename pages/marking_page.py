@@ -33,6 +33,15 @@ class mark():
             airtest_method.touch_button(auto_divide_element)
         airtest_method.operate_sleep()
 
+    def train_set():
+        '划分为训练集'
+        if not airtest_method.check_exit(light_control.train_set,'FALSE',5) :
+            assert False,'找不到划分为训练集按钮'
+        else:
+            airtest_method.touch_button(light_control.train_set)
+        airtest_method.operate_sleep()
+
+
     def import_label(file_path,color):
         '''串联方案导入标注
         color light:浅色主题 dark:深色主题

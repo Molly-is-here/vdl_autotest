@@ -15,7 +15,7 @@ import allure
 import os
 
 auto_setup(__file__)
-learning_times = '1'
+learning_times = '5'
 color = 'light'
 
 @allure.title('六类算法冒烟')
@@ -79,6 +79,7 @@ def test_algorithm_smoke():
 
                         training.seq_set_study(learning_times)
                         training.star_training(color)
+                        training.training_success(project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -125,6 +126,7 @@ def test_algorithm_smoke():
                                     do_log.info("使用无监督分类算法训练")
                                 training.uad_choice_model(type)
                                 training.star_training(color)
+                                # training.training_success(project_name)
                                     
 
                                 '''模型评估页面'''
@@ -170,6 +172,7 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                         
                         training.star_training(color)
+                        training.training_success(project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -214,6 +217,7 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                          
                         training.star_training(color)
+                        training.training_success(project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -259,6 +263,7 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                     
                         training.star_training(color)
+                        training.training_success(project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -303,6 +308,7 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                        
                         training.star_training(color)
+                        training.training_success(project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -347,6 +353,7 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.ocv_set_study(learning_times)                        
                         training.star_training(color)
+                        training.training_success(project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -391,6 +398,7 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                        
                         training.star_training(color)
+                        training.training_success(project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)

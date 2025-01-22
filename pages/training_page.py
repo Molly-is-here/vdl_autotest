@@ -2,6 +2,7 @@ from common.Airtest_method import airtest_method
 from airtest.core.api import *
 from elements.elements_path import save_path
 from elements.public_control import light_control,get_button_from_string
+from common.handle_log import do_log
 
 class training():
     
@@ -210,6 +211,14 @@ class training():
         airtest_method.input_text(learning_times)
         airtest_method.operate_sleep()
 
+    def generation_set_study(learning_times):
+        '''缺陷生成设置学习次数'''
+        airtest_method.touch_button(light_control.generation_study)
+        keyevent("^a")
+        keyevent("{BACKSPACE}")
+        airtest_method.input_text(learning_times)
+        airtest_method.operate_sleep()
+
     def star_training(color):
         '''点击开始训练
         color light:浅色主题 dark:深色主题
@@ -218,14 +227,26 @@ class training():
         airtest_method.touch_button(star_training_element)
         airtest_method.operate_sleep(5.0)
 
+    def stop_training():
+        '''点击停止训练'''
+        airtest_method.touch_button(light_control.stop_training)
+        airtest_method.operate_sleep(5.0)
+
     def training_success(name):
+        '''校验训练是否完成'''
         ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")  
-             
-        if not airtest_method.check_exit(light_control.review_assess,'TRUE',3600000): 
-            assert False,'训练未完成'
+        if not airtest_method.check_exit(light_control.training_error,'FALSE',300):
+            airtest_method.screenshot(ct_screenshot)
+            do_log.error(f'训练中断')
+            assert False,'训练中断'
+        if not airtest_method.check_exit(light_control.infering_finished,'TRUE',3600000): 
+            if  not airtest_method.check_exit(light_control.training_failed,'FALSE',3600000):
+                airtest_method.screenshot(ct_screenshot)
+                do_log.error(f'训练失败')
+                assert False,'训练失败'
         else: 
             airtest_method.screenshot(ct_screenshot)   #全屏截图
-      
+
     def review_assess(name):
         '''点击查看评估'''
         ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")       

@@ -145,7 +145,7 @@ class management():
 
     def double_click_toopened():
         '''双击打开方案'''        
-        airtest_method.double_click((557,804))
+        airtest_method.double_click((530,804))
         airtest_method.operate_sleep(5.0)
     
 

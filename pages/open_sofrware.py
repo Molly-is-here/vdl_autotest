@@ -24,9 +24,10 @@ class open_Software():
    
     def click_maximize():
         '''点击窗口最大化'''
-        if airtest_method.check_exit(light_control.max_screen,5):
-            airtest_method.touch_button(light_control.max_screen)
+        if not airtest_method.check_exit(light_control.max_screen,5):
+            return True
         else:
-            airtest_method.operate_sleep()        
+            airtest_method.touch_button(light_control.max_screen)
+                  
        
     

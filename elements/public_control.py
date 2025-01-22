@@ -225,6 +225,9 @@ class light_control():
     #自动划分按钮
     auto_divide = Template(save_path.base_path + "/public/06_自动划分.png", threshold=0.7)
 
+    #划分为训练集
+    train_set = Template(save_path.base_path + "/public/06_划分为训练集.png", threshold=0.7)
+
     #导入标注
     import_label = Template(save_path.base_path + "/public/06_导入标注_01.png",target_pos= 4,threshold=0.7)
 
@@ -330,6 +333,9 @@ class light_control():
     #设置学习次数
     set_study = Template(save_path.base_path + "/public/11_设置学习次数.png",threshold=0.7)
 
+    #缺陷生成设置学习次数
+    generation_study = Template(save_path.base_path + "/public/11_缺陷生成设置学习次数.png",threshold=0.7)
+
     #字符串阶段一
     seq_step1_study = Template(save_path.base_path + "/public/11_字符串设置学习次数.png",target_pos = 4,threshold=0.7)
 
@@ -371,6 +377,12 @@ class light_control():
 
     #停止训练
     stop_training = Template(save_path.base_path + "/public/12_停止训练.png",rgb=True,threshold=0.7)
+
+    #训练失败
+    training_failed = Template(save_path.base_path + "/public/12_训练失败.png",rgb= True,threshold=0.7)
+
+    #训练报错
+    training_error = Template(save_path.base_path + "/public/12_训练报错.png",threshold=0.7)
 
     #模型评估页面
     model_assess = Template(save_path.base_path + "/public/13_模型评估页面.png", threshold=0.7)
@@ -425,6 +437,12 @@ class light_control():
 
     #点击设置按钮
     setting_button = Template(save_path.base_path + "/public/15_设置按钮.png", threshold=0.7)
+
+    #导入扩展包
+    template_extension = Template(save_path.base_path + "/public/15_导入扩展包.png", threshold=0.7)
+
+    #导入
+    template_import = Template(save_path.base_path + "/public/15_导入.png", threshold=0.7)
 
     #深色版本
     change_theme =  Template(save_path.base_path + "/public/15_深色主题.png", threshold=0.7)

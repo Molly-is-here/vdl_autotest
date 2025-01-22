@@ -218,9 +218,10 @@ def test_compatible_smoke():
                 ct_screenshot = os.path.join(save_path.base_path, f"{dataset_name}评估完成.png") 
                 airtest_method.screenshot(ct_screenshot)
                 # create_html_file("V0.9.0",dataset_name,screenshot_images)
-                content = ["","V1.4.0",dataset_name]
-                run("https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=c1zt2p&_t=1726731212102&u=46f694f1d02b448b9de7e4eb8e458757",content,screenshot_images)
+                content = ["","V1.4.0.5",dataset_name]
+                run("https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=2vwj28&_t=1726731212102&u=46f694f1d02b448b9de7e4eb8e458757",content,screenshot_images)
                 
                 '''HOME键返回方案管理页面'''
                 open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
-                assess.home()
+                airtest_method.key_event("^w")  #关闭当前窗口
+                airtest_method.operate_sleep()
