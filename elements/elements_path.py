@@ -8,6 +8,7 @@ class save_path():
     project_path = r"D:\ly\VDL_projects"                                            #兼容性测试方案
     pipelines_path = r'C:\Users\user\Desktop\串联测试数据集\串联auto_test'            #串联方案数据集
     SDK_exe_path =   r"D:\ly\VDL_autotest\VDL_autotest\tools\demo.exe"   #SDK对齐exe
+    project_save_path = r"C:\Users\user\Documents"
 
     #算法类型（适用于单模块方案）
     cls = base_path + "/public/分类算法.png"
@@ -19,8 +20,8 @@ class save_path():
     clsocv = base_path + "/public/有监督字符检查.png"
     uadocv = base_path + "/public/无监督字符检查.png"
     generation = base_path + "/public/缺陷生成.png"
-    # project_list = [clsocv,uadocv,cls,uad,ocr,seqocr,det,seg]
-    project_list = [uad]
+    project_list = [clsocv,uadocv,cls,uad,ocr,seqocr,det,seg]
+    # project_list = [seg]
 
     #冒烟测试数据集
     cls_dataset = smoke_path + "\分类算法"

@@ -3,6 +3,7 @@ from airtest.core.api import *
 from elements.elements_path import save_path
 from elements.public_control import light_control,get_button_from_string
 from common.handle_log import do_log
+from tools.read_file import check_train_over
 
 class training():
     
@@ -232,20 +233,13 @@ class training():
         airtest_method.touch_button(light_control.stop_training)
         airtest_method.operate_sleep(5.0)
 
-    def training_success(name):
+    def training_success(file_path,project_name):
         '''校验训练是否完成'''
-        ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")  
-        if not airtest_method.check_exit(light_control.training_error,'FALSE',300):
-            airtest_method.screenshot(ct_screenshot)
-            do_log.error(f'训练中断')
-            assert False,'训练中断'
-        if not airtest_method.check_exit(light_control.infering_finished,'TRUE',3600000): 
-            if  not airtest_method.check_exit(light_control.training_failed,'FALSE',3600000):
-                airtest_method.screenshot(ct_screenshot)
-                do_log.error(f'训练失败')
-                assert False,'训练失败'
-        else: 
-            airtest_method.screenshot(ct_screenshot)   #全屏截图
+        status = check_train_over(file_path)
+        if status == 0:
+            do_log.info(f'{project_name}训练完成')
+        elif status == 1:
+            assert False,f'{project_name}训练报错'
 
     def review_assess(name):
         '''点击查看评估'''

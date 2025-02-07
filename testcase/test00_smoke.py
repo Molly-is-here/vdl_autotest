@@ -15,10 +15,9 @@ import allure
 import os
 
 auto_setup(__file__)
-learning_times = '5'
+learning_times = '10'
 color = 'light'
-
-@allure.title('六类算法冒烟')
+@allure.title('八类算法冒烟')
 @pytest.mark.smoke
 def test_algorithm_smoke():
     for item in save_path.project_list:
@@ -79,7 +78,8 @@ def test_algorithm_smoke():
 
                         training.seq_set_study(learning_times)
                         training.star_training(color)
-                        training.training_success(project_name)
+                        path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                        training.training_success(path,project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -126,8 +126,8 @@ def test_algorithm_smoke():
                                     do_log.info("使用无监督分类算法训练")
                                 training.uad_choice_model(type)
                                 training.star_training(color)
-                                # training.training_success(project_name)
-                                    
+                                path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                                training.training_success(path,project_name)
 
                                 '''模型评估页面'''
                                 assess.model_assess(color)
@@ -172,7 +172,8 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                         
                         training.star_training(color)
-                        training.training_success(project_name)
+                        path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                        training.training_success(path,project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -217,7 +218,8 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                          
                         training.star_training(color)
-                        training.training_success(project_name)
+                        path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                        training.training_success(path,project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -263,7 +265,8 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                     
                         training.star_training(color)
-                        training.training_success(project_name)
+                        path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                        training.training_success(path,project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -308,7 +311,8 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                        
                         training.star_training(color)
-                        training.training_success(project_name)
+                        path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                        training.training_success(path,project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -353,7 +357,8 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.ocv_set_study(learning_times)                        
                         training.star_training(color)
-                        training.training_success(project_name)
+                        path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                        training.training_success(path,project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
@@ -398,7 +403,8 @@ def test_algorithm_smoke():
                         training.color_mode(params_list[0][2])
                         training.set_study(learning_times,color)                        
                         training.star_training(color)
-                        training.training_success(project_name)
+                        path = os.path.join(save_path.project_save_path, project_name, "output", "2", "vimo-train.log")
+                        training.training_success(path,project_name)
 
                         '''模型评估页面'''
                         assess.model_assess(color)
