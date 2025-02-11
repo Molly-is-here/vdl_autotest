@@ -258,6 +258,10 @@ class training():
   
     def add_training():
         '''增量训练'''
+        if not airtest_method.check_exit(light_control.V2_training,'FALSE',5) :
+            assert False,'找不到V2训练卡片'
+        else:
+            airtest_method.touch_button(light_control.V2_training)
         if not airtest_method.check_exit(light_control.more_button,'FALSE',5) :
             assert False,'找不到更多按钮'
         else:

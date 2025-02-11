@@ -30,14 +30,26 @@ class light_control():
     #快速定位模块
     rapid_module = Template(save_path.base_path + "/public/快速定位模块.png" , threshold=0.7)
 
+    #添加模版
+    add_template = Template(save_path.base_path + "/public/20_添加模版.png" ,threshold=0.7)
+
+    #编辑名称
+    edit_name = Template(save_path.base_path + "/public/20_编辑名称.png" ,threshold=0.7)
+
+    #模版设定
+    template_setting = Template(save_path.base_path + "/public/20_模版设定.png" ,threshold=0.7)
+
     #单张测试
     single_test = Template(save_path.base_path + "/public/20_单张测试.png" , threshold=0.7)
 
     #全量测试
     full_test = Template(save_path.base_path + "/public/20_全量测试.png" , threshold=0.7)
 
-    #过滤参数1
-    filter_parameter1 = Template(save_path.base_path + "/public/20_过滤参数.png" ,target_pos= 6, threshold=0.7)
+    #过滤参数
+    filter_parameter = Template(save_path.base_path + "/public/20_参数配置.png" ,target_pos= 5, threshold=0.7)
+
+    #最大目标数
+    max_target = Template(save_path.base_path + "/public/20_最大目标数.png" ,target_pos= 6,threshold=0.7)
 
     #更新数据到后置模块
     update_to_post_module = Template(save_path.base_path + "/public/20_更新数据到后置模块.png" ,threshold=0.7)
@@ -236,6 +248,9 @@ class light_control():
 
     #新增训练小卡片
     add_card = Template(save_path.base_path + "/public/08_新增训练小卡片.png", threshold=0.7)
+
+    #V2训练卡片
+    V2_training = Template(save_path.base_path + "/public/08_V2训练卡片.png", threshold=0.7)
 
     #常规训练
     nomal_training = Template(save_path.base_path + "/public/08_常规训练.png", threshold=0.7)
@@ -456,6 +471,18 @@ class light_control():
     #点击关闭方案
     template_close = Template(save_path.base_path + "/public/16_关闭方案.png", threshold=0.7)
 
+    #高级设置
+    template_advanced = Template(save_path.base_path + "/public/16_高级设置.png", threshold=0.7)
+
+    #算法训练进程数
+    template_process = Template(save_path.base_path + "/public/16_算法训练进程数.png", threshold=0.7)
+
+    #automl迭代强度
+    template_automl = Template(save_path.base_path + "/public/16_automl迭代强度.png", threshold=0.7)
+
+    #实例最大检出数
+    template_max_detection = Template(save_path.base_path + "/public/16_实例最大检出数.png", threshold=0.7)
+
     #点击软件功能手册
     user_guild = Template(save_path.base_path + "/public/16_软件功能手册.png",target_pos = 8, threshold=0.7)
 
@@ -522,6 +549,9 @@ class light_control():
     #批量推理
     batch_infering = Template(save_path.base_path + "/public/17_批量推理.png",threshold=0.7)
 
+    #导出渲染图
+    rendering_image = Template(save_path.base_path + "/public/17_导出渲染图.png", threshold=0.7)
+
     #综合判定
     judgement_page = Template(save_path.base_path + "/public/18_综合判定.png", threshold=0.7)
 
@@ -585,6 +615,9 @@ class light_control():
     #使用trtfp16加速
     use_trt_16acceleration = Template(save_path.base_path + "/public/18_使用fp16加速.png",threshold=0.7)
 
+    #导出所有模块渲染图
+    export_rendering_image = Template(save_path.base_path + "/public/18_导出所有模块渲染图.png",threshold=0.7)
+
     #类别级别
     type_image = Template(save_path.base_path + "/public/类别级别.png",threshold=0.7)
 
@@ -622,6 +655,9 @@ class label_control():
 
     #矩形工具
     rectangle_tool = Template(save_path.base_path + "/auto_label/01_矩形工具.png" , threshold=0.7)
+
+    #智能矩形
+    auto_rectangle_tool = Template(save_path.base_path + "/auto_label/03_智能矩形.png" , threshold=0.7)
 
     #快速定位矩形工具
     rapid_rectangle_tool = Template(save_path.base_path + "/auto_label/02_快速定位矩形工具.png" , target_pos= 5,threshold=0.7)

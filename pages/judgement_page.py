@@ -1,17 +1,14 @@
-import os
 from common.Airtest_method import airtest_method 
 from elements.public_control import light_control
-from pages.data_page import data
 
 class judgement(): 
     def judgement_page():
         '''切换至综合判定页面'''
-        data.project_flow()  #点击方案流程按钮
         if not airtest_method.check_exit(light_control.judgement_page,'FALSE'):
             assert False,'找不到综合判定按钮'
         else:
             airtest_method.touch_button(light_control.judgement_page)
-            data.project_flow()
+            airtest_method.touch_button(light_control.judgement_area)
 
     def judgement_area(area):
         '''判定范围'''
@@ -35,6 +32,7 @@ class judgement():
         else:
             airtest_method.touch_button(light_control.judgement_rules)
             airtest_method.touch_button(light_control.add_rules)
+            airtest_method.touch_button(light_control.save_button)  #点击保存
 
     def advanced_trt_acceleration():
         '''高级配置-trt加速'''
@@ -60,7 +58,6 @@ class judgement():
             airtest_method.input_text(f'{batch}')
             airtest_method.touch_button(light_control.training_okbutton)
 
-
     def select_image(content):
         '''筛选图片'''
         if not airtest_method.check_exit(light_control.judgement_search,'FALSE'):
@@ -68,8 +65,22 @@ class judgement():
         else:
             airtest_method.touch_button(light_control.judgement_search)
             airtest_method.input_text(content)
-            airtest_method.double_click(light_control.select_image)
+            airtest_method.key_event('{ENTER}')
 
+    def export_rendering_image():
+        '''导出渲染图'''
+        airtest_method.double_click((369,218)) #切换到大图模式
+        airtest_method.right_click((871,529)) #右键
+        if not airtest_method.check_exit(light_control.export_rendering_image,'FALSE'):
+            assert False,'找不到渲染图导出按钮'
+        else:
+            airtest_method.touch_button(light_control.export_rendering_image)
+            airtest_method.operate_sleep(2.0)
+        airtest_method.touch_button(light_control.choice_button)
+        if not airtest_method.check_exit(light_control.upload_done,'FALSE'):      
+            assert False,'找不到完成按钮'
+        else:
+            airtest_method.touch_button(light_control.upload_done)
 
     def judgement_infering():
         '''开始推理'''

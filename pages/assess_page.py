@@ -163,7 +163,7 @@ class assess():
         else:          
             airtest_method.touch_button(light_control.template_SDK)
             airtest_method.touch_button(light_control.export_button)
-            airtest_method.operate_sleep(60.0)
+            airtest_method.operate_sleep(10.0)
 
     def template_help():
         '''点击帮助按钮'''
@@ -171,6 +171,42 @@ class assess():
             assert False,'未找到帮助按钮'
         else:
             airtest_method.touch_button(light_control.template_help)
+    
+    def template_setting():
+        '''点击设置按钮'''
+        if not airtest_method.check_exit(light_control.setting_button,'FALSE') :
+            assert False,'未找到设置按钮'
+        else:
+            airtest_method.touch_button(light_control.setting_button)
+
+    def template_advanced(worker,automl,maxdetect):
+        '''点击高级按钮'''
+        if not airtest_method.check_exit(light_control.template_advanced,'FALSE') :
+            assert False,'未找到高级按钮'
+        else:
+            airtest_method.touch_button(light_control.template_advanced)
+        if not airtest_method.check_exit(light_control.template_process,'FALSE') :
+            assert False,'未找到算法训练进程数'
+        else:
+            airtest_method.touch_button(light_control.template_process)
+            airtest_method.key_event('^a')
+            airtest_method.key_event('{BACKSPACE}')
+            airtest_method.input_text(f'{worker}')
+        if not airtest_method.check_exit(light_control.template_automl,'FALSE') :
+            assert False,'未找到automl迭代强度'
+        else:
+            airtest_method.touch_button(light_control.template_automl)
+            airtest_method.key_event('^a')
+            airtest_method.key_event('{BACKSPACE}')
+            airtest_method.input_text(f'{automl}')
+        if not airtest_method.check_exit(light_control.template_max_detection,'FALSE') :
+            assert False,'未找到实例最大检出数'
+        else:
+            airtest_method.touch_button(light_control.template_max_detection)
+            airtest_method.key_event('^a')
+            airtest_method.key_event('{BACKSPACE}')
+            airtest_method.input_text(f'{maxdetect}')
+        airtest_method.touch_button(light_control.save_button)
       
     def template_close():
         '''点击关闭按钮'''

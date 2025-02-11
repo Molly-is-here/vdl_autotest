@@ -30,8 +30,16 @@ def test_GPU_ONNX_infering():
         infering.begin_infering(color)
     with allure.step(f'判断推理是否完成'):
         infering.review_infering(color)
-    do_log.info('GPU-ONNX推理完成,用例执行成功')        
-    
+    do_log.info('GPU-ONNX推理完成,用例执行成功')   
+@allure.title('导出渲染图')
+@pytest.mark.smoke
+def test_export_rendering_image():
+    with allure.step(f'点击图像搜索框'):
+        infering.images_searching("10")
+    with allure.step(f'点击导出渲染图按钮'):
+        infering.export_rendering_image()
+    do_log.info('导出渲染图成功,用例执行成功')    
+     
 @allure.title('批量推理')
 @pytest.mark.smoke
 def test_batch_infering():

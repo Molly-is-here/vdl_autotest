@@ -320,6 +320,19 @@ class data():
         else:
             airtest_method.touch_button(light_control.rapid_module)
 
+    def add_template(template_name,points):
+        '''新增模版'''
+        if not airtest_method.check_exit(light_control.add_template,'FALSE',10) :
+            assert False,'找不到添加模版按钮'
+        else:
+            airtest_method.touch_button(light_control.add_template)
+        if not airtest_method.check_exit(light_control.edit_name,'FALSE',10):
+            assert False,'找不到名称编辑框'
+        else:
+            airtest_method.touch_button(light_control.edit_name)
+            airtest_method.input_text(template_name)
+            airtest_method.key_event('{ENTER}')
+        airtest_method.click_coordinate_point(points)
     def rapid_single_test():
         '''快速定位单张测试'''
         if not airtest_method.check_exit(light_control.single_test,'FALSE',10) :
@@ -338,16 +351,21 @@ class data():
             airtest_method.touch_button(light_control.training_okbutton)
             airtest_method.key_event("^s") #保存结果
 
-    def set_filter_parameter(number):
+    def set_filter_parameter(number,points):
         '''调整参数'''
-        if not airtest_method.check_exit(light_control.filter_parameter1,'FALSE',10) :
-            assert False,'找不到最大目标数位置'
+        airtest_method.click_coordinate_point(points)
+        if not airtest_method.check_exit(light_control.filter_parameter,'FALSE',10) :
+            assert False,'找不到过滤参数配置'
         else:
-            airtest_method.touch_button(light_control.filter_parameter1)
+            airtest_method.touch_button(light_control.filter_parameter)
+        if not airtest_method.check_exit(light_control.max_target,'FALSE',10) :
+            assert False,'找不到最大目标数'
+        else:
+            airtest_method.touch_button(light_control.max_target)
             airtest_method.key_event("^a")
             airtest_method.key_event('{BACKSPACE}')
             airtest_method.input_text(number)
-            airtest_method.key_event("^s") #保存结果 
+            airtest_method.touch_button(light_control.training_okbutton)  
 
     def update_to_post_module():
         '''更新数据到后置模块'''

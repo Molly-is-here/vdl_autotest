@@ -41,7 +41,28 @@ class infering():
         else:
             airtest_method.operate_sleep()
             airtest_method.touch_button(upload_done)
-      
+    def images_searching(name):
+        '''搜索图片'''
+        if not airtest_method.check_exit(light_control.judgement_search,'FALSE'):      
+            assert False,'找不到搜索图片按钮'
+        else:         
+            airtest_method.touch_button(light_control.judgement_search)
+            airtest_method.input_text(name)
+
+    def export_rendering_image():
+        '''导出渲染图'''
+        airtest_method.double_click((375,229))   #切换到大图模式
+        airtest_method.right_click((897,454))  #右键
+        if not airtest_method.check_exit(light_control.rendering_image,'FALSE'):      
+            assert False,'找不到导出渲染图按钮'
+        else:         
+            airtest_method.touch_button(light_control.rendering_image)
+            airtest_method.touch_button(light_control.choice_button)
+        if not airtest_method.check_exit(light_control.upload_done,'FALSE'):      
+            assert False,'找不到完成按钮'
+        else:
+            airtest_method.touch_button(light_control.upload_done)
+
     def begin_infering(color):
         '''开始推理
         color light:浅色主题 dark:深色主题

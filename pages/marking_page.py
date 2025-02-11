@@ -100,19 +100,19 @@ class mark():
             airtest_method.key_event('{DOWN}')  #切换至下一张图片
             airtest_method.touch_button(label_control.NG_sample_tool)  
 
-    def rectangle_marking(start_points,end_points):
+    def rectangle_marking(start_points,end_points,number):
         '''矩形标注'''
         airtest_method.operate_sleep()
         if not airtest_method.check_exit(label_control.rectangle_tool,'FALSE') :
             assert False,'未找到矩形工具'
         else:
-            airtest_method.key_event('0')    #标注方式一：选中特征标签后进行特征标注
+            airtest_method.key_event(number)    #标注方式一：选中特征标签后进行特征标注
             airtest_method.touch_button(label_control.rectangle_tool)
             BasePage.click_move_to(start_points,end_points)
 
             airtest_method.key_event('{DOWN}')  #切换至下一张图片
             airtest_method.operate_sleep()
-            airtest_method.key_event('0')    #先取消选中特征标签
+            airtest_method.key_event(number)    #先取消选中特征标签
             BasePage.click_move_to(start_points,end_points)
             airtest_method.touch_button(label_control.select_characteristic)  #标注方式二：先标注再选中标签
             if not airtest_method.check_exit(label_control.select_true,'FALSE') :
@@ -120,6 +120,34 @@ class mark():
             else:
                 airtest_method.touch_button(label_control.select_true) 
 
+    def auto_rectangle_marking(start_points,end_points):
+        '''智能矩形'''
+        airtest_method.operate_sleep()
+        airtest_method.key_event('{DOWN}')  #切换至下一张图片
+        if not airtest_method.check_exit(label_control.rectangle_tool,'FALSE') :
+            assert False,'未找到矩形工具'
+        else:
+            airtest_method.touch_button(label_control.rectangle_tool)
+        if not airtest_method.check_exit(label_control.auto_rectangle_tool,'FALSE') :
+            assert False,'未找到智能矩形工具'
+        else:
+            airtest_method.touch_button(label_control.auto_rectangle_tool)
+            BasePage.click_move_to(start_points,end_points)
+
+    def ocv_marking(start_points,end_points,number,content):
+        '''OCV矩形标注'''
+        airtest_method.operate_sleep()
+        if not airtest_method.check_exit(label_control.rectangle_tool,'FALSE') :
+            assert False,'未找到矩形工具'
+        else:
+            airtest_method.key_event(number)    
+            airtest_method.touch_button(label_control.rectangle_tool)
+            BasePage.click_move_to(start_points,end_points)
+            airtest_method.operate_sleep(5.0)
+            airtest_method.input_text(content)
+            airtest_method.key_event('{ENTER}')
+            airtest_method.operate_sleep(2.0)
+        
     def polygon_marking(v1,v2,v3,v4=None):
         '''多边形标注'''
         if not airtest_method.check_exit(label_control.polygon_tool,'FALSE') :
@@ -237,12 +265,12 @@ class mark():
         else:
             airtest_method.touch_button(label_control.add_marking)
 
-    def seq_rectangle_marking(v1,v2,v3):
+    def seq_rectangle_marking(v1,v2,v3,number):
         '''字符串算法矩形标注'''
         if not airtest_method.check_exit(label_control.rectangle_tool,'FALSE') :
             assert False,'未找到矩形工具'
         else:
-            airtest_method.key_event('0')    #标注方式一：选中特征标签后进行特征标注
+            airtest_method.key_event(number)    #标注方式一：选中特征标签后进行特征标注
             airtest_method.touch_button(label_control.rectangle_tool)
             BasePage.click_multiple_points(v1,v2,v3)   #三点确定矩形框和方向
             if not airtest_method.check_exit(label_control.select_true,'FALSE') :
@@ -252,7 +280,7 @@ class mark():
 
             airtest_method.key_event('{DOWN}')  #切换至下一张图片
             airtest_method.operate_sleep()
-            airtest_method.key_event('0')    #先取消选中特征标签
+            airtest_method.key_event(number)    #先取消选中特征标签
             BasePage.click_multiple_points(v1,v2,v3)  #三点确定矩形框和方向
             airtest_method.touch_button(label_control.select_characteristic)  #标注方式二：先标注再选中标签
             if not airtest_method.check_exit(label_control.select_true,'FALSE') :
@@ -267,8 +295,8 @@ class mark():
         else:
             airtest_method.touch_button(label_control.rapid_rectangle_tool)
             BasePage.click_multiple_points(v1,v2,v3)  #三点确定矩形框和方向
-            airtest_method.key_event("^s") #保存方案
             airtest_method.operate_sleep()
+            airtest_method.touch_button(light_control.training_okbutton)
 
     def seq_circle_marking(v1,v2,v3,v4):
         '''字符串算法环形标注'''

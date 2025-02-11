@@ -71,6 +71,7 @@ class save_path():
     roi_OCR = pipelines_path + "\\roi-OCR"
     rapid_det = pipelines_path + "\快速定位_检测"
     rapid_seg = pipelines_path + "\快速定位_分割"
+    rapid_OCR = pipelines_path + "\快速定位_OCR"
 
 
 class dark_save_path():

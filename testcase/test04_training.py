@@ -10,6 +10,7 @@ from pages.training_page import training
 from pages.assess_page import assess
 from test02_data import test_add_file
 from airtest.core.api import *
+from elements.elements_path import save_path
 
 model_selection = [light_control.high_power,light_control.low_power]
 scaling_selection = [light_control.equal_size,light_control.zidingyi_size]
@@ -72,38 +73,21 @@ def test_set_template():
         airtest_method.touch_button(light_control.add_card)
         airtest_method.touch_button(light_control.create_using_template)
     with allure.step(f'点击开始训练'):
-            training.star_training(color)
-    with allure.step(f'判断是否完成训练-评估'):
-        assess.model_assess(color)
+        training.star_training(color)
+    with allure.step(f'判断是否训练成功'):
+        with open('project_name.txt', 'r') as file:
+            content = file.read()
+        path = os.path.join(save_path.project_save_path, content, "output", "4", "vimo-train.log")
+        training.training_success(path,content) 
     with allure.step(f'判断是否评估成功'):  
+        assess.model_assess(color)
         if not airtest_method.check_exit(light_control.infering_finished,'FALSE',360000) :
             assert False,'评估未完成'
         else:
             airtest_method.operate_sleep()
-            do_log.info('图像裁切训练成功，用例执行成功')
+            do_log.info('模型训练成功，用例执行成功')
     with allure.step(f'返回模型训练页面'): 
         training.model_training(color)
-
-# @allure.title('继续训练') 
-# @pytest.mark.smoke
-# def test_continute_training():
-#     with allure.step(f'点击更多按钮'):
-#         airtest_method.touch_button(light_control.more_button)  
-#     with allure.step(f'点击继续训练'):  
-#         training.continu_training()
-#         airtest_method.operate_sleep()
-#     with allure.step(f'确认继续训练'): 
-#         airtest_method.touch_button(light_control.training_okbutton) #确认继续训练       
-#     with allure.step(f'判断是否训练成功'):
-#         name = '继续训练'
-#         training.review_assess(name) 
-#     with allure.step(f'判断是否评估成功'):  
-#         assess.assess_success()
-#         do_log.info('继续训练成功，用例执行成功')
-#     with allure.step(f'返回模型训练页面'): 
-#         training.model_training(color)
-#         test_delete()
-
 @allure.title('增量训练')   
 @pytest.mark.smoke
 def test_add_training():  
@@ -123,15 +107,19 @@ def test_add_training():
         training.star_training(color)
     with allure.step(f'确认开启增量训练'):
         airtest_method.touch_button(light_control.training_okbutton)
-    with allure.step(f'开启训练'):
-        airtest_method.operate_sleep(80.0)      
+    with allure.step(f'判断是否训练成功'):
+        with open('project_name.txt', 'r') as file:
+            content = file.read()
+            airtest_method.operate_sleep()
+        path = os.path.join(save_path.project_save_path, content, "output", "5", "vimo-train.log")
+        training.training_success(path,content) 
+    with allure.step(f'判断是否评估成功'):  
         assess.model_assess(color)
-        airtest_method.operate_sleep(10.0)
-    with allure.step(f'判断是否评估成功'):
-        if not airtest_method.check_exit(light_control.report_button,'FALSE',360000) :
+        if not airtest_method.check_exit(light_control.infering_finished,'FALSE',360000) :
             assert False,'评估未完成'
         else:
-            do_log.info('增量训练模型评估成功，用例执行成功')
+            airtest_method.operate_sleep()
+            do_log.info('模型增量训练成功，用例执行成功')
     with allure.step(f'返回模型训练页面'): 
         training.model_training(color)
         

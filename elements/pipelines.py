@@ -144,7 +144,7 @@ class rapid_det():
     file_path = save_path.rapid_det
     pre_module = light_control.rapid_module
     post_module = light_control.det_module
-    points = [(643,591),(745,541),(809,662)]
+    points = [(679,636),(773,587),(828,697)]
     number = '8'
     name = '快速定位-检测'
 
@@ -155,6 +155,17 @@ class rapid_seg():
     points = [(746,370),(1147,370),(1147,763)]
     number = '1'
     name = '快速定位-分割'
+
+class rapid_OCR():
+    file_path = save_path.rapid_OCR
+    pre_module = light_control.rapid_module
+    post_module = light_control.OCR_module
+    points1 = [(700,534),(1132,541),(1131,664)]
+    points2 = [(726,682),(1096,687),(1094,774)]
+    points = [points1,points2]
+    number = '1'
+    name = '快速定位-OCR'
+
 
 
 

@@ -27,6 +27,36 @@ def test_template_SDK():
         assess.template_SDK()
     do_log.info('导出SDK成功，用例执行成功')
 
+@allure.title('高级设置')
+def test_template_advanced():
+    with allure.step(f'点击设置按钮'):
+        assess.template_setting()
+    with allure.step(f'点击高级设置'):
+        worker,automl,maxdetect = 4,0.6,20
+        assess.template_advanced(worker,automl,maxdetect)
+    with allure.step(f'校验高级设置是否生效'):
+        file_path = r"D:\ViMo-Deeplearning\setting.ini"
+        with open(file_path, 'r',encoding='utf-8') as file:
+            found_worker = False
+            found_automl = False
+            found_maxdetect = False
+            for line in file:
+                if f'Worker={worker}' in line:
+                    found_worker = True
+                if f'AutoMLIter={automl}' in line:
+                    found_automl = True
+                if f'MaxDetect={maxdetect}' in line:
+                    found_maxdetect = True
+                
+                # 如果三者都找到了，则日志输出并退出
+                if found_worker and found_automl and found_maxdetect:
+                    do_log.info('高级设置生效，用例执行成功')
+                    assess.template_setting()
+                    break
+            else:
+                # 如果遍历完整个文件仍未找到所有条件
+                assert False, '高级设置未生效'
+
 @allure.title('导出软件功能手册')
 @pytest.mark.smoke
 def test_user_guild():

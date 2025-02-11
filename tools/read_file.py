@@ -7,7 +7,6 @@ def check_train_over(file_path):
         with open(file_path, 'r',encoding='utf-8') as file:
             while time.time() - start_time < time_limit:  # 在10分钟内检查
                 line = file.readline()  
-                
                 if not line:  # 如果读取到文件结尾，且没有找到任何关键字，则跳出循环
                     time.sleep(1)
                     continue  # 跳过这一轮，继续下一轮检查

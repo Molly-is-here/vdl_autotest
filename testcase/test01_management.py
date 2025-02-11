@@ -35,7 +35,9 @@ def test_create_model():
     with allure.step(f'方案名称输入多字符'):
         airtest_method.touch_button(light_control.input_textbox)
         airtest_method.key_event('{BACKSPACE}')
-        management.input_name('Auto',color)
+        project_name = management.input_name('Auto',color)
+        with open('project_name.txt', 'w') as file:
+            file.write(project_name)
     with allure.step(f'以分割算法为例'):       
         if not airtest_method.check_exit(light_control.seg_item,'FALSE',5) :
             assert False,'找不到分割算法控件'   
