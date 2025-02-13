@@ -33,6 +33,14 @@ class mark():
             airtest_method.touch_button(auto_divide_element)
         airtest_method.operate_sleep()
 
+    def set_background(points):
+        '''置为背景'''
+        airtest_method.right_click(points)
+        if not airtest_method.check_exit(label_control.set_background,'FALSE',10) :
+            assert False,'找不到置为背景选项'
+        else:
+            airtest_method.touch_button(label_control.set_background)
+
     def train_set():
         '划分为训练集'
         if not airtest_method.check_exit(light_control.train_set,'FALSE',5) :
@@ -41,6 +49,22 @@ class mark():
             airtest_method.touch_button(light_control.train_set)
         airtest_method.operate_sleep()
 
+    def hard_merge_label(points,content):
+        '''标签硬合并'''
+        airtest_method.click_coordinate_point(points)  #编辑特征名称
+        if not airtest_method.check_exit(label_control.characteristic_name,'FALSE',5) :
+            assert False,'找不到特征名称编辑框'
+        else:
+            airtest_method.touch_button(label_control.characteristic_name)
+            airtest_method.key_event('^a')
+            airtest_method.key_event('{BACKSPACE}')
+            airtest_method.input_text(content)
+            airtest_method.key_event('{ENTER}')
+        airtest_method.touch_button(light_control.tip)
+        
+    def soft_merge_label(start_points,end_points):
+        '''标签软合并'''
+        BasePage.click_hold_and_move_to(start_points,end_points)
 
     def import_label(file_path,color):
         '''串联方案导入标注

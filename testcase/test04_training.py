@@ -36,7 +36,7 @@ def test_add_card():
 def test_rename():    
     with allure.step(f'重命名'):
         input_name = '自動化創建的card'
-        training.renamed_card(input_name)
+        training.renamed_card(input_name,(135,220))
     do_log.info('卡片成功重命名,用例执行成功')
 
 @allure.title('修改备注') 
@@ -65,7 +65,7 @@ def test_delete():
 @pytest.mark.smoke
 def test_set_template():
     with allure.step(f'先设置训练参数'):
-        training.set_study('2',color)           
+        training.set_study('30',color)           
         training.cut_benchsize(color)
     with allure.step(f'训练参数设置为模板'):
         training.set_template()
@@ -85,13 +85,23 @@ def test_set_template():
             assert False,'评估未完成'
         else:
             airtest_method.operate_sleep()
-            do_log.info('模型训练成功，用例执行成功')
-    with allure.step(f'返回模型训练页面'): 
-        training.model_training(color)
+    do_log.info('模型训练成功，用例执行成功')
+
+@allure.title('分割算法自动标注')   
+@pytest.mark.smoke
+def test_seg_auto_marking():
+    with allure.step(f'切换回标注页面'):
+        mark.image_label(color)
+    with allure.step(f'点击分割算法自动标注按钮'):
+        airtest_method.key_event('{DOWN}')
+        mark.auto_marking()
+    do_log.info('分割算法自动标注完成')
+
 @allure.title('增量训练')   
 @pytest.mark.smoke
 def test_add_training():  
     with allure.step(f'选择增量训练'): 
+        training.model_training(color)
         training.add_training()
         airtest_method.operate_sleep()
     with allure.step(f'返回数据管理页面'):
@@ -120,10 +130,94 @@ def test_add_training():
         else:
             airtest_method.operate_sleep()
             do_log.info('模型增量训练成功，用例执行成功')
-    with allure.step(f'返回模型训练页面'): 
+
+@allure.title('特征置为背景')
+@pytest.mark.smoke
+def test_set_background(): 
+    with allure.step(f'切换回标注页面'):
+        mark.image_label(color)
+    with allure.step(f'特征1置为背景'):
+        mark.set_background((1701,507))
+    with allure.step(f'切换至模型训练页面'):
+        airtest_method.operate_sleep(2.0)
         training.model_training(color)
-        
-    
+    with allure.step(f'使用模版开启训练'):
+        airtest_method.touch_button(light_control.add_card)
+        airtest_method.touch_button(light_control.create_using_template)
+        training.renamed_card('特征1置为背景',(135,220))
+    with allure.step(f'点击开始训练'):
+        training.star_training(color)
+    with allure.step(f'判断是否训练成功'):
+        with open('project_name.txt', 'r') as file:
+            content = file.read()
+        path = os.path.join(save_path.project_save_path, content, "output", "6", "vimo-train.log")
+        training.training_success(path,content) 
+    with allure.step(f'判断是否评估成功'):  
+        training.review_assess()
+        if not airtest_method.check_exit(light_control.infering_finished,'FALSE',360000) :
+            assert False,'评估未完成'
+        else:
+            airtest_method.operate_sleep()
+    do_log.info('模型训练成功，用例执行成功')
+
+@allure.title('标签硬合并')
+@pytest.mark.smoke
+def test_hard_merge_label():
+    with allure.step(f'切换回标注页面'):
+        mark.image_label(color)
+    with allure.step(f'点击标签合并'):
+        mark.hard_merge_label((1623,557),'3')
+    with allure.step(f'切换至模型训练页面'):
+        airtest_method.operate_sleep(2.0)
+        training.model_training(color)
+    with allure.step(f'使用模版开启训练'):
+        airtest_method.touch_button(light_control.add_card)
+        airtest_method.touch_button(light_control.create_using_template)
+        training.renamed_card('特征2标签硬合并',(135,220))
+    with allure.step(f'点击开始训练'):
+        training.star_training(color)
+    with allure.step(f'判断是否训练成功'):
+        with open('project_name.txt', 'r') as file:
+            content = file.read()
+        path = os.path.join(save_path.project_save_path, content, "output", "7", "vimo-train.log")
+        training.training_success(path,content) 
+    with allure.step(f'判断是否评估成功'):  
+        training.review_assess()
+        if not airtest_method.check_exit(light_control.infering_finished,'FALSE',360000) :
+            assert False,'评估未完成'
+        else:
+            airtest_method.operate_sleep()
+    do_log.info('模型训练成功，用例执行成功')
+
+@allure.title('标签软合并')
+@pytest.mark.smoke
+def test_soft_merge_label():
+    with allure.step(f'切换回标注页面'):
+        mark.image_label(color)
+    with allure.step(f'标签3软合并至标签4'):
+        mark.soft_merge_label((1688,560),(1688,605))
+    with allure.step(f'切换至模型训练页面'):
+        airtest_method.operate_sleep(2.0)
+        training.model_training(color)
+    with allure.step(f'使用模版开启训练'):
+        airtest_method.touch_button(light_control.add_card)
+        airtest_method.touch_button(light_control.create_using_template)
+        training.renamed_card('特征3软合并至特征4',(135,220))
+    with allure.step(f'点击开始训练'):
+        training.star_training(color)
+    with allure.step(f'判断是否训练成功'):
+        with open('project_name.txt', 'r') as file:
+            content = file.read()
+        path = os.path.join(save_path.project_save_path, content, "output", "10", "vimo-train.log")
+        training.training_success(path,content) 
+    with allure.step(f'判断是否评估成功'):  
+        training.review_assess()
+        if not airtest_method.check_exit(light_control.infering_finished,'FALSE',360000) :
+            assert False,'评估未完成'
+        else:
+            airtest_method.operate_sleep()
+    do_log.info('模型训练成功，用例执行成功')
+
     
     
 

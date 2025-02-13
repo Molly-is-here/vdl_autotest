@@ -29,10 +29,10 @@ class training():
         airtest_method.touch_button(nomal_training)
         airtest_method.operate_sleep()
 
-    def renamed_card(content):
+    def renamed_card(content,points):
         '''重命名卡片'''
-        airtest_method.touch_button(light_control.new_card)
-        airtest_method.right_click(coords=(199,195)) #鼠标右键（自己填坐标）
+        # airtest_method.touch_button(light_control.new_card)
+        airtest_method.right_click(points) #鼠标右键（自己填坐标）
         airtest_method.touch_button(light_control.rename_button)
         airtest_method.key_event("^a") #全选
         airtest_method.input_text(content)
@@ -225,8 +225,10 @@ class training():
         color light:浅色主题 dark:深色主题
         '''
         star_training_element = get_button_from_string(f"{color}_control.star_training")
-        airtest_method.touch_button(star_training_element)
-        airtest_method.operate_sleep(5.0)
+        if not airtest_method.check_exit(star_training_element,'FALSE') :        
+            assert False,'找不到开始训练按钮'
+        else:
+            airtest_method.touch_button(star_training_element)
 
     def stop_training():
         '''点击停止训练'''
@@ -241,13 +243,12 @@ class training():
         elif status == 1:
             assert False,f'{project_name}训练报错'
 
-    def review_assess(name):
-        '''点击查看评估'''
-        ct_screenshot = os.path.join(save_path.base_path, f"{name}.png")       
-        if not airtest_method.check_exit(light_control.infering_finished,'FALSE',3600000): 
-            assert False,'训练未完成'
+    def review_assess():
+        '''点击查看评估'''     
+        if not airtest_method.check_exit(light_control.review_assess,'FALSE',90): 
+            assert False,'未找到查看评估按钮'
         else: 
-            airtest_method.screenshot(ct_screenshot)   #全屏截图
+            airtest_method.touch_button(light_control.review_assess)
         
     def continu_training():
         '''继续训练'''

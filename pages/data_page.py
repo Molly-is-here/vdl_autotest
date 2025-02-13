@@ -86,7 +86,7 @@ class data():
         airtest_method.touch_button(light_control.click_area)
         '''全选标注'''
         airtest_method.key_event("^a")
-        airtest_method.touch_button(light_control.ok_button)
+        airtest_method.key_event('{ENTER}')
 
         if not airtest_method.check_exit(upload_label,'FALSE') :
             assert False,'找不到导入完成标志'
@@ -105,7 +105,7 @@ class data():
         airtest_method.touch_button(light_control.click_area)
         '''全选图片'''
         airtest_method.key_event("^a")
-        airtest_method.touch_button(light_control.ok_button)
+        airtest_method.key_event("{ENTER}")
         if not airtest_method.check_exit(light_control.upload_label,'FALSE') :
             assert False,'找不到导入完成标志'
 

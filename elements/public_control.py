@@ -243,6 +243,9 @@ class light_control():
     #导入标注
     import_label = Template(save_path.base_path + "/public/06_导入标注_01.png",target_pos= 4,threshold=0.7)
 
+    #提示
+    tip = Template(save_path.base_path + "/public/06_提示.png",target_pos= 8, threshold=0.7)
+
     #模型训练页面
     model_training = Template(save_path.base_path + "/public/07_模型训练页面.png", threshold=0.7)
 
@@ -367,7 +370,7 @@ class light_control():
     ocv_step2_study = Template(save_path.base_path + "/public/11_ocv设置学习次数.png",target_pos = 6,threshold=0.7)
 
     #点击开始训练
-    star_training = Template(save_path.base_path + "/public/12_开始训练.png",threshold=0.7)
+    star_training = Template(save_path.base_path + "/public/12_开始训练.png",threshold=0.9)
 
     #继续训练
     continu_training = Template(save_path.base_path + "/public/08_继续训练.png", threshold=0.7)
@@ -388,7 +391,7 @@ class light_control():
     close_task = Template(save_path.base_path + "/public/12_关闭任务完成.png", target_pos = 6,threshold=0.7)
 
     #点击查看评估
-    review_assess = Template(save_path.base_path + "/public/12_查看评估.png",rgb=True,threshold=0.7)
+    review_assess = Template(save_path.base_path + "/public/12_查看评估.png",rgb=True,threshold=0.8)
 
     #停止训练
     stop_training = Template(save_path.base_path + "/public/12_停止训练.png",rgb=True,threshold=0.7)
@@ -400,7 +403,7 @@ class light_control():
     training_error = Template(save_path.base_path + "/public/12_训练报错.png",threshold=0.7)
 
     #模型评估页面
-    model_assess = Template(save_path.base_path + "/public/13_模型评估页面.png", threshold=0.7)
+    model_assess = Template(save_path.base_path + "/public/13_模型评估页面.png", threshold=0.8)
 
     #切换至类别级别
     change_type = Template(save_path.base_path + "/public/14_切换类别.png", threshold=0.7)
@@ -652,6 +655,15 @@ class label_control():
 
     #确认选中特征标签
     select_true = Template(save_path.base_path + "/auto_label/00_确认选中标签.png" , threshold=0.7)
+
+    #置为背景
+    set_background = Template(save_path.base_path + "/auto_label/07_置为背景.png" , threshold=0.7)
+
+    #编辑信息
+    edit_content = Template(save_path.base_path + "/auto_label/07_编辑信息.png" , threshold=0.7)
+
+    #特征名称
+    characteristic_name = Template(save_path.base_path + "/auto_label/07_特征名称.png" , threshold=0.7)
 
     #矩形工具
     rectangle_tool = Template(save_path.base_path + "/auto_label/01_矩形工具.png" , threshold=0.7)
