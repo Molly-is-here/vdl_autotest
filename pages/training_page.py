@@ -241,7 +241,9 @@ class training():
         if status == 0:
             do_log.info(f'{project_name}训练完成')
         elif status == 1:
+            do_log.error(f'{project_name}训练报错')
             assert False,f'{project_name}训练报错'
+            
 
     def review_assess():
         '''点击查看评估'''     

@@ -208,7 +208,7 @@ def test_soft_merge_label():
     with allure.step(f'判断是否训练成功'):
         with open('project_name.txt', 'r') as file:
             content = file.read()
-        path = os.path.join(save_path.project_save_path, content, "output", "10", "vimo-train.log")
+        path = os.path.join(save_path.project_save_path, content, "output", "8", "vimo-train.log")
         training.training_success(path,content) 
     with allure.step(f'判断是否评估成功'):  
         training.review_assess()
@@ -218,6 +218,35 @@ def test_soft_merge_label():
             airtest_method.operate_sleep()
     do_log.info('模型训练成功，用例执行成功')
 
+@allure.title('ignore标签')
+@pytest.mark.smoke
+def test_ignore_label():
+    with allure.step(f'切换回标注页面'):
+        mark.image_label(color)
+    with allure.step(f'把标签5移动至ignore'):
+        mark.soft_merge_label((1706,606),(1717,464))
+    with allure.step(f'切换至模型训练页面'):
+        airtest_method.operate_sleep(2.0)
+        training.model_training(color)
+    with allure.step(f'使用模版开启训练'):
+        airtest_method.touch_button(light_control.add_card)
+        airtest_method.touch_button(light_control.create_using_template)
+        training.renamed_card('特征5软合并至ignore',(135,220))
+    with allure.step(f'点击开始训练'):
+        training.star_training(color)
+    with allure.step(f'判断是否训练成功'):
+        with open('project_name.txt', 'r') as file:
+            content = file.read()
+        path = os.path.join(save_path.project_save_path, content, "output", "9", "vimo-train.log")
+        training.training_success(path,content) 
+    with allure.step(f'判断是否评估成功'):  
+        training.review_assess()
+        if not airtest_method.check_exit(light_control.infering_finished,'FALSE',360000) :
+            assert False,'评估未完成'
+        else:
+            airtest_method.operate_sleep()
+    do_log.info('模型训练成功，用例执行成功')
+    
     
     
 
