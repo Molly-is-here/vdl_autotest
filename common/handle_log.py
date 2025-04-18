@@ -18,8 +18,14 @@ class HandleLog:
 
         self.my_logger.setLevel(do_yaml.get_data("log", "logger_level"))  # 设置日志等级
         console_handle = logging.StreamHandler()  # 创建日志输出渠道，日志输出到控制台
-        # console_handle.setLevel('WARNING')  # 控制台的日志等级，若不写，则遵循上面的等级
+        
+        # 获取日志文件路径
         log_full_path = os.path.join(LOG_PATH, do_yaml.get_data('log', 'log_filename'))  # log保存地址
+        
+        # 重置日志文件
+        with open(log_full_path, 'w', encoding='utf-8') as f:
+            f.write('')  # 清空文件内容
+            
         file_handle = logging.FileHandler(log_full_path, encoding="utf-8")  # 日志输出到文件
         # 创建日志的显示样式（格式）并与渠道进行关联
         formater = logging.Formatter('%(asctime)s - [%(levelname)s] - [msg]: %(message)s - [%(filename)s:%(lineno)d]')

@@ -126,8 +126,8 @@ class data():
         else:
             airtest_method.touch_button(light_control.add_dataset)
 
-    def add_pre_module(element):
-        '''添加前置模块'''
+    def add_module(element):
+        '''添加模块'''
         data.add_dataset()
         if not airtest_method.check_exit(element,'FALSE',5) :
             assert False,'未找到前置模块'
@@ -233,85 +233,67 @@ class data():
             airtest_method.touch_button(light_control.roi_mode_switching)
             airtest_method.touch_button(light_control.proportional_splitting)
 
+    def splitting_number(size1,size2):
+            '''比例切分ROI-数量设置'''
+            #设置行数
+            airtest_method.click_coordinate_point((1663,285))
+            airtest_method.key_event('^a')
+            airtest_method.key_event('{BACKSPACE}')
+            airtest_method.input_text(size1)
+            airtest_method.key_event('{ENTER}')
+
+            #设置列数
+            airtest_method.click_coordinate_point((1821,285))
+            airtest_method.key_event('^a')
+            airtest_method.key_event('{BACKSPACE}')
+            airtest_method.input_text(size2)
+            airtest_method.key_event('{ENTER}')
+
     def splitting_size(size1,size2):
         '''比例切分ROI-大小设置'''
-        if not airtest_method.check_exit(light_control.splitting_size_left,'FALSE',10) :
-            assert False,'找不到大小左边的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_size_left)
-            airtest_method.key_event('^a')
-            airtest_method.key_event('{BACKSPACE}')
-            airtest_method.input_text(size1)
-            airtest_method.key_event('{ENTER}')
+        #设置宽度
+        airtest_method.click_coordinate_point((1663,360))
+        airtest_method.key_event('^a')
+        airtest_method.key_event('{BACKSPACE}')
+        airtest_method.input_text(size1)
+        airtest_method.key_event('{ENTER}')
 
-        if not airtest_method.check_exit(light_control.splitting_size_right,'FALSE',10) :
-            assert False,'找不到大小右边的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_size_right)
-            airtest_method.key_event('^a')
-            airtest_method.key_event('{BACKSPACE}')
-            airtest_method.input_text(size2)
-            airtest_method.key_event('{ENTER}')
-
-    def splitting_displacement(size1,size2):
-        '''比例切分ROI-位移设置'''
-        if not airtest_method.check_exit(light_control.splitting_displacement_left,'FALSE',10) :
-            assert False,'找不到位移左边的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_displacement_left)
-            airtest_method.key_event('^a')
-            airtest_method.key_event('{BACKSPACE}')
-            airtest_method.input_text(size1)
-            airtest_method.key_event('{ENTER}')
-
-        if not airtest_method.check_exit(light_control.splitting_displacement_right,'FALSE',10) :
-            assert False,'找不到位移右边的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_displacement_right)
-            airtest_method.key_event('^a')
-            airtest_method.key_event('{BACKSPACE}')
-            airtest_method.input_text(size2)
-            airtest_method.key_event('{ENTER}')
-
-    def splitting_number(size1,size2):
-        '''比例切分ROI-数量设置'''
-        if not airtest_method.check_exit(light_control.splitting_number_left,'FALSE',10) :
-            assert False,'找不到数量左边的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_number_left)
-            airtest_method.key_event('^a')
-            airtest_method.key_event('{BACKSPACE}')
-            airtest_method.input_text(size1)
-            airtest_method.key_event('{ENTER}')
-
-        if not airtest_method.check_exit(light_control.splitting_number_right,'FALSE',10) :
-            assert False,'找不到数量右边的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_number_right)
-            airtest_method.key_event('^a')
-            airtest_method.key_event('{BACKSPACE}')
-            airtest_method.input_text(size2)
-            airtest_method.key_event('{ENTER}')
-
+        #设置高度
+        airtest_method.click_coordinate_point((1821,360))
+        airtest_method.key_event('^a')
+        airtest_method.key_event('{BACKSPACE}')
+        airtest_method.input_text(size2)
+        airtest_method.key_event('{ENTER}')
     def splitting_interval(size1,size2):
-        '''比例切分ROI-间隔设置'''
-        if not airtest_method.check_exit(light_control.splitting_interval_left,'FALSE',10) :
-            assert False,'找不到间隔左边的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_interval_left)
+            '''比例切分ROI-间隔设置'''
+            #设置宽度间隔
+            airtest_method.click_coordinate_point((1663,440))
             airtest_method.key_event('^a')
             airtest_method.key_event('{BACKSPACE}')
             airtest_method.input_text(size1)
             airtest_method.key_event('{ENTER}')
 
-        if not airtest_method.check_exit(light_control.splitting_interval_right,'FALSE',10) :
-            assert False,'找不到数量间隔的编辑框'
-        else:
-            airtest_method.touch_button(light_control.splitting_interval_right)
+            #设置高度间隔
+            airtest_method.click_coordinate_point((1821,440))
             airtest_method.key_event('^a')
             airtest_method.key_event('{BACKSPACE}')
             airtest_method.input_text(size2)
             airtest_method.key_event('{ENTER}')
+    def splitting_displacement(size1,size2):
+        '''比例切分ROI-偏移设置'''
+        #设置X轴偏移
+        airtest_method.click_coordinate_point((1663,517))
+        airtest_method.key_event('^a')
+        airtest_method.key_event('{BACKSPACE}')
+        airtest_method.input_text(size1)
+        airtest_method.key_event('{ENTER}')
+
+        #设置Y轴偏移
+        airtest_method.click_coordinate_point((1821,517))
+        airtest_method.key_event('^a')
+        airtest_method.key_event('{BACKSPACE}')
+        airtest_method.input_text(size2)
+        airtest_method.key_event('{ENTER}')
 
     def add_rapid_module():
         '''新建快速定位模块'''

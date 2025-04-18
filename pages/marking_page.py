@@ -22,10 +22,10 @@ class mark():
         '''
         auto_divide_element = get_button_from_string(f"{color}_control.auto_divide")
         train_ratio_element = get_button_from_string(f"{color}_control.train_ratio")
-        train_60_element = get_button_from_string(f"{color}_control.train_60")
+        train_100_element = get_button_from_string(f"{color}_control.train_100")
         
         airtest_method.touch_button(train_ratio_element) #训练比例
-        airtest_method.touch_button(train_60_element) #60%
+        airtest_method.touch_button(train_100_element) #100%
 
         if not airtest_method.check_exit(auto_divide_element,'FALSE',10) :
             assert False,'找不到数据划分按钮'

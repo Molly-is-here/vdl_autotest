@@ -1,6 +1,5 @@
 from common.Airtest_method import airtest_method 
 from airtest.core.api import *
-from elements.elements_path import save_path
 from elements.public_control import light_control,get_button_from_string
 from common.handle_log import do_log
 from tools.read_file import check_train_over

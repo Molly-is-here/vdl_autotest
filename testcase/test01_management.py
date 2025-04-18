@@ -1,83 +1,121 @@
 __author__ = "yunliu"
 import pytest
 import allure
+import os
 from pages.management_page import management
 from common.Airtest_method import airtest_method
 from elements.public_control import light_control
 from common.handle_log import do_log
 
-color = 'light'
+# 常量定义
+COLOR = 'light'
+PROJECT_NAME_FILE = 'project_name.txt'
+
+@pytest.fixture(scope="module")
+def setup_teardown():
+    """测试前置和后置处理"""
+    # 前置处理
+    yield
+    # 后置处理
+    if os.path.exists(PROJECT_NAME_FILE):
+        os.remove(PROJECT_NAME_FILE)
+
 @allure.feature('方案管理页面')
-@allure.title('点击新建方案')
-@pytest.mark.smoke
-def test_create_proj():   
-    with allure.step(f'点击新建方案按钮'):
-        management.create_project(color)
-    do_log.info('成功点击新建方案按钮,用例执行成功')
+class TestManagement:
+    """方案管理页面测试类"""
+    @allure.story('方案创建功能')
+    @allure.title('点击新建方案')
+    @pytest.mark.smoke
+    def test_create_proj(self):   
+        """测试新建方案按钮功能"""
+        with allure.step('点击新建方案按钮'):
+            management.create_project(COLOR)
+        do_log.info('成功点击新建方案按钮,用例执行成功')
 
-@allure.title('编辑框仅输入单个字符创建方案失败')
-@pytest.mark.smoke
-def test_input_name():
-    project_name = '1'
-    with allure.step(f'输入单个字符'):
-        management.input_name(project_name,color)
-    with allure.step(f'点击创建按钮'):
-        management.create_success(color)
-    with allure.step(f'校验异常情况'):
-        airtest_method.hover((993,353))  #自己写入坐标
-        if airtest_method.check_exit(light_control.proj_error):
-            do_log.error(f'字符长度输入校验,用例执行失败')
-            allure.attach('字符长度输入校验失败', name="异常情况", attachment_type=allure.attachment_type.TEXT)
+    @allure.story('方案创建功能')
+    @allure.title('编辑框输入不同字符创建方案')
+    @pytest.mark.parametrize('project_name,expected_result', [ 
+        ('1', False)
+    ])
+    @pytest.mark.smoke
+    def test_input_name(self, project_name: str, expected_result: bool):
+        """测试输入字符的异常情况"""
+        with allure.step(f'输入项目名称: {project_name}'):
+            management.input_name(project_name, COLOR)
+        with allure.step('点击创建按钮'):
+            management.create_success(COLOR)
+        with allure.step('校验验证结果'):
+            airtest_method.hover((993, 353))
+            has_error = airtest_method.check_exit(light_control.proj_error)
+            assert has_error == (not expected_result), f'项目名称验证结果不符合预期: {project_name}'
+            if has_error:
+                do_log.error(f'字符长度输入校验失败: {project_name}')
+                allure.attach(f'字符长度输入校验失败: {project_name}', 
+                            name="异常情况", 
+                            attachment_type=allure.attachment_type.TEXT)
 
-@allure.title('编辑框输入多个字符创建方案成功')
-@pytest.mark.smoke
-def test_create_model():
-    with allure.step(f'方案名称输入多字符'):
-        airtest_method.touch_button(light_control.input_textbox)
-        airtest_method.key_event('{BACKSPACE}')
-        project_name = management.input_name('Auto',color)
-        with open('project_name.txt', 'w') as file:
-            file.write(project_name)
-    with allure.step(f'以分割算法为例'):       
-        if not airtest_method.check_exit(light_control.seg_item,'FALSE',5) :
-            assert False,'找不到分割算法控件'   
-        else:
+    @allure.story('方案创建功能')
+    @allure.title('创建新方案流程')
+    @pytest.mark.smoke
+    def test_create_model(self):
+        """测试创建新方案流程"""
+        project_name = 'AutoTest'
+        with allure.step(f'方案名称输入: {project_name}'):
+            airtest_method.touch_button(light_control.input_textbox)
+            airtest_method.key_event('{BACKSPACE}')
+            project_name = management.input_name(project_name, COLOR)
+            with open(PROJECT_NAME_FILE, 'w', encoding='utf-8') as file:
+                file.write(project_name)
+        
+        with allure.step('选择分割算法'):       
+            if not airtest_method.check_exit(light_control.seg_item, 'FALSE', 3):
+                pytest.fail('找不到分割算法控件')
             airtest_method.touch_button(light_control.seg_item)    
-    with allure.step(f'点击创建按钮'):
-        management.create_success(color)
-    do_log.info('方案成功新建,用例执行成功')
+        
+        with allure.step('点击创建按钮'):
+            management.create_success(COLOR)
+        do_log.info(f'方案成功新建: {project_name},用例执行成功')
 
-@allure.title('方案管理页面筛选框组合筛选')
-@pytest.mark.smoke
-def test_search_project():
-    with allure.step(f'点击home键返回方案管理页面'):
-        management.home()    
-    with allure.step(f'混合筛选'):
-        management.mixed_filtering('Auto') 
-    do_log.info('成功混合筛选出方案,用例执行成功')
+    @allure.story('方案筛选功能')
+    @allure.title('方案管理页面筛选框组合筛选')
+    @pytest.mark.parametrize('search_text', ['Auto'])
+    @pytest.mark.smoke
+    def test_search_project(self, search_text: str):
+        """测试方案筛选功能"""
+        with allure.step('点击home键返回方案管理页面'):
+            management.home()    
+        with allure.step(f'使用关键词筛选: {search_text}'):
+            management.mixed_filtering(search_text) 
+        do_log.info(f'成功使用关键词 {search_text} 筛选出方案,用例执行成功')
 
-@allure.title('右键编辑')
-@pytest.mark.smoke
-def test_right_click_toedit():
-    with allure.step(f'鼠标右键进行编辑'):
-        text = 'o*￣▽￣*o hihi嗨嗨'
-        management.right_click_toedit(text)
-    do_log.info('右键编辑添加备注成功,用例执行成功')
+    @allure.story('方案编辑功能')
+    @allure.title('右键编辑方案')
+    @pytest.mark.parametrize('edit_text', ['o*￣▽￣*o hihi嗨嗨123'])
+    @pytest.mark.smoke
+    def test_right_click_toedit(self, edit_text: str):
+        """测试右键编辑功能"""
+        with allure.step(f'鼠标右键进行编辑: {edit_text}'):
+            management.right_click_toedit(edit_text)
+        do_log.info(f'右键编辑添加备注成功: {edit_text},用例执行成功')
 
-@allure.title('右键关闭方案')
-@pytest.mark.smoke
-def test_closed_project():
-    with allure.step(f'右键关闭方案'):
-        management.right_click_toclosed()
-        airtest_method.operate_sleep(2.0)
-    do_log.info('成功关闭方案,用例执行成功')
+    @allure.story('方案关闭功能')
+    @allure.title('右键关闭方案')
+    @pytest.mark.smoke
+    def test_closed_project(self):
+        """测试右键关闭方案功能"""
+        with allure.step('右键关闭方案'):
+            management.right_click_toclosed()
+            airtest_method.operate_sleep(3)
+        do_log.info('成功关闭方案,用例执行成功')
 
-@allure.title('双击打开方案')
-@pytest.mark.smoke
-def test_opened_project():
-    with allure.step(f'双击打开方案'):
-        management.double_click_toopened()
-    do_log.info('成功打开方案,用例执行成功')
+    @allure.story('方案打开功能')
+    @allure.title('双击打开方案')
+    @pytest.mark.smoke
+    def test_opened_project(self):
+        """测试双击打开方案功能"""
+        with allure.step('双击打开方案'):
+            management.double_click_toopened()
+        do_log.info('成功打开方案,用例执行成功')
 
 
 

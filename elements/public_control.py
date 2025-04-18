@@ -78,30 +78,6 @@ class light_control():
     #ROI比例切分
     proportional_splitting = Template(save_path.base_path + "/public/19_比例切分.png" ,threshold=0.7)
 
-    #比例切分-大小-左边编辑框
-    splitting_size_left = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 4, threshold=0.7)
-
-    #比例切分-大小-右边编辑框
-    splitting_size_right = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 6, threshold=0.7)
-
-    #比例切分-位移-左边编辑框
-    splitting_displacement_left = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 7, threshold=0.7)
-
-    #比例切分-位移-右边编辑框
-    splitting_displacement_right = Template(save_path.base_path + "/public/19_比例切分调参1.png" ,target_pos= 9, threshold=0.7)
-
-    #比例切分-数量-左边编辑框
-    splitting_number_left = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 4, threshold=0.7)
-
-    #比例切分-数量-右边编辑框
-    splitting_number_right = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 6, threshold=0.7)
-
-    #比例切分-间隔-左边编辑框
-    splitting_interval_left = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 7, threshold=0.7)
-
-    #比例切分-间隔-右边编辑框
-    splitting_interval_right = Template(save_path.base_path + "/public/19_比例切分调参2.png" ,target_pos= 9, threshold=0.7)
-
     #点击窗口最大化
     max_screen = Template(save_path.base_path + "/public/01_窗口最大化.png" , threshold=0.7)
 
@@ -229,7 +205,7 @@ class light_control():
     image_label = Template(save_path.base_path + "/public/06_图像标注页面.png", threshold=0.7)
 
     #训练比例60%
-    train_60 = Template(save_path.base_path + "/public/06_训练比例60.png", threshold=0.7)
+    train_100 = Template(save_path.base_path + "/public/06_训练比例100.png", threshold=0.7)
 
     #训练比例
     train_ratio = Template(save_path.base_path + "/public/06_训练比例.png", threshold=0.7)
@@ -403,7 +379,7 @@ class light_control():
     training_error = Template(save_path.base_path + "/public/12_训练报错.png",threshold=0.7)
 
     #模型评估页面
-    model_assess = Template(save_path.base_path + "/public/13_模型评估页面.png", threshold=0.8)
+    model_assess = Template(save_path.base_path + "/public/13_模型评估页面.png", threshold=0.7)
 
     #切换至类别级别
     change_type = Template(save_path.base_path + "/public/14_切换类别.png", threshold=0.7)
@@ -635,6 +611,9 @@ class light_control():
 
     #切换为类别级别
     change_type_image = Template(save_path.base_path + "/public/切换为类别级别.png",threshold=0.7)
+
+    #导入完成
+    import_done = Template(save_path.base_path + "/public/21_导入完成.png",threshold=0.7)
 
 #标注工具控件
 class label_control():   

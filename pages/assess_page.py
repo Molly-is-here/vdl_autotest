@@ -163,7 +163,7 @@ class assess():
         else:          
             airtest_method.touch_button(light_control.template_SDK)
             airtest_method.touch_button(light_control.export_button)
-            airtest_method.operate_sleep(10.0)
+            airtest_method.operate_sleep(15.0)
 
     def template_help():
         '''点击帮助按钮'''
@@ -171,6 +171,7 @@ class assess():
             assert False,'未找到帮助按钮'
         else:
             airtest_method.touch_button(light_control.template_help)
+            open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
     
     def template_setting():
         '''点击设置按钮'''
@@ -311,8 +312,11 @@ class assess():
             assert False,'未找到导入扩展包按钮'
         else:
             airtest_method.touch_button(light_control.template_extension)
+            airtest_method.operate_sleep()
             airtest_method.input_text(r"D:\generation.smgen")
             airtest_method.key_event('{ENTER}')
             airtest_method.touch_button(light_control.template_import)
-            airtest_method.operate_sleep(30.0)
-            airtest_method.touch_button(light_control.upload_done)
+            if not airtest_method.check_exit(light_control.import_done,'FALSE',300.0) :
+                assert False,'未成功导入预置模型'
+            else:
+                airtest_method.touch_button(light_control.upload_done)
