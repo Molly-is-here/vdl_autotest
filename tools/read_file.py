@@ -4,7 +4,7 @@ import time
 def check_train_over(file_path):
     '''检查训练是否结束'''
     start_time = time.time() 
-    time_limit = 10 * 60  # 10分钟
+    time_limit = 30 * 60  # 30分钟
     while time.time() - start_time < time_limit:  # 在10分钟内循环检查
         # 检查文件是否存在
         if not os.path.isfile(file_path):

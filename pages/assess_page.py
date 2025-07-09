@@ -3,6 +3,7 @@ from elements.elements_path import save_path
 from common.Airtest_method import airtest_method 
 from common.Base_method import search_file
 from pages.open_sofrware import open_Software
+from common.handle_log import do_log
 import os
 import zipfile
 import subprocess
@@ -29,15 +30,19 @@ class assess():
         else:
             assert False,'评估出现异常'
             
-
     def assess_done():       
-        '''通过后处理参数配置判断评估是否完成''' 
-        if not airtest_method.check_exit(light_control.process_setting,'FALSE',360000) :
+        '''通过评估icon是否完成''' 
+        # 循环检查评估图标是否消失，表示评估完成
+        airtest_method.click_coordinate_point((180,173))
+        if airtest_method.check_exit_timeout(light_control.assessing,'TRUE',300) :
+            return True
+        else:
             assert False,'评估未完成'  
   
     def more_button():
          '''点击更多按钮'''
-         airtest_method.touch_button(light_control.more_button)
+         airtest_method.operate_sleep(2.0)
+         airtest_method.click_coordinate_point((240,170))
          airtest_method.operate_sleep()
    
     def export_model():
@@ -113,7 +118,7 @@ class assess():
         current_dir = os.path.join(os.getcwd(),'export_SDK') 
         search_file.copy_files(save_path.SDK_exe_path,current_dir)   # 拷贝exe
 
-        opencv_path = os.path.join(current_dir, 'vimo-inference-win64-cpp', 'opencv', 'x64', 'vc15', 'bin','opencv_world490d.dll')  # opencv依赖路径
+        opencv_path = os.path.join(current_dir, 'vimo-inference-win64-cpp', 'opencv', 'x64', 'vc15', 'bin','opencv_world490.dll')  # opencv依赖路径
         search_file.copy_files(opencv_path, current_dir)  # 拷贝opencv依赖
 
         bin_path = os.path.join(current_dir, 'vimo-inference-win64-cpp', 'bin')  # bin目录下依赖路径
@@ -123,12 +128,19 @@ class assess():
     def run_SDK(img_path = None,project_name = None,moduleid = '2',json_path = './'):
         '''运行SDK'''
         current_dir = os.path.join(os.getcwd(),'export_SDK') 
-        vimosln_path = os.path.join(current_dir,'model.vimosln')            
-        command = f'cd {current_dir} & .\\demo.exe --config {vimosln_path} --images {img_path} --name {moduleid} --output {json_path}'    
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)        
+        vimosln_path = os.path.join(current_dir,'model.vimosln')  
+        command = [
+            os.path.join(current_dir, "demo.exe"),
+            "--config", vimosln_path,
+            "--image", img_path,
+            "--name", str(moduleid),
+            "--output", json_path
+        ]        
+        # command = f'cd {current_dir} & .\\demo.exe --config {vimosln_path} --image {img_path} --name {moduleid} --output {json_path}'    
+        result = subprocess.run(command, cwd=current_dir, capture_output=True, text=True)        
         if result.stdout:
             output = result.stdout  # 保存输出信息
-            if 'Done' in output:
+            if 'inference done' in output:
                 output_file_path = project_name + '.txt'  # 设置保存输出的文本文件路径
                 with open(output_file_path, "w") as output_file:
                     output_file.write(output)
@@ -211,11 +223,20 @@ class assess():
       
     def template_close():
         '''点击关闭按钮'''
-        if not airtest_method.check_exit(light_control.template_close,'FALSE') :
-            assert False,'未找到关闭按钮'
-        else:
-            airtest_method.touch_button(light_control.template_close)
-            airtest_method.operate_sleep(10.0)
+        # if not airtest_method.check_exit(light_control.template_close,'FALSE') :
+        #     assert False,'未找到关闭按钮'
+        # else:
+            # airtest_method.touch_button(light_control.template_close)    
+        airtest_method.operate_sleep(2.0)
+        airtest_method.key_event("^w")
+        airtest_method.operate_sleep(5.0)
+        do_log.info("已执行关闭方案操作")
+        # if not airtest_method.check_exit(light_control.template_close,'FALSE',5) :
+        #     assess.template_file()
+        #     airtest_method.touch_button(light_control.template_close)
+        #     do_log.info("关闭方案操作失败，再次执行")
+        # else:
+        #     airtest_method.operate_sleep(2.0)
 
     def change_theme(color):
         '''切换主题

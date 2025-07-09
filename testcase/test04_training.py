@@ -9,7 +9,6 @@ from pages.data_page import data
 from pages.marking_page import mark
 from pages.training_page import training
 from pages.assess_page import assess
-from airtest.core.api import *
 from elements.elements_path import save_path
 
 # 常量定义
@@ -23,8 +22,7 @@ SLEEP_TIME = 2.0  # 等待时间（秒）
 
 @allure.feature('模型训练页面')
 class TestTraining:
-    """模型训练页面测试类"""
-    
+    """模型训练页面测试类"""  
     def import_image_and_label(self):
         """导入图像和标注文件夹"""
         with allure.step('点击导入文件夹按钮'):

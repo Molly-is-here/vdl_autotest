@@ -5,7 +5,9 @@ import pyautogui
 import pyperclip
 from playwright.sync_api import sync_playwright
 from common.Airtest_method import airtest_method
+from common.handle_log import do_log
 from airtest.core.api import *
+
 
 # Create a logger and set the log level to INFO
 logger = logging.getLogger(__name__)
@@ -74,15 +76,18 @@ def docqq_export(page):
         time.sleep(1)
         with page.expect_download() as download_info:
             page.get_by_role("menuitem", name="本地Excel表格 (.xlsx)").click()
-            page.get_by_text("普通下载").wait_for(state="visible")
-            page.get_by_text("普通下载").click()
+            # page.get_by_text("普通下载").wait_for(state="visible")
+            # page.get_by_text("普通下载").click()
+            page.get_by_text("直接导出").wait_for(state="visible")
+            page.get_by_text("直接导出").click()
+            do_log.info("导出成功")
         time.sleep(1)
         download = download_info.value
         new_path = os.path.join(os.getcwd(), download.suggested_filename)
         download.save_as(new_path)
         return new_path
     except Exception as err:
-        logger.error(f"export FAIL:{err}")
+        do_log.error(f"export FAIL:{err}")
 
 def docqq_rows(page):
     # logger.info("获取文档行数~~~~~~~~~~~~~~")
@@ -153,72 +158,78 @@ def rm_tk():
     pyautogui.click(413,112)
 
 def run(url, content,get_images):
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False, args=['--start-maximized'])
-        context = browser.new_context(viewport={"width": 1920, "height": 1080}, no_viewport=True)  # 全屏
+    try:
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=False, args=['--start-maximized'])
+            context = browser.new_context(viewport={"width": 1920, "height": 1080}, no_viewport=True)  # 全屏
 
-        # logger.info("打开文档~~~~~~~~~~~~~")
-        page = context.new_page()
-        page.set_default_timeout(10000)
-        open_url(page, url)
-        time.sleep(5)
+            # logger.info("打开文档~~~~~~~~~~~~~")
+            page = context.new_page()
+            page.set_default_timeout(10000)
+            open_url(page, url)
+            time.sleep(5)
 
-        # logger.info("去掉左上角讨厌的弹框~~~~~~~~~~~~~")
-        rm_tk()
-        time.sleep(1)
-
-        # logger.info("登录~~~~~~~~~~~~~")
-        docqq_easylogin(page)
-        # docqq_login(page, username, password)
-        time.sleep(5)
-
-        # logger.info("确认当前文档行数~~~~~~~~~~~~~")
-        num_rows = docqq_rows(page)
-        logger.info(f"lines:{num_rows}")
-        # MOCK new_path = r"C:\Users\Smartmore\Desktop\python\coding git\docsQQ\2024.xlsx"
-        # MOCK num_rows = 20
-        time.sleep(10)
-
-        # logger.info("重新打开原文档首页，焦点回到首行第一列~~~~~~~~~~~~~")
-        open_url(page, url)
-        time.sleep(10)
-
-        # logger.info("键盘操作，挪动焦点到待写入的位置~~~~~~~~~~~~~")
-        for i in range(num_rows):
-            # pyautogui.press('enter')
-            page.locator("#alloy-rich-text-editor").press("ArrowDown")
+            # logger.info("去掉左上角讨厌的弹框~~~~~~~~~~~~~")
+            rm_tk()
             time.sleep(1)
 
-        # logger.info("按照行写入~~~~~~~~~~~~~")
-        content[0] = num_rows
-        row_write(page, content)
-        rm_tk()
-        time.sleep(1)
+            # logger.info("登录~~~~~~~~~~~~~")
+            docqq_easylogin(page)
+            # docqq_login(page, username, password)
+            time.sleep(5)
 
-        # insert = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\insert.png",threshold=0.7)
-        # cell_image = Template(r"D:\ly\VDL_autotest\VDL_autotest\tools\cell_image.png",threshold=0.7)
-        # airtest_method.touch_button(insert)
-        # airtest_method.touch_button(cell_image)
-        # airtest_method.operate_sleep(5.0)
-        for element in get_images:
-            # input_content = os.path.join(r"D:\ly\VDL_autotest\VDL_autotest\elements",element)
+            # logger.info("确认当前文档行数~~~~~~~~~~~~~")
+            num_rows = docqq_rows(page)
+            logger.info(f"lines:{num_rows}")
+            # MOCK new_path = r"C:\Users\Smartmore\Desktop\python\coding git\docsQQ\2024.xlsx"
+            # MOCK num_rows = 20
+            time.sleep(10)
+
+            # logger.info("重新打开原文档首页，焦点回到首行第一列~~~~~~~~~~~~~")
+            open_url(page, url)
+            time.sleep(10)
+
+            # logger.info("键盘操作，挪动焦点到待写入的位置~~~~~~~~~~~~~")
+            for i in range(num_rows):
+                # pyautogui.press('enter')
+                page.locator("#alloy-rich-text-editor").press("ArrowDown")
+                time.sleep(1)
+
+            # logger.info("按照行写入~~~~~~~~~~~~~")
+            content[0] = num_rows
+            row_write(page, content)
+            rm_tk()
+            time.sleep(1)
+
+            # insert = Template(r"D:\ly\VDL_autotest\tools\insert.png",threshold=0.7)
+            # cell_image = Template(r"D:\ly\VDL_autotest\tools\cell_image.png",threshold=0.7)
             # airtest_method.touch_button(insert)
             # airtest_method.touch_button(cell_image)
-            # airtest_method.operate_sleep(5.0)      
-            insert_image(page,element)
-            airtest_method.input_text(element)
-            airtest_method.key_event('{ENTER}')
-            page.locator("#alloy-rich-text-editor").press("ArrowRight")
-        time.sleep(5.0)
+            # airtest_method.operate_sleep(5.0)
+            for element in get_images:
+                input_content = os.path.join(r"D:\ly\VDL_autotest\elements",element)
+                # airtest_method.touch_button(insert)
+                # airtest_method.touch_button(cell_image)
+                page.locator('li[role="tab"]').filter(has_text="插入").click()
+                page.get_by_role("button", name="单元格图片").click()
+                page.get_by_text("从本地").click()
+                airtest_method.operate_sleep(5.0)      
+                insert_image(page,element)
+                airtest_method.input_text(element)
+                airtest_method.key_event('{ENTER}')
+                page.locator("#alloy-rich-text-editor").press("ArrowRight")
+            time.sleep(5.0)
+    except Exception as err:
+        do_log.debug(f"get FAIL:{err}")
 
 
-if __name__ == "__main__":
-    '''说明
-    默认输入：线上文档地址doc_url，写入内容按行row_content，默认从文档的下一行接着写，比如现在10行，则从第11行写
-    2个坐标需修改：row_write 里的是文档上方编辑框，rm_tk 页面弹框
-    '''
-    doc_url = "https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=c1zt2p&_t=1726731212102&u=46f694f1d02b448b9de7e4eb8e458757"  
-    row_content = ["2", "china", "中国新年好", "万事大吉", "Hello"]
-    run(doc_url, row_content,1)
-    logger.info("run success")
-    # time.sleep(200)
+# if __name__ == "__main__":
+#     '''说明
+#     默认输入：线上文档地址doc_url，写入内容按行row_content，默认从文档的下一行接着写，比如现在10行，则从第11行写
+#     2个坐标需修改：row_write 里的是文档上方编辑框，rm_tk 页面弹框
+#     '''
+#     doc_url = "https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=qxgy6z&_t=1750041650763&nlc=1&u=7f2950a20b1040d3bd13eae7fcb0cd81"  
+#     row_content = ["2", "china", "中国新年好", "万事大吉", "Hello"]
+#     run(doc_url, row_content,1)
+#     logger.info("run success")
+#     # time.sleep(200)

@@ -423,6 +423,9 @@ class light_control():
     #后处理参数配置
     process_setting = Template(save_path.base_path + "/public/14_后处理参数配置.png", threshold=0.7)
 
+    #评估中
+    assessing = Template(save_path.base_path + "/public/14_评估中.png", threshold=0.7)
+
     #判断导出成功
     report_success =  Template(save_path.base_path + "/public/16_判断报告是否导出成功.png", threshold=0.7)
 

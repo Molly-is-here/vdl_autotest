@@ -20,6 +20,7 @@ class airtest_method:
     def click_coordinate_point(points,times=1):
         '''点击坐标点'''
         api.touch(points,times)
+        api.sleep(1.0)
 
     def input_text(content):
         '''输入文本'''
@@ -33,6 +34,22 @@ class airtest_method:
                 print(msg)  
                 return False        
         return True
+    
+    def check_exit_timeout(element,msg = "",timeout = 60):
+        '''循环查找元素是否消失
+        element: 要检查的元素
+        msg: 超时时的提示信息
+        timeout: 超时时间（秒）
+        return: True - 元素消失，False - 元素一直存在
+        ''' 
+        start_time = time.time()
+        while True:
+            if not api.exists(element):
+                return True  # 元素消失，立即返回True
+            if time.time() - start_time > timeout:
+                print(msg)  
+                return False  # 超时且元素一直存在，返回False
+            time.sleep(0.5)  # 避免过于频繁的检查
         
     def screenshot(msg=""):
         '''屏幕截图'''
@@ -71,8 +88,9 @@ class airtest_method:
         
     def hover(points):
         '''根据坐标点hover'''
-        move(points)
         api.sleep(1.0)
+        move(points)
+        api.sleep(2.0)
 
 
 

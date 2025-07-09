@@ -1,6 +1,5 @@
 import os
 import shutil
-# from pymouse import PyMouse
 from common.handle_log import do_log
 from common.Airtest_method import airtest_method
 
@@ -17,7 +16,7 @@ class search_file():
         if os.path.exists(path):
          shutil.rmtree(path)
         else:
-            print('目标文件夹不存在')
+            do_log.error('目标文件夹不存在')
    
     def copy_files(oldpath, newpath):
         '''复制文件和文件夹'''
@@ -31,9 +30,9 @@ class search_file():
                         file_path = os.path.join(oldpath, file)
                         shutil.copy2(file_path, newpath)
             else:
-                print('目标文件夹不存在')
+                do_log.error('目标文件夹不存在')
         else:
-            print('源文件不存在')
+            do_log.error('源文件不存在')
 
 class BasePage():
     # def __init__(self) -> None:

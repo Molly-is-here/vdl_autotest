@@ -5,6 +5,7 @@ from pages.management_page import management
 from pages.data_page import data
 from pages.judgement_page import judgement
 from pages.infering_page import infering
+from pages.assess_page import assess
 from common.Airtest_method import airtest_method
 from elements.public_control import light_control
 from elements.pipelines import *
@@ -26,6 +27,7 @@ class TestUniteJudgement:
     def test_open_pipelinespro(self):
         """测试打开串联方案功能"""
         with allure.step('打开串联方案'):
+            assess.template_close()  #关闭方案
             management.open_project(PROJECT_PATH)
             management.click_project()
         do_log.info('打开串联方案成功，用例执行成功')
@@ -118,6 +120,7 @@ class TestUniteJudgement:
         """测试导出渲染图功能"""
         with allure.step('筛选图片'):
             judgement.select_image(IMAGE_NAME)
+            airtest_method.operate_sleep(2.0)
         with allure.step('点击导出渲染图按钮'):
             judgement.export_rendering_image()
         do_log.info('导出渲染图成功，用例执行成功')

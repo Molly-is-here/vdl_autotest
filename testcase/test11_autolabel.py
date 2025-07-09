@@ -48,7 +48,7 @@ class TestAutolabel:
                 do_log.info('成功标注合格样本')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
 
     @allure.story('自动标注功能')
@@ -100,7 +100,7 @@ class TestAutolabel:
                 do_log.info('成功标注合格样本')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
     @allure.story('自动标注功能')
     @allure.title('无监督字符检查算法自动标注')
@@ -136,7 +136,7 @@ class TestAutolabel:
                 do_log.info('智能矩形标注完成')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
     @allure.story('自动标注功能')
     @allure.title('有监督字符检查算法自动标注')
@@ -174,8 +174,9 @@ class TestAutolabel:
                 do_log.info('智能矩形标注完成')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
+    
     @allure.story('自动标注功能')
     @allure.title('OCR算法自动标注')
     @pytest.mark.smoke
@@ -198,7 +199,7 @@ class TestAutolabel:
             mark.image_label(COLOR)
             with allure.step(f'绘制矩形标注'):
                 mark.add_label('0')  #创建标签
-                mark.rectangle_marking((689,421),(826,633),'0')  #绘制矩形标注
+                mark.rectangle_marking((789,481),(860,572),'0')  #绘制矩形标注
                 do_log.info('成功绘制矩形标注')
             
             with allure.step(f'自动标注'):
@@ -210,7 +211,7 @@ class TestAutolabel:
                 do_log.info('智能矩形标注完成')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
     @allure.story('自动标注功能')
     @allure.title('seq_OCR算法自动标注')
@@ -247,7 +248,7 @@ class TestAutolabel:
                 do_log.info('自动标注完成')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
     @allure.story('自动标注功能')
     @allure.title('分类算法自动标注')
@@ -278,7 +279,7 @@ class TestAutolabel:
                 do_log.info('成功标注合格样本')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
     @allure.story('自动标注功能')
     @allure.title('无监督算法自动标注')
@@ -309,7 +310,7 @@ class TestAutolabel:
                 do_log.info('成功标注NG样本')
 
             '''关闭方案'''  
-            assess.template_file()
+            # assess.template_file()
             assess.template_close()
         
         

@@ -280,7 +280,7 @@ def zidingyi_roi_module(sizes):
 #             pre_module=pipelines.pre_module,
 #             post_module=pipelines.post_module
 #         )
-            
+
 @allure.title('文件夹导入ROI串联数据集')
 @pytest.mark.smoke
 def test_roi_pipelines():

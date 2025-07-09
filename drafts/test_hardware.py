@@ -13,8 +13,8 @@ from tools.monitoring import *
 from tools.create_html import create_html_file
 import threading
 from PIL import Image
-from tools.ocr import ocr_organize
-from elements.public_control import control
+from VDL_autotest.tools.ocr import ocr_organize
+from elements.public_control import light_control
 from pages.infering_page import infering
 
 auto_setup(__file__)
@@ -52,20 +52,20 @@ def testcase03():
         '''设置训练参数'''
         if name == 'CLS_Results' or name == 'OCR_Results' or name == 'SEG_Results':  #分类/OCR/分割需要自定义图片尺寸&学习次数
             training.add_card()
-            training.image_scaling(control.image_scaling) #图像缩放
+            training.image_scaling(light_control.image_scaling) #图像缩放
             airtest_method.operate_sleep()
-            airtest_method.touch_button(control.zidingyi_size)
+            airtest_method.touch_button(light_control.zidingyi_size)
 
             for size in input_size:
                 file_name = name + '_' + size
-                airtest_method.touch_button(control.zidingyi_edit_box1) #第一个编辑框
+                airtest_method.touch_button(light_control.zidingyi_edit_box1) #第一个编辑框
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 airtest_method.input_text(size)
 
-                airtest_method.touch_button(control.zidingyi_edit_box2) #第二个编辑框
+                airtest_method.touch_button(light_control.zidingyi_edit_box2) #第二个编辑框
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
@@ -105,20 +105,20 @@ def testcase03():
 
         elif name == 'UAD_Results':  #无监督算法需要自定义图片尺寸
             training.add_card()
-            training.image_scaling(control.uad_image_scaling) #图像缩放
+            training.image_scaling(light_control.uad_image_scaling) #图像缩放
             airtest_method.operate_sleep()
-            airtest_method.touch_button(control.zidingyi_size)
+            airtest_method.touch_button(light_control.zidingyi_size)
 
             for size in input_size:
                 file_name = name + '_' + size
-                airtest_method.touch_button(control.zidingyi_edit_box1) #第一个编辑框
+                airtest_method.touch_button(light_control.zidingyi_edit_box1) #第一个编辑框
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 airtest_method.input_text(size)
 
-                airtest_method.touch_button(control.zidingyi_edit_box2) #第二个编辑框
+                airtest_method.touch_button(light_control.zidingyi_edit_box2) #第二个编辑框
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")
                 keyevent("{BACKSPACE}")

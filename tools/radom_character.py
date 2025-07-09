@@ -25,7 +25,7 @@ class radom_Name():
                 combined_list.append((param_A,param_B))
                 list1.remove(param_A)
                 list2.remove(param_B)
-                return combined_list
+            return combined_list
         else:    
             count = min(len(list1),len(list2),len(list3))
             for i in range(count):
@@ -36,4 +36,4 @@ class radom_Name():
                 list1.remove(param_A)
                 list2.remove(param_B)
                 list3.remove(param_C)
-                return combined_list
+            return combined_list

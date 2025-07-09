@@ -6,8 +6,8 @@ class save_path():
     dataset_path = r"\\10.80.31.43\vimo数据SVNwc\15_VDL_autotest_dataset"      
     smoke_path = r"\\10.80.31.43\vimo数据SVNwc\14.VDL_SDK自动化\VDL_datasets"        #冒烟测试数据集
     project_path = r"D:\ly\VDL_projects"                                            #兼容性测试方案
-    pipelines_path = r'C:\Users\user\Desktop\串联测试数据集\串联auto_test'            #串联方案数据集
-    SDK_exe_path =   r"D:\ly\VDL_autotest\VDL_autotest\tools\demo.exe"   #SDK对齐exe
+    pipelines_path = r"C:\Users\user\Desktop\串联测试数据集\串联auto_test"           #串联方案数据集
+    SDK_exe_path =   r"D:\ly\VDL_autotest\tools\demo.exe"   #SDK运行exe
     project_save_path = r"C:\Users\user\Documents"
 
     #算法类型（适用于单模块方案）
@@ -20,8 +20,8 @@ class save_path():
     clsocv = os.path.join(base_path, "public", "有监督字符检查.png")
     uadocv = os.path.join(base_path, "public", "无监督字符检查.png")
     generation = os.path.join(base_path, "public", "缺陷生成.png")
-    project_list = [cls,uad,ocr,seqocr,det,seg,clsocv,uadocv]
-    # project_list = [seg]
+    project_list = [cls,seg,ocr,seqocr,det,clsocv,uadocv,uad]
+
 
     #冒烟测试数据集
     cls_dataset = os.path.join(smoke_path, "分类算法")

@@ -1,5 +1,4 @@
 import statistics
-import csv
 import pandas as pd
 import os
 

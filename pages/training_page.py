@@ -78,13 +78,13 @@ class training():
             else:
                 airtest_method.touch_button(type) #选择模型类型
 
-    def uad_moudle_type():
+    def uad_moudle_type(module_type):
         '''选择无监督训练模型类型'''
         if not airtest_method.check_exit(light_control.uad_cls,'FALSE',5) :      
                 assert False,'展示类型按钮选中失败'
         else:
             airtest_method.touch_button(light_control.uad_cls)
-            airtest_method.touch_button(light_control.uad_seg)
+            airtest_method.touch_button(module_type)
 
     def uad_choice_model(type):
         '''选择UAD模型类型'''
@@ -242,10 +242,8 @@ class training():
         elif status == 1:
             do_log.error(f'{project_name}训练报错')
             assert False,f'{project_name}训练报错'
-            
-
     def review_assess():
-        '''点击查看评估'''     
+        '''点击查看评估'''   
         if not airtest_method.check_exit(light_control.review_assess,'FALSE',90): 
             assert False,'未找到查看评估按钮'
         else: 

@@ -69,7 +69,7 @@ class judgement():
 
     def export_rendering_image():
         '''导出渲染图'''
-        airtest_method.double_click((369,218)) #切换到大图模式
+        airtest_method.double_click((376,243)) #切换到大图模式
         airtest_method.right_click((871,529)) #右键
         if not airtest_method.check_exit(light_control.export_rendering_image,'FALSE'):
             assert False,'找不到渲染图导出按钮'

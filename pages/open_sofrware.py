@@ -5,16 +5,14 @@ from pywinauto import Application
 
 
 class open_Software():
-    os.chdir(r"D:\ViMo-Deeplearning")
-
     
     def open_sofeware(app_path):
         '''打开软件'''
-        app = Application().start(app_path)
+        vdl_path = os.path.join(r"D:\ViMo-Deeplearning", app_path)
+        app = Application().start(vdl_path)
         # start_app(app_path)
-        airtest_method.operate_sleep(5.0)
-
-    
+        airtest_method.operate_sleep(10.0)
+ 
     def connect_sofeware(url):
         '''连接当前设备'''
         airtest_method.connect_app(url)

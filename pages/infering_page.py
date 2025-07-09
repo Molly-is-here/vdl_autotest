@@ -51,7 +51,8 @@ class infering():
 
     def export_rendering_image():
         '''导出渲染图'''
-        airtest_method.double_click((375,229))   #切换到大图模式
+        airtest_method.operate_sleep(2.0)
+        airtest_method.double_click((381,245))   #切换到大图模式
         airtest_method.right_click((897,454))  #右键
         if not airtest_method.check_exit(light_control.rendering_image,'FALSE'):      
             assert False,'找不到导出渲染图按钮'

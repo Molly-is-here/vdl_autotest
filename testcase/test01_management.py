@@ -6,6 +6,7 @@ from pages.management_page import management
 from common.Airtest_method import airtest_method
 from elements.public_control import light_control
 from common.handle_log import do_log
+from tools.ocr import ocr_region
 
 # 常量定义
 COLOR = 'light'
@@ -46,13 +47,16 @@ class TestManagement:
             management.create_success(COLOR)
         with allure.step('校验验证结果'):
             airtest_method.hover((993, 353))
-            has_error = airtest_method.check_exit(light_control.proj_error)
-            assert has_error == (not expected_result), f'项目名称验证结果不符合预期: {project_name}'
-            if has_error:
+            has_error = ocr_region((887,300,1106,337),lang="ch")
+            do_log.info(f'ocr_region结果: {has_error[0]["text"].strip()}')
+            if has_error[0]['text'].strip() == '方案名称至少包含2个字符！':
                 do_log.error(f'字符长度输入校验失败: {project_name}')
                 allure.attach(f'字符长度输入校验失败: {project_name}', 
                             name="异常情况", 
                             attachment_type=allure.attachment_type.TEXT)
+            else:
+                assert has_error[0]['text'].strip() == (not expected_result), f'项目名称验证结果不符合预期: {project_name}'
+
 
     @allure.story('方案创建功能')
     @allure.title('创建新方案流程')

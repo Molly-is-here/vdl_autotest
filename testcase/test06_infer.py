@@ -29,7 +29,7 @@ class TestInfer:
     def test_images_input(self):
         """测试导入图像功能"""
         with allure.step('导入图像'):
-            dataset = r'D:\ly\VDL_autotest\VDL_autotest\elements'
+            dataset = r'D:\ly\VDL_autotest\elements'
             infering.images_input(dataset, 'images', COLOR)
         do_log.info('图像导入成功,用例执行成功')
 

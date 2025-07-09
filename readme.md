@@ -43,7 +43,7 @@ pytest testcase/test00_smoke.py
 
 ## 项目结构
 ```
-VDL_autotest/
+/
 ├── common/          # 公共类和方法
 ├── configs/         # 配置文件
 ├── drafts/          # 草稿箱

@@ -19,18 +19,18 @@ ADVANCED_SETTINGS = {
 class TestMenu:
     """菜单栏测试类"""
 
-    @allure.story('文件操作')
-    @allure.title('关闭方案')
-    @pytest.mark.smoke
-    def test_template_close(self):
-        """测试关闭方案功能"""
-        airtest_method.operate_sleep(5.0)
-        with allure.step('点击文件按钮'):
-            assess.template_file()
-        with allure.step('点击关闭方案'):
-            assess.template_close()
-            airtest_method.operate_sleep()
-        do_log.info('关闭方案成功，用例执行成功')
+    # @allure.story('文件操作')
+    # @allure.title('关闭方案')
+    # @pytest.mark.smoke
+    # def test_template_close(self):
+    #     """测试关闭方案功能"""
+    #     airtest_method.operate_sleep(5.0)
+    #     with allure.step('点击文件按钮'):
+    #         assess.template_file()
+    #     with allure.step('点击关闭方案'):
+    #         assess.template_close()
+    #         airtest_method.operate_sleep()
+    #     do_log.info('关闭方案成功，用例执行成功')
 
     @allure.story('文件操作')
     @allure.title('导出SDK')

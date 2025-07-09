@@ -28,11 +28,9 @@ class data():
             airtest_method.touch_button(light_control.choice_file)            
         airtest_method.input_text(file_path)
         airtest_method.key_event('{ENTER}')
-        # airtest_method.touch_button(light_control.jump_click)
-        # airtest_method.key_event('{ENTER}')
         airtest_method.touch_button(light_control.choice_button)
 
-        if not airtest_method.check_exit(light_control.upload_label,'FALSE') :
+        if not airtest_method.check_exit(light_control.upload_label,'FALSE',90) :
             assert False,'找不到导入完成标志'
         else:
             airtest_method.touch_button(light_control.upload_done)
@@ -158,6 +156,7 @@ class data():
             airtest_method.touch_button(light_control.tag_dropdown)
             airtest_method.touch_button(light_control.tag_searching)
             airtest_method.input_text(content)
+            airtest_method.operate_sleep(2.0)
             airtest_method.key_event('{ENTER}')
             airtest_method.touch_button(light_control.checkbox)
             airtest_method.touch_button(light_control.upload_label)
