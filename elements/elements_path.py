@@ -20,7 +20,7 @@ class save_path():
     clsocv = os.path.join(base_path, "public", "有监督字符检查.png")
     uadocv = os.path.join(base_path, "public", "无监督字符检查.png")
     generation = os.path.join(base_path, "public", "缺陷生成.png")
-    project_list = [cls,seg,ocr,seqocr,det,clsocv,uadocv,uad]
+    project_list = [uad,cls,seg,ocr,seqocr,det,clsocv,uadocv]
 
 
     #冒烟测试数据集

@@ -8,7 +8,7 @@ from common.Airtest_method import airtest_method
 from common.handle_log import do_log
 from airtest.core.api import *
 
-
+pyautogui.FAILSAFE = False
 # Create a logger and set the log level to INFO
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -98,10 +98,10 @@ def docqq_rows(page):
         workbook = xlrd.open_workbook(path)
         worksheet = workbook.sheet_by_index(0)
         num_rows = worksheet.nrows
-        logger.info("获取行数success")
+        do_log.info("获取行数success")
         return num_rows
     except Exception as err:
-        logger.error(f"get rows FAIL:{err}")
+        do_log.error(f"get rows FAIL:{err}")
 
 def open_url(page, url):
     # logger.info("打开腾讯文档~~~~~~~~~~~~~~")

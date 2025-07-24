@@ -65,9 +65,8 @@ def create_module_and_import_label(type, file_path, module_type, module):
 
 def close_project():
     """关闭方案"""         
-    assess.template_file()
+    # assess.template_file()
     assess.template_close()
-    airtest_method.operate_sleep(10.0)
 
 def pre_train_and_assess_done(type, LEARNING_TIMES):
     """前置模块训练评估完成"""
@@ -169,117 +168,117 @@ def zidingyi_roi_module(sizes):
     data.setting_displacement(sizes[4], sizes[5])
     do_log.info('自定义ROI设置成功')
 
-# @allure.title('文件夹导入快速定位串联数据集')
-# @pytest.mark.smoke
-# def test_rapid_pipelines():
-#     """快速定位模版串联pipelines"""
-#     for pipelines in rapid_pipelines: 
-#         do_log.info(f"Processing pipeline: {pipelines.name}")
-#         do_log.info(f"Points: {pipelines.points}")
-#         if pipelines == rapid_OCR:
-#             template_name = ['auto_match_1', 'auto_match_2']
-#             template_points = [(1844, 314), (1844, 358)]
-#             v1 = [pipelines.points[0][0], pipelines.points[1][0]]
-#             v2 = [pipelines.points[0][1], pipelines.points[1][1]]
-#             v3 = [pipelines.points[0][2], pipelines.points[1][2]]
-#             process_pipeline(
-#                 name=pipelines.name,
-#                 file_path=pipelines.file_path,
-#                 type=pipelines,
-#                 pre_module=pipelines.pre_module,
-#                 post_module=pipelines.post_module,
-#                 template_name=template_name,
-#                 points=template_points,
-#                 v1=v1,
-#                 v2=v2,
-#                 v3=v3,
-#                 number=pipelines.number
-#             )
-#         else:
-#             template_name = ['auto_match']
-#             template_points = [(1844, 314)]
-#             # 对于单个模板，将points转换为列表形式
-#             v1 = [pipelines.points[0]]
-#             v2 = [pipelines.points[1]]
-#             v3 = [pipelines.points[2]]
-#             process_pipeline(
-#                 name=pipelines.name,
-#                 file_path=pipelines.file_path,
-#                 type=pipelines,
-#                 pre_module=pipelines.pre_module,
-#                 post_module=pipelines.post_module,
-#                 template_name=template_name,
-#                 points=template_points,
-#                 v1=v1,
-#                 v2=v2,
-#                 v3=v3,
-#                 number=pipelines.number
-#             )
+@allure.title('文件夹导入快速定位串联数据集')
+@pytest.mark.smoke
+def test_rapid_pipelines():
+    """快速定位模版串联pipelines"""
+    for pipelines in rapid_pipelines: 
+        do_log.info(f"Processing pipeline: {pipelines.name}")
+        do_log.info(f"Points: {pipelines.points}")
+        if pipelines == rapid_OCR:
+            template_name = ['auto_match_1', 'auto_match_2']
+            template_points = [(1844, 314), (1844, 358)]
+            v1 = [pipelines.points[0][0], pipelines.points[1][0]]
+            v2 = [pipelines.points[0][1], pipelines.points[1][1]]
+            v3 = [pipelines.points[0][2], pipelines.points[1][2]]
+            process_pipeline(
+                name=pipelines.name,
+                file_path=pipelines.file_path,
+                type=pipelines,
+                pre_module=pipelines.pre_module,
+                post_module=pipelines.post_module,
+                template_name=template_name,
+                points=template_points,
+                v1=v1,
+                v2=v2,
+                v3=v3,
+                number=pipelines.number
+            )
+        else:
+            template_name = ['auto_match']
+            template_points = [(1844, 314)]
+            # 对于单个模板，将points转换为列表形式
+            v1 = [pipelines.points[0]]
+            v2 = [pipelines.points[1]]
+            v3 = [pipelines.points[2]]
+            process_pipeline(
+                name=pipelines.name,
+                file_path=pipelines.file_path,
+                type=pipelines,
+                pre_module=pipelines.pre_module,
+                post_module=pipelines.post_module,
+                template_name=template_name,
+                points=template_points,
+                v1=v1,
+                v2=v2,
+                v3=v3,
+                number=pipelines.number
+            )
 
-# @allure.title('文件夹导入分割串联数据集')
-# @pytest.mark.smoke
-# def test_seg_pipelines():
-#     """分割模块串联pipelines测试"""
-#     for pipelines in seg_pipellines: 
-#         process_pipeline(
-#             name=pipelines.name,
-#             file_path=pipelines.file_path,
-#             type=pipelines,
-#             pre_module=pipelines.pre_module,
-#             post_module=pipelines.post_module
-#         )
+@allure.title('文件夹导入分割串联数据集')
+@pytest.mark.smoke
+def test_seg_pipelines():
+    """分割模块串联pipelines测试"""
+    for pipelines in seg_pipellines: 
+        process_pipeline(
+            name=pipelines.name,
+            file_path=pipelines.file_path,
+            type=pipelines,
+            pre_module=pipelines.pre_module,
+            post_module=pipelines.post_module
+        )
             
-# @allure.title('文件夹导入检测串联数据集')
-# @pytest.mark.smoke
-# def test_det_pipelines():
-#     """检测模块串联pipelines测试"""
-#     for pipelines in det_pipelines: 
-#         process_pipeline(
-#             name=pipelines.name,
-#             file_path=pipelines.file_path,
-#             type=pipelines,
-#             pre_module=pipelines.pre_module,
-#             post_module=pipelines.post_module
-#         )
+@allure.title('文件夹导入检测串联数据集')
+@pytest.mark.smoke
+def test_det_pipelines():
+    """检测模块串联pipelines测试"""
+    for pipelines in det_pipelines: 
+        process_pipeline(
+            name=pipelines.name,
+            file_path=pipelines.file_path,
+            type=pipelines,
+            pre_module=pipelines.pre_module,
+            post_module=pipelines.post_module
+        )
 
-# @allure.title('文件夹导入分类串联数据集')
-# @pytest.mark.smoke
-# def test_cls_pipelines():
-#     """分类模块串联pipelines测试"""
-#     for pipelines in cls_pipelines: 
-#         process_pipeline(
-#             name=pipelines.name,
-#             file_path=pipelines.file_path,
-#             type=pipelines,
-#             pre_module=pipelines.pre_module,
-#             post_module=pipelines.post_module
-#         )
+@allure.title('文件夹导入分类串联数据集')
+@pytest.mark.smoke
+def test_cls_pipelines():
+    """分类模块串联pipelines测试"""
+    for pipelines in cls_pipelines: 
+        process_pipeline(
+            name=pipelines.name,
+            file_path=pipelines.file_path,
+            type=pipelines,
+            pre_module=pipelines.pre_module,
+            post_module=pipelines.post_module
+        )
 
-# @allure.title('文件夹导入字符串串联数据集')
-# @pytest.mark.smoke
-# def test_seq_pipelines():
-#     """字符串模块串联pipelines测试"""
-#     for pipelines in seq_pipelines: 
-#         process_pipeline(
-#             name=pipelines.name,
-#             file_path=pipelines.file_path,
-#             type=pipelines,
-#             pre_module=pipelines.pre_module,
-#             post_module=pipelines.post_module
-#         )
+@allure.title('文件夹导入字符串串联数据集')
+@pytest.mark.smoke
+def test_seq_pipelines():
+    """字符串模块串联pipelines测试"""
+    for pipelines in seq_pipelines: 
+        process_pipeline(
+            name=pipelines.name,
+            file_path=pipelines.file_path,
+            type=pipelines,
+            pre_module=pipelines.pre_module,
+            post_module=pipelines.post_module
+        )
 
-# @allure.title('文件夹导入无监督串联数据集')
-# @pytest.mark.smoke
-# def test_uad_pipelines():
-#     """无监督模块串联pipelines测试"""
-#     for pipelines in uad_pipelines: 
-#         process_pipeline(
-#             name=pipelines.name,
-#             file_path=pipelines.file_path,
-#             type=pipelines,
-#             pre_module=pipelines.pre_module,
-#             post_module=pipelines.post_module
-#         )
+@allure.title('文件夹导入无监督串联数据集')
+@pytest.mark.smoke
+def test_uad_pipelines():
+    """无监督模块串联pipelines测试"""
+    for pipelines in uad_pipelines: 
+        process_pipeline(
+            name=pipelines.name,
+            file_path=pipelines.file_path,
+            type=pipelines,
+            pre_module=pipelines.pre_module,
+            post_module=pipelines.post_module
+        )
 
 @allure.title('文件夹导入ROI串联数据集')
 @pytest.mark.smoke

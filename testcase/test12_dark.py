@@ -83,7 +83,7 @@ def test_run_module():
         airtest_method.operate_sleep(10.0)
     with allure.step(f'切到模型推理页面开始推理'):
         infering.model_infering(color)
-        dataset = r'D:\ly\VDL_autotest\VDL_autotest\elements'  
+        dataset = r'D:\ly\VDL_autotest\elements'  
         infering.images_input(dataset,'images',color) 
         infering.begin_infering(color)
         infering.review_infering(color)

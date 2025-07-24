@@ -35,8 +35,10 @@ class assess():
         # 循环检查评估图标是否消失，表示评估完成
         airtest_method.click_coordinate_point((180,173))
         if airtest_method.check_exit_timeout(light_control.assessing,'TRUE',300) :
+            do_log.debug("检测到评估完成")
             return True
         else:
+            do_log.error("300秒内未检测到评估完成状态")
             assert False,'评估未完成'  
   
     def more_button():

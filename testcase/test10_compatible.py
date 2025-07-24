@@ -1,4 +1,3 @@
-__author__ = "yunliu"
 from airtest.core.api import *
 from common.Airtest_method import airtest_method
 from common.handle_log import do_log
@@ -7,256 +6,205 @@ from elements.public_control import light_control
 from pages.management_page import management
 from pages.training_page import training
 from pages.assess_page import assess
-from pages.open_sofrware import open_Software
 from tools.monitoring import get_training_utilization
 from tools.docqq import run
 from pathlib import Path
 import pytest
 import allure
 import threading
+import os
 
-auto_setup(__file__)
-learning_times = '30'
+# 配置表：算法类型及其参数定义
+ALGORITHM_CONFIG = {
+    "CLS": {"path_index": 0, "need_models": True, "model_list": "default", "screenshot": ["类别级别"]},  
+    "OCR": {"path_index": 3, "need_models": True, "model_list": "default", "screenshot": ["图像级别", "字符级别"]},
+    "SEQOCR": {"path_index": 5, "need_models": True, "model_list": [light_control.high_power], "screenshot": ["图像级别", "内容级别", "类别级别"]},
+    "UAD": {"path_index": 4, "need_models": True, "model_list": "uad", "screenshot": ["项目级别"], "show_types": [light_control.uad_cls, light_control.uad_seg]},
+    "UADOCV": {"path_index": 6, "need_models": True, "model_list": "default", "screenshot": ["字符级别", "类别级别"]},
+    "CLSOCV": {"path_index": 7, "need_models": True, "model_list": "default", "screenshot": ["字符级别", "类别级别"]},
+    "DET": {"path_index": 1, "need_models": True, "model_list": "default", "screenshot": ["图像级别", "类别级别"]},
+    "SEG": {"path_index": 2, "need_models": True, "model_list": "default", "screenshot": ["图像级别", "类别级别", "像素级别"]},
+}
+
+model_selection = [light_control.high_power, light_control.low_power]
+UADmodel_selection = [light_control.modelB, light_control.modelA_low_power, light_control.modelA_high_power]
+LEARNING_TIMES = '30'
 color = 'light'
 
 @allure.title('八类算法对比测试')
 @pytest.mark.smoke
 def test_compatible_smoke():
-    status = [0]  # 用于控制监控停止的标志
-    event = threading.Event()
-    for item in save_path.project_list:
-            dataset_list = []
-            #根据传入的item判断算法类型，找到相应的数据集        
-            if item ==save_path.seg:
-                name = 'SEG'
-                folder_path = Path(save_path.compare_project[2])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[2],folder_name) 
-                        dataset_list.append(dataset)   
-            if item == save_path.cls:
-                name = 'CLS'
-                folder_path = Path(save_path.compare_project[0])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[0],folder_name) 
-                        dataset_list.append(dataset)   
-            if item == save_path.det:
-                name = 'DET'
-                folder_path = Path(save_path.compare_project[1])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[1],folder_name)
-                        dataset_list.append(dataset)
-            if item == save_path.ocr:
-                name = 'OCR'
-                folder_path = Path(save_path.compare_project[3])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[3],folder_name) 
-                        dataset_list.append(dataset)   
-            if item == save_path.uad:
-                name = 'UAD'
-                folder_path = Path(save_path.compare_project[4])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[4],folder_name) 
-                        dataset_list.append(dataset)  
-            if item == save_path.seqocr:
-                name = 'SEQOCR'
-                folder_path = Path(save_path.compare_project[5])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[5],folder_name) 
-                        dataset_list.append(dataset)  
-            if item == save_path.uadocv:
-                name = 'UADOCV'
-                folder_path = Path(save_path.compare_project[6])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[6],folder_name) 
-                        dataset_list.append(dataset)
-            if item == save_path.clsocv:
-                name = 'CLSOCV'
-                folder_path = Path(save_path.compare_project[7])
-                for entry in folder_path.iterdir():
-                    if entry.is_dir():
-                        folder_name = entry.name
-                        dataset = os.path.join(save_path.compare_project[7],folder_name) 
-                        dataset_list.append(dataset)
+    for name, config in ALGORITHM_CONFIG.items():
+        path_index = config["path_index"]
+        screenshot_types = config["screenshot"]
+        model_list_key = config.get("model_list")
+        show_types = config.get("show_types", [None])
 
-            for project_path in dataset_list:
-                dataset_name = os.path.basename(project_path)
-                with allure.step(f'当前运行{dataset_name}方案'):
-                    '''方案管理页面'''
-                    management.open_project(project_path)
-                    management.click_project()
+        dataset_list = get_dataset_list(save_path.compare_project[path_index])
 
-                    # '''图像标注页面'''
-                    # mark.image_label(color)
+        for project_path in dataset_list:
+            dataset_name = os.path.basename(project_path)
+            with allure.step(f'当前运行{dataset_name}方案'):
+                management.open_project(project_path)
+                management.click_project()
+                training.model_training(color)
 
-                    # '''模型训练页面'''
-                    training.model_training(color)
-                    if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR': 
-                        training.add_card(color)
-                        if name == 'SEQOCR':
-                            training.seq_set_study(learning_times)
-                        else:
-                            training.set_study(learning_times,color)
-                        training.cut_benchsize(color)
+                for show_type in show_types:
+
+                    # 根据配置获取对应模型列表
+                    if model_list_key == "default":
+                        model_list = model_selection
+                    elif model_list_key == "uad":
+                        model_list = UADmodel_selection
+                    elif isinstance(model_list_key, list):
+                        model_list = model_list_key
                     else:
-                        if name == 'UAD' or name == 'UADOCV' or name == 'CLSOCV':
-                            training.add_card(color) 
-                        if name == 'UADOCV':
-                            training.set_study(learning_times,color)
-                        if name == 'CLSOCV':
-                            training.ocv_set_study(learning_times)
-                    
-                    monitor_thread = threading.Thread(
-                        target=get_training_utilization,
-                        args=(dataset_name, status, event)  # 参数：方案名称、状态数组、事件
-                    )
-                    monitor_thread.start()
-                    training.star_training(color)    #开始训练
+                        model_list = []
 
-                    # 动态构建训练日志路径
-                    output_dir = os.path.join(save_path.project_save_path, project_path, "output")
-                    if not os.path.exists(output_dir):
-                        do_log.error(f"Output directory does not exist: {output_dir}")
-                        return
-                        
-                    # 获取最新的训练目录
-                    training_dirs = [d for d in os.listdir(output_dir) if d.isdigit()]
-                    if not training_dirs:
-                        do_log.error(f"No training directories found in: {output_dir}")
-                        return
-                        
-                    latest_training = max(training_dirs, key=int)
-                    
-                    # 根据项目类型构建不同的日志路径
-                    if name == 'CLSOCV':
-                        path = os.path.join(output_dir, latest_training, "cls", "vimo-train.log")
-                    elif name == 'UADOCV':
-                        path = os.path.join(output_dir, latest_training, "uad", "vimo-train.log")
-                    else:
-                        path = os.path.join(output_dir, latest_training, "vimo-train.log")
-                        
-                    training.training_success(path, project_path)
-                    status[0] = 1
-                    event.wait()  # 等待监控线程退出
-                    do_log.info(f"{dataset_name}方案监控结束")
+                    for model_type in model_list:
+                        output_type = get_output_type(model_type, show_type)
 
-                    training_screenshot = os.path.join(save_path.base_path, f"{dataset_name}训练时长.jpg")
-                    airtest_method.operate_sleep(2.0)
-                    airtest_method.screenshot(training_screenshot)
-                    screenshot_images = []
-                    screenshot_images.append(training_screenshot)
+                        # 执行训练及监控，绘图在run_training里主线程调用
+                        status = [0]  # 用于线程间共享状态，0表示监控线程运行中，1表示退出信号
+                        event = threading.Event()  # 用于线程同步通知
 
-                    '''模型评估页面'''
-                    assess.model_assess(color)
-                    assess.assess_success(color)
-                    if name == 'CLS' or name == 'DET' or name == 'OCR' or name == 'SEG' or name == 'SEQOCR' or name == 'UADOCV' or name == 'CLSOCV':
-                        assess.assess_done() 
-                    else:
-                        if not airtest_method.check_exit(light_control.sensitive_area,'FALSE',360000) :
-                            assert False,'评估未完成'
+                        run_training(dataset_name, project_path, name, show_type, model_type, output_type, status, event)
+                        post_flow(name, dataset_name, output_type, screenshot_types)
 
-                    airtest_method.operate_sleep(15.0)
+                airtest_method.key_event("^w")
+                airtest_method.operate_sleep()
 
-                    if name == 'SEG':
-                        image_screenshot = os.path.join(save_path.base_path, f"{dataset_name}图像级别.jpg")
-                        airtest_method.screenshot(image_screenshot)
-                        screenshot_images.append(image_screenshot)
-                        
-                        #类别级别截图
-                        airtest_method.touch_button(light_control.type_image)
-                        type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
-                        airtest_method.screenshot(type_screenshot)
-                        screenshot_images.append(type_screenshot)
-                        
-                        #像素级别截图
-                        airtest_method.touch_button(light_control.pixel_image)
-                        pixel_screenshot = os.path.join(save_path.base_path, f"{dataset_name}像素级别.jpg")
-                        airtest_method.screenshot(pixel_screenshot)
-                        screenshot_images.append(pixel_screenshot)
+def get_dataset_list(folder_path):
+    '''获取数据集列表'''
+    folder_path = Path(folder_path)
+    return [str(entry) for entry in folder_path.iterdir() if entry.is_dir()]
 
-                    if name == 'DET':
-                        image_screenshot = os.path.join(save_path.base_path, f"{dataset_name}图像级别.jpg")
-                        airtest_method.screenshot(image_screenshot)
-                        screenshot_images.append(image_screenshot)
+def get_output_type(model_type, show_type=None):
+    '''根据不同模型类型，输出类型名称'''
+    base = ''
+    if model_type == light_control.high_power:
+        base = '高精度'
+    elif model_type == light_control.low_power:
+        base = '低功耗'
+    elif model_type == light_control.modelA_low_power:
+        base = '模型A-低功耗'
+    elif model_type == light_control.modelA_high_power:
+        base = '模型A-高精度'
+    elif model_type == light_control.modelB:
+        base = '模型B'
 
-                        #类别级别截图
-                        airtest_method.touch_button(light_control.type_image)
-                        type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
-                        airtest_method.screenshot(type_screenshot)
-                        screenshot_images.append(type_screenshot)
+    if show_type == light_control.uad_cls:
+        return f'无监督分类_{base}'
+    elif show_type == light_control.uad_seg:
+        return f'无监督分割_{base}'
+    return base
 
-                    if name == 'OCR':
-                        image_screenshot = os.path.join(save_path.base_path, f"{dataset_name}图像级别.jpg")
-                        airtest_method.screenshot(image_screenshot)
-                        screenshot_images.append(image_screenshot)
+def run_training(dataset_name, project_path, name, show_type, model_type, output_type, status, event):
+    '''
+    运行训练流程并监控资源使用：
+    - 启动监控线程采集资源使用数据（Excel）
+    - 训练执行
+    - 通知监控线程停止
+    - 主线程等待监控线程结束
+    - 主线程调用绘图函数绘制资源使用曲线图
+    '''
 
-                        #字符级别截图
-                        airtest_method.touch_button(light_control.ocr_image)
-                        ocr_screenshot = os.path.join(save_path.base_path, f"{dataset_name}字符级别.jpg")
-                        airtest_method.screenshot(ocr_screenshot)
+    training.model_training(color)
 
-                        screenshot_images.append(ocr_screenshot)
+    if name == "UAD":
+        training.add_card(color)
+        training.uad_moudle_type(show_type)
+        training.uad_choice_model(model_type)
+    else:
+        if model_type:
+            training.add_card(color)
+            training.choice_model(model_type)
 
-                    if name == 'SEQOCR':
-                        image_screenshot = os.path.join(save_path.base_path, f"{dataset_name}图像级别.jpg")
-                        airtest_method.screenshot(image_screenshot)
-                        screenshot_images.append(image_screenshot)
+    # 启动资源监控线程，传入文件名、状态标志、事件对象
+    monitor_thread = threading.Thread(
+        target=get_training_utilization,
+        args=(f"{dataset_name}_{output_type}", status, event)
+    )
 
-                        #内容级别截图
-                        airtest_method.touch_button(light_control.content_image)
-                        content_screenshot = os.path.join(save_path.base_path, f"{dataset_name}内容级别.jpg")
-                        airtest_method.screenshot(content_screenshot)
-                        screenshot_images.append(content_screenshot)
+    airtest_method.operate_sleep()
+    monitor_thread.start()
 
-                        #类别级别截图
-                        airtest_method.touch_button(light_control.type_image)
-                        type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
-                        airtest_method.screenshot(type_screenshot)
-                        screenshot_images.append(type_screenshot)
+    training.set_all_study(name, LEARNING_TIMES, color)
+    training.star_training(color)
 
-                    if name == 'UAD':
-                        project_screenshot = os.path.join(save_path.base_path, f"{dataset_name}项目级别.jpg")
-                        airtest_method.screenshot(project_screenshot)
-                        screenshot_images.append(project_screenshot)
+    output_dir = os.path.join(save_path.project_save_path, project_path, "output")
+    training_dirs = [d for d in os.listdir(output_dir) if d.isdigit()]
+    latest_training = max(training_dirs, key=int)
 
-                    if name == 'CLS':
-                        type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
-                        airtest_method.screenshot(type_screenshot)
-                        screenshot_images.append(type_screenshot)
+    if name in ["CLSOCV", "UADOCV"]:
+        log_path = os.path.join(output_dir, latest_training, name.lower().replace("ocv", ""), "vimo-train.log")
+    else:
+        log_path = os.path.join(output_dir, latest_training, "vimo-train.log")
 
-                    if name == 'UADOCV' or name == 'CLSOCV':
-                        #字符级别截图
-                        airtest_method.touch_button(light_control.ocr_image)
-                        ocr_screenshot = os.path.join(save_path.base_path, f"{dataset_name}字符级别.jpg")
-                        airtest_method.screenshot(ocr_screenshot)
-                        screenshot_images.append(ocr_screenshot)
-                        airtest_method.operate_sleep()
+    training.training_success(log_path, project_path)
 
-                        airtest_method.touch_button(light_control.type_image)
-                        type_screenshot = os.path.join(save_path.base_path, f"{dataset_name}类别级别.jpg")
-                        airtest_method.screenshot(type_screenshot)
-                        screenshot_images.append(type_screenshot)
+    # 通知监控线程退出
+    status[0] = 1
+    event.set()
 
-                    ct_screenshot = os.path.join(save_path.base_path, f"{dataset_name}评估完成.jpg") 
-                    airtest_method.screenshot(ct_screenshot)
-                    # create_html_file("V0.9.0",dataset_name,screenshot_images)
-                    content = ["","V1.7.0.2",dataset_name]
-                    run("https://docs.qq.com/sheet/DY2ZHWnFlQXplWUFv?tab=vkfxla&_t=1750041650763&nlc=1&u=7f2950a20b1040d3bd13eae7fcb0cd81",content,screenshot_images)
-                    
-                    '''HOME键返回方案管理页面'''
-                    open_Software.connect_sofeware("Windows:///?title_re=MainWindow.*")
-                    airtest_method.key_event("^w")  #关闭当前窗口
-                    airtest_method.operate_sleep()
+    # 主线程等待监控线程结束，超时5秒
+    monitor_thread.join(timeout=5.0)
+    if monitor_thread.is_alive():
+        do_log.warning("监控线程未正常退出，可能存在资源泄漏风险。")
+    else:
+        do_log.info(f"{dataset_name}监控线程成功结束")
+
+    # 在主线程调用绘图函数，避免绘图库多线程问题
+    try:
+        plot_file = f"{dataset_name}_{output_type}.xlsx"
+        from tools.monitoring import plot_resource_usage  # 延迟导入避免循环依赖
+        plot_resource_usage(plot_file)
+    except Exception as e:
+        do_log.error(f"绘图失败: {e}")
+
+def post_flow(name, dataset_name, output_type, screenshot_types):
+    '''获取训练时长并截图，获取评估结果并截图'''
+
+    training_screenshot = os.path.join(save_path.base_path, f"{dataset_name}_{output_type}训练时长.jpg")
+    airtest_method.operate_sleep(2.0)
+    airtest_method.screenshot(training_screenshot)
+    screenshot_images = [training_screenshot]
+
+    assess.model_assess(color)
+    assess.assess_success(color)
+    if name in ['CLS', 'DET', 'OCR', 'SEG', 'SEQOCR', 'UADOCV', 'CLSOCV', 'UAD']:
+        assess.assess_done()
+        do_log.info(f"{dataset_name}_{output_type}_评估完成")
+    else:
+        if not airtest_method.check_exit(light_control.sensitive_area, 'FALSE', 360000):
+            assert False, f"{dataset_name}_{output_type}_评估失败"
+    airtest_method.operate_sleep(15.0)
+
+    screen_shot_by_type(dataset_name, output_type, screenshot_images, screenshot_types)
+
+def screen_shot_by_type(dataset_name, output_type, screenshot_images, screenshot_types):
+    '''截图，并将结果写入腾讯文档'''
+
+    button_map = {
+        "图像级别": None,
+        "类别级别": light_control.type_image,
+        "像素级别": light_control.pixel_image,
+        "字符级别": light_control.ocr_image,
+        "内容级别": light_control.content_image,
+        "项目级别": None
+    }
+
+    for shot_type in screenshot_types:
+        if button_map[shot_type]:
+            airtest_method.touch_button(button_map[shot_type])
+
+        shot_path = os.path.join(save_path.base_path, f"{dataset_name}_{output_type}_{shot_type}.jpg")
+        if shot_path not in screenshot_images:
+            airtest_method.screenshot(shot_path)
+            screenshot_images.append(shot_path)
+
+        do_log.info(f"截图已保存：{dataset_name}_{output_type}_{shot_type}")
+
+    run("https://docs.qq.com/sheet/DY3VIak9uVkRYaXpm?u=7f2950a20b1040d3bd13eae7fcb0cd81&no_promotion=1&tab=BB08J2",
+        ["", "V1.7.2", dataset_name, output_type],
+        screenshot_images)

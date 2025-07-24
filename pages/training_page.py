@@ -164,6 +164,7 @@ class training():
         else:      
             airtest_method.touch_button(cut_benchsize_element,times= 3)
     
+   
     def set_study(learning_times,color):
         '''设置学习次数
         color light:浅色主题 dark:深色主题
@@ -210,6 +211,18 @@ class training():
         keyevent("{BACKSPACE}")
         airtest_method.input_text(learning_times)
         airtest_method.operate_sleep()
+
+    def set_all_study(name,learning_times,color):
+        '''设置所有算法的学习次数'''
+        if name == "SEG" or name == "DET" or name== "OCR" or name== "CLS" or name == "UADOCV":
+            training.set_study(learning_times,color) 
+        if name == "SEQOCR":
+            training.seq_set_study(learning_times)
+        if  name == "CLSOCV":
+            training.ocv_set_study(learning_times)
+        else:
+            pass
+
 
     def generation_set_study(learning_times):
         '''缺陷生成设置学习次数'''

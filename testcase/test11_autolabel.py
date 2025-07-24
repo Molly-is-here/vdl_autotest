@@ -25,8 +25,10 @@ class TestAutolabel:
         name = 'DET自动标注'  #方案名称
         item = save_path.det  #方案类型
         dataset = save_path.det_dataset  #数据集
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  
@@ -58,8 +60,10 @@ class TestAutolabel:
         name = 'SEG自动标注'  #方案名称
         item = save_path.seg  #方案类型
         dataset = save_path.seg_dataset  #数据集
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  
@@ -102,6 +106,7 @@ class TestAutolabel:
             '''关闭方案'''  
             # assess.template_file()
             assess.template_close()
+
     @allure.story('自动标注功能')
     @allure.title('无监督字符检查算法自动标注')
     @pytest.mark.smoke
@@ -109,8 +114,10 @@ class TestAutolabel:
         name = 'UAD_OCR自动标注'
         item = save_path.uadocv
         dataset = save_path.uadocv_dataset
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  
@@ -138,6 +145,7 @@ class TestAutolabel:
             '''关闭方案'''  
             # assess.template_file()
             assess.template_close()
+
     @allure.story('自动标注功能')
     @allure.title('有监督字符检查算法自动标注')
     @pytest.mark.smoke
@@ -145,8 +153,10 @@ class TestAutolabel:
         name = 'CLS_OCR自动标注'
         item = save_path.clsocv
         dataset = save_path.clsocv_dataset
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  
@@ -184,8 +194,10 @@ class TestAutolabel:
         name = 'OCR自动标注'  #方案名称
         item = save_path.ocr  #方案类型
         dataset = save_path.ocr_dataset  #数据集
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  
@@ -213,6 +225,7 @@ class TestAutolabel:
             '''关闭方案'''  
             # assess.template_file()
             assess.template_close()
+
     @allure.story('自动标注功能')
     @allure.title('seq_OCR算法自动标注')
     @pytest.mark.smoke
@@ -220,8 +233,10 @@ class TestAutolabel:
         name = 'SEQ_OCR自动标注'  #方案名称
         item = save_path.seqocr  #方案类型
         dataset = save_path.seqocr_dataset  #数据集
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  
@@ -250,6 +265,7 @@ class TestAutolabel:
             '''关闭方案'''  
             # assess.template_file()
             assess.template_close()
+
     @allure.story('自动标注功能')
     @allure.title('分类算法自动标注')
     @pytest.mark.smoke
@@ -257,8 +273,10 @@ class TestAutolabel:
         name = 'CLS自动标注'  #方案名称
         item = save_path.cls  #方案类型
         dataset = save_path.cls_dataset  #数据集
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  
@@ -281,6 +299,7 @@ class TestAutolabel:
             '''关闭方案'''  
             # assess.template_file()
             assess.template_close()
+            
     @allure.story('自动标注功能')
     @allure.title('无监督算法自动标注')
     @pytest.mark.smoke
@@ -288,8 +307,10 @@ class TestAutolabel:
         name = 'UAD自动标注'  #方案名称
         item = save_path.uad  #方案类型
         dataset = save_path.uad_dataset  #数据集
+        files = search_file.get_file(dataset)
 
-        for file in search_file.get_file(dataset):
+        if files:
+            file = files[0]  # 只处理第一个文件
             '''方案管理页面'''
             management.create_project(COLOR)       
             management.input_name(name,COLOR)  

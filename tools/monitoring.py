@@ -1,6 +1,4 @@
-from common.Airtest_method import airtest_method 
-from tools.ocr import ocr_organize
-from tools.calculating import calculate_data
+# from tools.calculating import calculate_data
 from common.handle_log import do_log
 from PIL import Image
 from openpyxl.drawing.image import Image as XLImage
@@ -17,6 +15,7 @@ import csv
 import pynvml
 import datetime
 import psutil
+import matplotlib
 import os
 
 
@@ -25,6 +24,7 @@ def plot_resource_usage(xlsx_path):
     从文件中读取资源使用情况，绘图并保存图像，并将图像路径保存到xlsx中
     """
     # 读取数据
+    matplotlib.use('Agg')
     try:
         df = pd.read_excel(xlsx_path)
     except Exception as e:
@@ -64,6 +64,9 @@ def plot_resource_usage(xlsx_path):
 
     # 插入图像到 Excel
     try:
+        if os.path.getsize(xlsx_path) < 1000:
+            do_log.warning(f"{xlsx_path} 文件太小，可能数据采集失败")
+            return
         wb = load_workbook(xlsx_path)
         ws = wb.active
         img = XLImage(image_path)
@@ -74,72 +77,61 @@ def plot_resource_usage(xlsx_path):
         do_log.error(f"插入图像失败：{e}")
 
 def get_training_utilization(name, status, event, gpu_index=0):
-    '''获取训练阶段的资源使用情况，并绘制曲线图'''
-    header = ['时间', 'GPU利用率/%', '显存使用量/Mib', 'CPU利用率/%', '内存使用量/MB', '磁盘使用量/MB']
+    '''监控训练资源使用情况，并记录成 Excel'''
+    do_log.debug(f"[{name}] 开始资源监控线程")
+    start_time = time.time()
     file_name = name + '.xlsx'
+    headers = ['时间', 'GPU利用率/%', '显存使用量/Mib', 'CPU利用率/%', '内存使用量/MB', '磁盘使用量/MB']
 
-    # 创建xlsxwriter工作簿和工作表
-    workbook = xlsxwriter.Workbook(file_name)
-    worksheet = workbook.add_worksheet()
-
-    # 写表头
-    for col, head in enumerate(header):
-        worksheet.write(0, col, head)
+    try:
+        workbook = xlsxwriter.Workbook(file_name)
+        worksheet = workbook.add_worksheet()
+        for i, h in enumerate(headers):
+            worksheet.write(0, i, h)
+    except Exception as e:
+        do_log.error(f"创建Excel失败: {e}")
+        event.set()
+        return
 
     row = 1
-
-    # 获取初始磁盘使用情况
-    partition = "D:\\"  # 磁盘分区路径
+    partition = "D:\\"  # 可根据实际改成项目盘符
     try:
         init_disk_used = psutil.disk_usage(partition).used / (1024 * 1024)
-        do_log.info(f'磁盘已使用：{init_disk_used:.2f} MB')
+        do_log.info(f"[{name}] 初始磁盘使用量: {init_disk_used:.2f}MB")
     except Exception as e:
-        do_log.error(f"[磁盘获取异常]：{e}")
+        do_log.warning(f"获取磁盘信息失败：{e}")
         init_disk_used = 0
 
-    # 获取目标进程 PID 列表
     target_names = {'VDL.exe', 'python.exe', 'QtWebEngineProcess.exe'}
-    target_pids = []
-    for proc in psutil.process_iter(['name']):
-        if proc.info['name'] in target_names:
-            target_pids.append(proc.pid)
-
-    # CPU预热
+    target_pids = [proc.pid for proc in psutil.process_iter(['name']) if proc.info['name'] in target_names]
     for pid in target_pids:
         try:
             psutil.Process(pid).cpu_percent(None)
-        except Exception:
+        except:
             continue
 
     try:
         while True:
-            # 获取 GPU 利用率 和 显存占用
-            nvidia_cmd = [
-                "nvidia-smi",
-                f"--query-gpu=utilization.gpu,memory.used",
-                f"--id={gpu_index}",
-                "--format=csv,noheader,nounits"
-            ]
+            if status[0] == 1:
+                do_log.debug(f"[{name}] 状态标志位为 1，退出资源监控")
+                break
+
+            # GPU采集
             try:
-                output = subprocess.check_output(nvidia_cmd).decode("utf-8")
-                utilization = re.findall(r"(\d+),\s+(\d+)", output)
-                if not utilization:
-                    continue
-                gpu_util, mem_util = map(int, utilization[0])
+                output = subprocess.check_output([
+                    "nvidia-smi",
+                    "--query-gpu=utilization.gpu,memory.used",
+                    f"--id={gpu_index}",
+                    "--format=csv,noheader,nounits"
+                ], timeout=2).decode()
+                match = re.findall(r"(\d+),\s*(\d+)", output)
+                gpu_util, mem_used = map(int, match[0]) if match else (0, 0)
             except Exception as e:
-                do_log.error(f"[GPU数据获取失败]：{e}")
-                gpu_util, mem_util = 0, 0
+                do_log.warning(f"[{name}] GPU采集失败: {e}")
+                gpu_util, mem_used = 0, 0
 
-            # 获取磁盘使用变化
-            try:
-                disk_used = psutil.disk_usage(partition).used / (1024 * 1024)
-                lated_disk_used = disk_used - init_disk_used
-            except:
-                lated_disk_used = 0
-
-            # 获取 CPU、内存使用
-            cpu_sum = 0
-            mem_sum = 0
+            # CPU和内存采集
+            cpu_sum = mem_sum = 0.0
             for pid in target_pids:
                 try:
                     proc = psutil.Process(pid)
@@ -147,130 +139,141 @@ def get_training_utilization(name, status, event, gpu_index=0):
                     mem = proc.memory_info().rss / (1024 * 1024)
                     cpu_sum += cpu
                     mem_sum += mem
-                except psutil.NoSuchProcess:
+                except:
                     continue
 
-            # 当前时间
-            current_time = datetime.datetime.now().strftime("%H:%M:%S")
+            # 磁盘增量采集
+            try:
+                current_disk_used = psutil.disk_usage(partition).used / (1024 * 1024)
+                delta_disk = current_disk_used - init_disk_used
+            except:
+                delta_disk = 0
 
-            # 写入数据行
-            worksheet.write(row, 0, current_time)
-            worksheet.write(row, 1, gpu_util)
-            worksheet.write(row, 2, mem_util)
-            worksheet.write(row, 3, round(cpu_sum, 2))
-            worksheet.write(row, 4, round(mem_sum, 2))
-            worksheet.write(row, 5, round(lated_disk_used, 2))
-            row += 1
+            now_time = datetime.datetime.now().strftime('%H:%M:%S')
 
-            if status[0] == 1:
+            # 写入Excel
+            try:
+                worksheet.write(row, 0, now_time)
+                worksheet.write(row, 1, gpu_util)
+                worksheet.write(row, 2, mem_used)
+                worksheet.write(row, 3, round(cpu_sum, 2))
+                worksheet.write(row, 4, round(mem_sum, 2))
+                worksheet.write(row, 5, round(delta_disk, 2))
+                row += 1
+            except Exception as e:
+                do_log.warning(f"[{name}] 写入Excel失败: {e}")
                 break
 
             time.sleep(1)
 
     except Exception as e:
-        do_log.error(f"[监控异常终止]：{e}")
-
+        do_log.error(f"[{name}] 资源监控主循环异常：{e}")
     finally:
-        # 关闭文件，释放资源
-        workbook.close()
+        try:
+            workbook.close()
+            do_log.info(f"[{name}] 监控数据保存完成，共{row - 1}行")
+        except Exception as e:
+            do_log.error(f"[{name}] Excel关闭失败: {e}")
+
+        # 通知调用方监控线程完成
         event.set()
-        plot_resource_usage(file_name)
 
-def get_infer_utilization(name,status,event,path):
-    '''获取推理阶段的资源使用情况'''
-    pynvml.nvmlInit()
-    current_dir = os.getcwd()
 
-    header = ['Time', 'GPU利用率/%', '显存使用量/Mib','CPU利用率/%','内存使用量/MB','磁盘使用量/GB']  #设置表头
+# def get_infer_utilization(name,status,event,path):
+#     '''获取推理阶段的资源使用情况'''
+#     pynvml.nvmlInit()
+#     current_dir = os.getcwd()
 
-    file_name = name + '.csv'      
-    with open(file_name, 'a', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(header)#将表头写入表格
-        '''磁盘使用情况'''              
-        partition = "D:\\"  #磁盘分区的挂载点路径
-        init_disk_used = psutil.disk_usage(partition).used / (1024 * 1024 * 1024)
-        print(f'磁盘已使用：{init_disk_used:.2f} GB')
-    if status[0] == 0:
-        while True:
-            #调用英伟达命令行
-            nvidia_smi_output = subprocess.check_output(["nvidia-smi","--query-gpu=utilization.gpu,memory.used", "--format=csv,noheader,nounits"]).decode("utf-8")
-            utilization = re.findall(r"(\d+),\s+(\d+)", nvidia_smi_output)
+#     header = ['Time', 'GPU利用率/%', '显存使用量/Mib','CPU利用率/%','内存使用量/MB','磁盘使用量/GB']  #设置表头
 
-            if len(utilization) > 0:
-                gpu_util, mem_util = map(int, utilization[0]) #GPU利用率和显存使用量
+#     file_name = name + '.csv'      
+#     with open(file_name, 'a', newline='') as f:
+#         writer = csv.writer(f)
+#         writer.writerow(header)#将表头写入表格
+#         '''磁盘使用情况'''              
+#         partition = "D:\\"  #磁盘分区的挂载点路径
+#         init_disk_used = psutil.disk_usage(partition).used / (1024 * 1024 * 1024)
+#         print(f'磁盘已使用：{init_disk_used:.2f} GB')
+#     if status[0] == 0:
+#         while True:
+#             #调用英伟达命令行
+#             nvidia_smi_output = subprocess.check_output(["nvidia-smi","--query-gpu=utilization.gpu,memory.used", "--format=csv,noheader,nounits"]).decode("utf-8")
+#             utilization = re.findall(r"(\d+),\s+(\d+)", nvidia_smi_output)
+
+#             if len(utilization) > 0:
+#                 gpu_util, mem_util = map(int, utilization[0]) #GPU利用率和显存使用量
                 
-                '''获取磁盘使用情况'''
-                disk_used = psutil.disk_usage(partition).used / (1024 * 1024 * 1024)
-                lated_disk_used = disk_used - init_disk_used
-                print(f'磁盘使用量为：{lated_disk_used:.2f} GB')
+#                 '''获取磁盘使用情况'''
+#                 disk_used = psutil.disk_usage(partition).used / (1024 * 1024 * 1024)
+#                 lated_disk_used = disk_used - init_disk_used
+#                 print(f'磁盘使用量为：{lated_disk_used:.2f} GB')
 
-                '''根据进程号获取CPU使用情况'''
-                cpu_sum = 0
-                men_cum = 0
-                plist = ['VDL.exe','python.exe','QtWebEngineProcess.exe']
-                #print('cpu核数：',psutil.cpu_count())
+#                 '''根据进程号获取CPU使用情况'''
+#                 cpu_sum = 0
+#                 men_cum = 0
+#                 plist = ['VDL.exe','python.exe','QtWebEngineProcess.exe']
+#                 #print('cpu核数：',psutil.cpu_count())
 
-                for proc in psutil.process_iter(['name']):
-                    if proc.info['name'] in plist:
-                        pid = proc.pid
-                        print(proc.info['name'] ,"的进程号是：", pid)
-                        process_cpu_usage = proc.cpu_percent()/psutil.cpu_count()
-                        process_mem_usage = proc.memory_info().rss / (1024*1024)
-                        cpu_sum += process_cpu_usage
-                        men_cum += process_mem_usage
+#                 for proc in psutil.process_iter(['name']):
+#                     if proc.info['name'] in plist:
+#                         pid = proc.pid
+#                         print(proc.info['name'] ,"的进程号是：", pid)
+#                         process_cpu_usage = proc.cpu_percent()/psutil.cpu_count()
+#                         process_mem_usage = proc.memory_info().rss / (1024*1024)
+#                         cpu_sum += process_cpu_usage
+#                         men_cum += process_mem_usage
                         
-                now = datetime.datetime.now()
-                current_time = now.strftime("%H:%M:%S")#获取当前时间
+#                 now = datetime.datetime.now()
+#                 current_time = now.strftime("%H:%M:%S")#获取当前时间
                
-                with open(file_name, 'a', newline='') as f:
-                    writer = csv.writer(f)
-                    writer.writerow([current_time, gpu_util, mem_util,round(cpu_sum,2),round(men_cum,2),round(lated_disk_used,2)])
-                    time.sleep(1)
-                if status[0] == 1:                       
-                    break
-    event.set() 
+#                 with open(file_name, 'a', newline='') as f:
+#                     writer = csv.writer(f)
+#                     writer.writerow([current_time, gpu_util, mem_util,round(cpu_sum,2),round(men_cum,2),round(lated_disk_used,2)])
+#                     time.sleep(1)
+#                 if status[0] == 1:                       
+#                     break
+#     event.set() 
 
-    '''统计表格数据'''
-    calculate_data(file_name)
-    static_path = os.path.join(path, 'static')
-    project_name = f"{name}"
-    detail_screenshot = os.path.join(static_path, f"{project_name}.png")
-    min_time = os.path.join(static_path, f"{project_name}_min.png")
-    max_time = os.path.join(static_path, f"{project_name}_max.png")
-    avg_time = os.path.join(static_path, f"{project_name}_avg.png")
+#     '''统计表格数据'''
+#     calculate_data(file_name)
+#     static_path = os.path.join(path, 'static')
+#     project_name = f"{name}"
+#     detail_screenshot = os.path.join(static_path, f"{project_name}.png")
+#     min_time = os.path.join(static_path, f"{project_name}_min.png")
+#     max_time = os.path.join(static_path, f"{project_name}_max.png")
+#     avg_time = os.path.join(static_path, f"{project_name}_avg.png")
 
-    airtest_method.screenshot(detail_screenshot)   #全屏截图
-    detail_image =  os.path.join(path,detail_screenshot)  #指定路径
-    region_image = Image.open(detail_image)
+#     airtest_method.screenshot(detail_screenshot)   #全屏截图
+#     detail_image =  os.path.join(path,detail_screenshot)  #指定路径
+#     region_image = Image.open(detail_image)
 
-    min_time_screenshot = region_image.crop((1440,428,1580,515)) #最小值截图
-    min_time_screenshot.save(min_time)
+#     min_time_screenshot = region_image.crop((1440,428,1580,515)) #最小值截图
+#     min_time_screenshot.save(min_time)
 
-    max_time_screenshot = region_image.crop((1600,428,1740,515)) #最大值截图
-    max_time_screenshot.save(max_time)
+#     max_time_screenshot = region_image.crop((1600,428,1740,515)) #最大值截图
+#     max_time_screenshot.save(max_time)
 
-    avg_time_screenshot = region_image.crop((1760,428,1900,515)) #平均值截图
-    avg_time_screenshot.save(avg_time)
+#     avg_time_screenshot = region_image.crop((1760,428,1900,515)) #平均值截图
+#     avg_time_screenshot.save(avg_time)
 
-    ocr_character = [min_time,max_time,avg_time]
-    ocr_content = ocr_organize(ocr_character)    
-    # data = [int(ocr_content[0]),int(ocr_content[1])]
-    # van_time = statistics.variance(data)
-    # range_time = ocr_content[1] - ocr_content[0]      
+#     ocr_character = [min_time,max_time,avg_time]
+#     ocr_content = ocr_organize(ocr_character)    
+#     # data = [int(ocr_content[0]),int(ocr_content[1])]
+#     # van_time = statistics.variance(data)
+#     # range_time = ocr_content[1] - ocr_content[0]      
         
-    '''将ct时间记录至表格'''
-    content = {}
-    content = {
-        'min:' :ocr_content[0],
-        'max:' :ocr_content[1],
-        'avg:' :ocr_content[2],
-        # 'van:' :van_time,
-        # 'range:' : range_time
-    }
-    with open(file_name, 'a', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow([content])
+#     '''将ct时间记录至表格'''
+#     content = {}
+#     content = {
+#         'min:' :ocr_content[0],
+#         'max:' :ocr_content[1],
+#         'avg:' :ocr_content[2],
+#         # 'van:' :van_time,
+#         # 'range:' : range_time
+#     }
+#     with open(file_name, 'a', newline='') as f:
+#         writer = csv.writer(f)
+#         writer.writerow([content])
  
 def monitor_memory_usage(threshold_percent=90, check_interval=1):
     """实时监控内存使用情况并进行预警
